@@ -1,9 +1,61 @@
 # TAX AI — Project State
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE A — READ-ONLY AUDIT / OFFLINE PLAN COMPLETE**
-Execution: **僅唯讀盤點、離線驗證與文件更新；未實作整合、未部署、未改動 GCP**
+Status: **PHASE A — PUBLIC REVIEW COMPLETE / FILE IMPORT APPROVAL PENDING**
+Execution: **本輪僅公開性審查、離線依賴驗證、納管準備及文件；未納管原始碼、未啟用 Pages、未實作 AI、未改 GCP**
 Source import: **ZIP 已實際取得及讀取；原始網頁、題庫與 CSV 未匯入 Git**
+
+
+## 本輪公開性審查與納管準備（2026-10-08）
+
+審查基線：已 pull main 至 **090cdd26d54618a3ef3b1b294297a58c36d9107e**，依序讀四份文件；GitHub metadata 確認仍為 Public。八個原檔逐 byte 對照 ZIP 一致，ZIP SHA-256 仍為 824dc5020641ad3423a1364e737a51dae989e77923eaa7f43a3f67c492707c0e。
+
+**結論：3 檔可公開候選、5 檔需確認；本輪不納管任何原檔，只提交 STATE／TASK。** 維持 Public 已是確定決策，不再要求改 Private。以下「可公開」表示技術內容審查未見公開阻擋、可列入下一輪候選，不能代替逐檔公開及納管授權；「需確認」不表示已證實為機密。
+
+### 八檔公開性清單
+
+| 檔案 | 分類 | 審查結果與納管條件 |
+| --- | --- | --- |
+| search.js | **可公開（候選）** | 本機搜尋／正規化／排序演算法，無硬編碼網路端點、憑證、完整題庫或個案紀錄；依賴 TaxSearchDictionary 及呼叫者傳入 bank。可原貌納管候選。 |
+| searchDictionary.js | **可公開（候選）** | 一般稅務術語、同義詞、查詢意圖與排序權重；未含完整答案、個案資料或端點／憑證。人工排序註解與一般短提示不等於原始測試個案；保留原貌。 |
+| style.css | **可公開（候選）** | UI／RWD 樣式，無 url()/@import 外部資產、inline 資料或憑證；字型為系統字型引用，未夾帶字型檔。 |
+| questionBank.js | **需確認** | 已逐題檢視129題問題／答案並掃描其餘欄位。主要為稅務說明，未發現可確證的直接識別個資／憑證；但108題版本標記、1題缺版本及20題官網標記，皆沒有逐題可追溯來源欄位。申辦網址不是該段文字的公開來源證據；須資料權責人確認整份可公開，或提供逐題公開來源／核准範圍。示例人物與服務聯絡語境沒有直接判為個資，也未引用原字串。整檔暫停納管，不自行切出20題或改寫題庫。 |
+| learningBank.js | **需確認** | 7篇內容，含1篇個案敘事（L004，原檔52行起）；日期／機關標記沒有來源 URL 或公開依據。須確認案例已獲公開處理、文字轉載／改寫範圍及素材來源。不得把案例原文寫入 Public 文件。 |
+| app.js | **需確認** | 控制器本身未見憑證，但第7行起內嵌1篇 featured＋3篇 news 備用內容，不能當作純程式碼放行。須確認這4篇的公開範圍；Excel 匯入為本機解析與 localStorage，本輪未見上傳 Excel／bank 的程式路徑。 |
+| index.html | **需確認** | 包含外部入口設定 API（175行）、遊戲 iframe（147行起）、XLSX CDN（133行）及 ../index.html 返回連結。端點沒有硬編碼憑證，但其公開用途／管理歸屬與 Pages 跨來源可用性尚未確認；不在 Public 文件抄錄待確認的完整端點。頁面標示同仁／內部使用者，不構成身分驗證。須連同題庫、學習文字及 logo 審查結果放行。 |
+| logo.png.gif | **需確認** | 已視覺查驗為 TRS 識別圖，實際 GIF 96×96、單 frame；無 EXIF／comment／XMP keys，未見個人影像。圖片可讀取不等於機關標誌／素材的公開展示範圍已獲確認；本輪不納管。 |
+
+八個原檔未發現足以直接定性為「不可公開」的確證憑證／直接識別個資；有疑義者全部保留於 repo 外暫存。**目前不得公開／提交的項目**：整份 ZIP（包含5個待確認原檔）、未核准題庫衍生的 faq.csv、使用者匯入的 Excel／匯出紀錄，以及任何後續發現的憑證／未核准個資。ZIP／CSV 為預設排除項，不因3檔候選通過而整包提交。
+
+### 原貌納管的 hash 白名單
+
+下列摘要只識別審查版本，不包含題庫／案例原文。來源變更後須重審，不能沿用本輪分類。
+
+| 候選檔案 | SHA-256 |
+| --- | --- |
+| search.js | e5a654b9187a281d16e737c1c790a3806dba9d1370c76be900f1d2d77c3d159d |
+| searchDictionary.js | e020590d1a7a6d5ae72a66c89df139b7264f9646107bee06c92a1ca9e7a1cb85 |
+| style.css | afb88aa24a70babf928c00d5633dcd7d13d794f9b6fe070c5bcb40484e1f5435 |
+
+其餘5檔的本機待確認清單亦綁定原檔 hash；尚無已授權匯入的原始檔。建議下一輪只按明確核准白名單，將檔案原貌放至 repo 根目錄同檔名，保留相對結構；不得整包解壓到 Git 或使用全量 staging。ZIP、faq.csv、generated/、work/、attachments/、匯入 Excel 須列入後續排除策略；本輪只準備清單，未新增 .gitignore 或修改網站。
+
+### 相依性、限制與替代方案
+
+1. **題庫是初始化必要依賴**：app.js 的 loadBank 找不到 questionBank.js 時改讀 questionBank.json，但 ZIP 沒有該 JSON。兩者都不可用會 alert 並在 init 前 return；搜尋表單及其他初始化未完成，不能把只納管3個候選檔案宣稱為完整可運作網站。
+2. **學習內容不能只移除 learningBank.js**：learningBank.json 也不在 ZIP；缺少兩者仍使用 app.js 內嵌 fallback，且學習 DOM 會在初始化產生。導覽 display:none 不阻止靜態 JS／文字被下載或查看。
+3. **圖片來源缺件**：learningBank 引用 assets/01.png～07.png 及對應 *_thumb.png，共14張，全部不在 ZIP。原 ZIP 本身已實際取得；缺的是圖像資產，不假設另有 assets archive。若保留學習中心，須提供圖片及公開範圍，或另案核准處理方式。
+4. **外部服務分開確認**：XLSX 固定 CDN 版本，未附本機 vendor 檔，未驗證供應可用性／未引用其授權結論；入口設定 API 的 response／CORS／公開用途未驗證，iframe 在初始 HTML 即有 src，隱藏導覽也可能載入。只做靜態與離線檢查，未發出真實 API／iframe／CDN 請求。
+5. **返回入口不在來源包**：../index.html 沒有隨 ZIP 提供；未來 Pages 的路徑與既有入口不能假設相同。本輪不改連結、不填正式網域、不設定 Pages。
+6. **若內容不得公開**：可保持 Public 程式 repo，但 Public Git／Pages 只能承載已核准資料。原題庫若必須保密，完整網站須另案設計受控資料承載／身分驗證；只換成無驗證 JSON/API、隱藏畫面或允許特定網域都不能保密。任何剝離 fallback、替換資料／logo、調整 API 或導覽均待另案授權，本輪未實作。
+
+### 本輪驗證與未完成項目
+
+- 7個文字檔全檔掃描15類模式：私鑰、Google/GitHub/AWS credentials、JWT、Bearer、密碼／secret 賦值、email、手機、身分證格式、IPv4／本機域名、URL 內憑證／secret parameter、電話格式，未命中。另對129題問答、7篇學習內容、4篇 fallback 作語境閱讀；有限模式掃描不是全面保證或法規／公開授權證明。
+- GIF 型別／尺寸／frame／metadata 與視覺檢查完成；5份 JS 的 node --check 通過。沒有執行 converter 或 AI 整合。
+- 原檔不改碼的隔離 Chromium 相依性試驗 **2/2 PASS**：省略題庫會中止初始化；省略 learningBank 仍產生 app fallback（featured＋3 news）。route 供應暫存原檔且阻擋所有外部請求；Production／GCP 請求0。未啟動對外網站。
+- 前輪 Node 14/14 與8組網站基線是歷史結果，本輪未重跑，不據此宣稱公開性／部署已通過。
+- 尚待：5個待確認原檔的公開依據、3候選檔的逐檔納管授權、14張缺件圖片、外部服務／入口的公開用途及未來路徑決策。原始碼匯入、Pages、AI、converter、CX/GCP 寫入均未開始。
+- 公開文件只記檔名、行號、hash、分類與原因，未複製疑似敏感正文／個案細節／待確認完整端點。本輪 commit 範圍只有 PROJECT_STATE.md／NEXT_TASK.md；README／AGENTS 不變。
 
 ## 已確認需求與架構邊界
 
@@ -14,7 +66,7 @@ Source import: **ZIP 已實際取得及讀取；原始網頁、題庫與 CSV 未
 - questionBank.js 為唯一正式題庫來源；faq.csv 僅為可重複產生的 question,answer 二欄產物。
 - 正式網址／Messenger allowed domains 尚未提供；不可猜值。暫不登入的既有決策不能驗證同仁身分，正式上線前仍須核對實際網路存取限制。
 
-## 本輪來源與 GitHub 實證
+## 第一輪盤點來源與 GitHub 實證（歷史記錄）
 
 - 已讀 README／AGENTS／STATE／TASK 並 fetch 最新 origin。盤點起點 main：53d3860c69711ce6be278b71ea883c9a73b23589；四份本機文件 blob hashes 與 GitHub 一致，當時 repo 只有四份 Markdown，沒有網站或部署 workflow。
 - GitHub metadata 核對：tax-helper 為 **Public**、default branch main；tpctax-1999-ai-web 為 Public；dialogflow-cx-qa-framework 為 Private。本輪沒有修改另兩個 repo，也沒有重做或假設其歷史 Production 驗證。
@@ -134,7 +186,7 @@ tax-helper/
 
 本輪未新增 converter、未產生正式 CSV、未上傳 GCS／匯入 Data Store；二欄 ingestion 相容性由 CX Framework 後續驗證。
 
-## 已執行驗證及後續測試矩陣
+## 第一輪驗證結果及後續測試矩陣（歷史記錄）
 
 - ZIP／hash／有限 Secret scan／嚴格 JSON 題庫統計完成。
 - 固定1999暫存副本執行 node tests/phase7e3a.test.mjs：**14/14 PASS**，涵蓋 normalization／URL／Markdown／去重、首次 override／followup、reset／expiry、timeout lock／late response、service error／clear。
@@ -165,7 +217,7 @@ tax-helper/
 ## 阻擋與 handoff
 
 - **ZIP 缺件已解除**：已實際讀取，不需再次上傳；尚未入 Git 不等於缺少來源。
-- **來源納管待決策**：repo 仍 Public；依 AGENTS，未確認可公開範圍不得推送內部題庫／ZIP。下一輪先決定 Private 或明確核准公開範圍，再授權原貌匯入；本輪未改 visibility。
+- **來源納管待決策**：維持 Public 已確認；須依本輪逐檔審查核准公開／納管範圍。3檔為可公開候選，5檔待確認；原 ZIP／CSV 預設不提交，不再以改 Private 為前置條件。
 - **資料差異**：靜態109 vs 實際129、optional metadata 缺漏、2 個孤立關聯、Excel runtime bank vs AI 正式來源；本輪只記錄，未修正或同步。
 - **CX handoff**：獨立 TAX Agent／Playbook resource names、Environment/Messenger binding、正式網址／allowed domains／網路限制待提供；Bucket／Data Store 區域、命名、權限、CSV ingestion 由 Framework 處理。本輪未讀寫 live GCP。
 - **STOP**：先回報 ChatGPT 審閱，未有 Phase B/C 授權前不實作 UI／transport／converter，不部署、不寫 CX／GCP／Messenger／IAM、不改1999／Rental。
@@ -177,5 +229,5 @@ tax-helper/
 - 使用者明確決定 `tax-helper` 維持 Public，預計將 GitHub Pages 作為靜態網站部署方式；日後仍可評估其他部署。此時未啟用 Pages、未正式部署。
 - 原先「先改 Private」不再是前置條件，但 Public Repo 不代表原 ZIP、內部題庫及其他檔案已取得公開授權。
 - GitHub Pages 的 JS 與靜態資料可被外部檢視。前端隱藏資料、固定網址或 Messenger allowed domains 均不構成同仁身分驗證。
-- 下一輪優先逐檔檢查是否可公開，再依核准範圍原貌納管；未獲准的題庫、內部資料或憑證不得提交。原始 ZIP 與 faq.csv 預設不提交。
-- 本決策取代上文「先決定 Private 或公開範圍」的二選一表述：visibility 已決定為 Public，**仍須決定可公開的檔案範圍**。請以更新後的 NEXT_TASK.md 為下一輪工作依據。
+- 本輪已完成逐檔公開性審查；下一輪取得具體檔名及公開／納管範圍核准後才原貌納管。未獲准的題庫、內部資料或憑證不得提交，原始 ZIP 與 faq.csv 預設排除。
+- Visibility 固定為 Public；待決事項是逐檔核准範圍，不再重新決定 visibility。請以本輪公開性清單及 NEXT_TASK.md 為工作依據。
