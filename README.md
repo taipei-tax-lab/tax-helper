@@ -1,13 +1,13 @@
 # TAX AI / tax-helper
 
-本 repository 用於既有 TAX AI 網頁的版本管理，以及後續與獨立 Dialogflow CX Agent 的整合。現階段為 **Phase B1 已完成，待 ChatGPT 驗收**：已依使用者公開授權原貌納管 ZIP 八檔、驗證原功能，並建立 FAQ CSV 轉換器與離線測試。AI 整合及部署尚未開始。
+本 repository 用於既有 TAX AI 網頁的版本管理，以及後續與獨立 Dialogflow CX Agent 的整合。現階段為 **Phase B2 離線整合已完成，待 ChatGPT 驗收**：原搜尋頁可切換快速搜尋／AI 智慧問答，獨立最新問答卡與 Messenger transport 已用 Mock 驗證；B1 原貌 commit、題庫與 FAQ 工具保留。正式 CX 介接及部署尚未開始。
 
 ## 專案原則
 
 - 保留既有 TAX AI 網頁架構、快速搜尋、題庫瀏覽、收藏等功能，不進行不必要的重構。
 - 搜尋頁面提供「快速搜尋／AI 智慧問答」切換。
 - AI 智慧問答以單一問答結果卡呈現；**CX 在同一 Session 保留多輪脈絡**，使用者按「重置提問」才開始新 Session；切換搜尋模式不自行重置。
-- `questionBank.js` 為原始題庫，未來透過可重複執行的轉換腳本產出 `question,answer` 二欄 `faq.csv`。
+- `questionBank.js` 為原始題庫，已可透過可重複執行的轉換腳本產出 `question,answer` 二欄 `faq.csv`。
 - 本 repo 僅負責 Web 與題庫轉換，CX Agent、Playbook、Tool、Data Store、GCS Bucket 與 Production 配置由獨立 CX Framework repo 管理。
 - 網站正式網址、Messenger allowed domains 尚待提供；不使用登入是目前業務決策，**不代表具備使用者身分限制**。
 
@@ -39,7 +39,27 @@
 
 使用者已同意將原始 `tax-helper.zip` 所包含的 **8 個原始檔案全部公開**並原貌納管至本 Public repo，包含 129 題的 `questionBank.js`、學習內容與網頁程式。先前逐檔審查「待確認」是歷史狀態，公開納管授權已解除阻擋。
 
-本輪已完成 **B1 原貌匯入、原功能基線及 deterministic FAQ CSV 轉換器與離線測試**。沒有提交原 ZIP、衍生 `faq.csv`、缺少的 14 張圖片或其他附件；未啟用 GitHub Pages、未做 CX／GCP 操作。B2 AI UI 及 B3 真實 CX 介接仍為後續階段。
+B1 已完成並經 ChatGPT 驗收：原貌匯入、原功能基線及 deterministic FAQ CSV 轉換器與離線測試。B2 已完成離線 AI UI／Mock 整合；B3 真實 CX 介接仍待正式契約與個別授權。沒有提交原 ZIP、衍生 `faq.csv`、缺少的 14 張圖片或其他附件；未啟用 GitHub Pages、未做 CX／GCP 操作。
+
+## B2 操作與重跑
+
+原搜尋頁提供「快速搜尋／AI 智慧問答」按鈕。預設 AI 顯示「服務準備中」，快速搜尋等原功能可繼續使用。離線示範需在 HTTP 頁面 URL 明確加上 `?tax-ai-demo=1`；頁面會標示模擬資料，回覆不是正式稅務答覆。新增模組不載入 Messenger SDK，沒有正式 Agent／Playbook／Environment ID 或雲端呼叫。
+
+只保留最新一問一答；追問沿用同一個 Mock Session，切模式與站內導覽不重建。重置會清空本次問答／來源／輸入並開始新 Session，保留收藏。逾期清除舊卡、保留輸入供手動再問；逾時則等原操作結束才開放下一題，沒有自動 retry。Excel 匯入仍只影響本機快速搜尋。
+
+AI 程式與樣式位於 `assets/tax-ai/`。原檔只局部修改 `index.html` 與 `app.js`（一個不帶問題正文的快速模式事件），其他六檔保留原貌。**不可變 B1 基線固定為 `e01ef42e7e0caa05c96083c5709b0554127d8e5f`**，`tests/source_baseline.json` 與搜尋 ID manifest 不改寫；測試以 `git show` 讀取固定 B1 bytes，再對整合版重跑同一套行為測試。需 Git 歷史包含該 commit，淺層 clone 應先取得此 SHA。
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+node --test --test-isolation=none tests/tax_ai.test.mjs
+python tests/site_baseline.py --source b1 --browser /usr/bin/chromium --xlsx-script /tmp/tax-helper-xlsx-0.18.5.js
+python tests/site_baseline.py --source integration --browser /usr/bin/chromium --xlsx-script /tmp/tax-helper-xlsx-0.18.5.js
+python tests/tax_ai_browser.py --browser /usr/bin/chromium --xlsx-script /tmp/tax-helper-xlsx-0.18.5.js
+```
+
+Node 命令以 24.19.0 驗證；瀏覽器依賴與 repo 外 XLSX 暫存取得方式見下段。瀏覽器皆以 route 提供本機資產、阻擋外部請求，不啟動 server。`--report`／`--screenshots` 可指定 repo 外暫存位置；Mock 的 fixture 控制僅在明確 demo 模式存在，不會變成正式連線設定。
+
+B2 實證：Python **21/21**、Node **21/21**、Chromium **B1 17/17＋整合回歸17/17＋AI情境21/21**；原始及新增 JS 語法 **10/10**。詳情見 STATE。這些驗證涵蓋 Session／重置／逾期／timeout／IME、安全 DOM 與 320／390px，不代表真實 SDK／CX 稅務品質已驗證。
 
 ## B1 重跑方式
 
@@ -52,7 +72,7 @@ python -m unittest discover -s tests -p 'test_*.py' -v
 
 CSV 固定二欄 `question,answer`、UTF-8 無 BOM、LF 記錄分隔；保留原陣列順序、完整答案、欄內換行及首尾空白。輸入缺值、錯型別、重複 key／ID／問題、動態或額外 JavaScript 會失敗，既有輸出不受影響。產物不可手改或以試算表重存，也不自動提交或上傳。
 
-本輪 **20/20 Python 測試**（19 項 converter＋1 項八檔原貌 hash）及 **17/17 Chromium 基線**通過。`tests/source_baseline.json` 保存八檔 SHA-256；`.gitattributes` 保留原檔 bytes，`tests/search_baseline.json` 凍結三組搜尋 ID／排序。
+B1 當時 **20/20 Python 測試**（19 項 converter＋1 項八檔原貌 hash）及 **17/17 Chromium 基線**通過。B2 將 hash 驗證明確分成固定 B1 與授權整合範圍，沒有更新原 manifest。`.gitattributes` 保留 bytes，`tests/search_baseline.json` 凍結三組搜尋 ID／排序。
 
 瀏覽器測試需 Chromium 與 `tests/requirements-browser.txt` 的 Playwright。它以 route 供應本機原檔，不啟動 HTTP server，阻擋入口設定 API、遊戲與 CDN 的實際請求；不測 live CX 或部署。以下先執行 14 組原功能基線：
 

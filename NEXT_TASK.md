@@ -1,56 +1,45 @@
 # TAX AI — Next Task
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B2 AUTHORIZED — OFFLINE WEB AI INTEGRATION IN PROGRESS / NOT YET VERIFIED**
-Owner: **ChatGPT 專案 Session 驗收／規劃**；後續 Web 實作由 Codex，CX 後端由 `dialogflow-cx-qa-framework` 獨立 Session 負責。
-Authorization: **2026-10-08 使用者已授權 Web Codex 直接進行 B2 的 AI 介面離線整合與 Mock／回歸測試；CX 後端仍在另一 Session 準備中。本次不授權 B3 正式連線、Pages／CI 部署或 GCP/CX 寫入。**
+Status: **PHASE B2 OFFLINE COMPLETE — AWAITING CHATGPT ACCEPTANCE**
+Owner: **ChatGPT 專案 Session 驗收／下一輪規劃**；Web 由 Codex 維護，CX 後端由另一個 Framework Session 同步開發。
+Authorization: **B2 雙模式、獨立卡／transport、Mock 與完整原功能回歸已授權並完成；本輪未授權 B3 正式連線、Production、GCP/CX 或 Pages／CI 部署。**
+Branch: **本機 work → 遠端 main**；B2實作SHA **10509014fc2b4aaebae4d33b3b4b8e0bc2da9a1a**；驗收文件另作交接commit，main SHA以Codex收工回報核對。
 
 ## 已定案
 
-- `tax-helper` 維持 **Public**；GitHub Pages 是預計採用的部署方式，尚未啟用／部署。
-- 原 ZIP 八檔全部已獲准公開並原貌納管；Phase A「三檔候選、五檔待確認」已由使用者授權解除阻擋，不再重問。
-- 不重構 TAX AI；原快速搜尋、收藏、題庫瀏覽、Excel 匯入、學習與導覽保持原貌。
-- 未來 AI 使用獨立單一問答卡，只呈現最新一問一答；CX 同 Session 保留多輪脈絡。模式切換不 reset，主動重置才開始新 Session。
-- `questionBank.js` 是唯一題庫來源；`faq.csv` 為 deterministic 二欄衍生檔，不手改、不預設提交。CX 正式 ID、Environment、binding／allowed domains 由 CX Session 確認。
+- Repo維持Public，Pages仍為未來方案，未啟用。B1八檔公開授權已完成，不再重新詢問。
+- 保留原網站功能、questionBank唯一來源與再生FAQ工具；不重構整站、不修改1999／Rental／CX repo。
+- AI只呈現最新一問一答；同Session追問，模式／站內導覽不reset，主動重置才新Session。自然逾期／結束會清舊卡並通知下一題新對話。
+- 預設AI為服務準備中；URL明確加`?tax-ai-demo=1`才啟用標示為模擬資料的離線Mock，不載入正式SDK或填任何正式ID。
+- B1不可變SHA：`e01ef42e7e0caa05c96083c5709b0554127d8e5f`。`tests/source_baseline.json`與`tests/search_baseline.json`未改寫，B2只有index.html／app.js兩個原檔局部差異，其他六檔仍原貌。
 
-## B1 完成清單（供本輪驗收）
+## B2 完成清單（供本輪驗收）
 
-- [x] Pull main 至 `37b2b55c5f85d487358f56cc4e071755e6806672`，依序讀四份文件；實際核對 ZIP 存在、SHA-256 與前輪一致。
-- [x] 八檔逐 byte 核對 ZIP 與已審 hash，原貌納管至根目錄，含 GIF／BOM／換行；新增 `.gitattributes`、`.gitignore` 與八檔 hash manifest／測試。無 ZIP／CSV／Excel／附件／缺圖納管。
-- [x] 原網站 isolated Chromium **17/17 組 PASS**：129題／11分類、搜尋排序／50筆上限、收藏與重載、分類、詳情／關聯／複製／Escape、熱門題、學習文字、390px導覽、XLSX unavailable，以及真實 XLSX 0.18.5 解析合成 workbook 的成功／錯誤／重載路徑。Page errors 0、瀏覽器外部頁面請求0。
-- [x] `tools/question_bank_to_faq.py` 完成；Python **20/20 PASS**（19 converter＋1八檔 hash），原始 JS 語法 **5/5 PASS**。覆蓋完整答案／二欄／特殊字元／round-trip／錯誤拒絕／原子輸出保護／byte-identical。
-- [x] 實際產生被 Git 忽略的 `generated/faq.csv`：129筆、73,297 bytes；SHA-256 `2a5220e55604e8463ef3e289841cb6d25cf81102650457cfc75097292f9712c8`。未提交CSV、未上傳GCP／匯入CX。
-- [x] 更新 README／STATE／TASK，明列八檔 hash、工具版本、測試命令／證據、限制與 CX 重建交接；本輪成果 commit／push 至 main，SHA 以 Codex 收工回報為準。
+- [x] Pull main至`e4c9bad79793d6dbd6b99d13c36ea3cb81bd9df8`，依序讀README／AGENTS／STATE／TASK，核對並保護B1固定來源。
+- [x] 原搜尋頁雙模式、獨立AI form／status／最新卡；原搜尋、分類、收藏、Excel、學習及導覽保持，首頁／分類入口回快速模式。
+- [x] TAX獨立config／controller／Messenger transport、安全renderer與Mock；只有合成`mock-only-tax-faq`首次override標記，無正式SDK、CX IDs／resource names或1999正式binding。
+- [x] 同Session追問、切模式／導覽不重mount；reset清model／DOM／輸入／來源且保留收藏；idle／in-flight expiry/end、timeout／late response、空答／錯答／service unavailable、連續送出與IME完成。
+- [x] B1固定參照與整合版本測試分層：Python **21/21**、Node **21/21**、JS語法 **10/10**；Chromium **B1原貌17/17、B2原功能回歸17/17、AI Mock E2E21/21**。含安全DOM／links、320／390px鍵盤／focus、真實XLSX＋合成workbook及AI來源分離。
+- [x] 瀏覽器page errors 0、外部頁面請求送出0、正式SDK請求0；FAQ重跑129題／73,297 bytes／原output hash不變，CSV仍不入Git、不上傳GCP。
+- [x] 更新README／STATE／TASK，記錄來源差異、實作commit與重跑證據；commit／push至main，交ChatGPT驗收，不開始B3／部署。
 
-## B1 驗收結論（2026-10-08）
+## 下一輪單一任務：ChatGPT 驗收 B2，確認 B3 交接契約
 
-- [x] main `e01ef42e7e0caa05c96083c5709b0554127d8e5f` 確認含八原檔、轉換器、測試與 hash manifest；未匯入 ZIP 容器／CSV，Repo 維持 Public。
-- [x] 靜態檢視 converter／測試實作、B1 baseline 保護與原功能回歸矩陣；20/20 Python、17/17 Chromium、5/5 Node 為 Codex 記錄，**本驗收未獨立重跑全部測試**。
-- [x] 保留14張學習圖片、返回入口／Pages 路徑、第三方服務與 live CX 的未驗證限制。
+- [ ] 核對Codex回報的main交接SHA及STATE所列實作SHA、Git diff最小範圍、新增AI模組與固定B1 manifest；確認沒有靜默重算原hash。
+- [ ] 依README重跑Python／Node／兩層17組原功能回歸／21組AI情境，或明確標記僅靜態審閱。驗收只涵蓋離線Mock與原功能，不將結果稱作live CX／完整稅務品質通過。
+- [ ] 與另一個CX Session取得TAX獨立Agent／Playbook完整resource names、Environment／Messenger binding、正式URL／allowed domains、response／citation契約及FAQ ingestion交接；未提供的值保持缺省，不猜、不複製1999。
+- [ ] B2驗收通過且契約已提供後，另行明確授權B3的SDK loader／binding與live驗證範圍；核對promise／event settle、cancelability、極晚response相關性、多輪語意／reset／逾期及安全。**目前不直接執行B3。**
 
-## 本輪執行階段：B2 — 最小 Web AI 離線整合（已授權）
+## 持續限制及後續路線
 
-- [ ] 先 pull main，讀四份文件；核對 B1 commit，保護已凍結原網站基線。
-- [ ] 僅在原 `#searchView` 搜尋區局部加入「快速搜尋／AI 智慧問答」切換與獨立 AI form、status、**最新一問一答卡**。所有原有搜尋、分類、收藏、Excel、學習及站內導覽維持；首頁搜尋入口仍採快速搜尋。
-- [ ] 參考 1999 repo 的 Messenger transport、result normalization、最小安全 Markdown renderer，僅移植必要程式，採 TAX 獨立 config 與控制器；**離線 Mock 模式不載入正式 SDK、不接觸 GCP/CX，也不使用1999正式 ID**。
-- [ ] 同一 CX Session 可多輪追問；切模式及站內導覽不 reset／不重 mount；手動重置才新 Session。處理初問／追問的 Playbook override、idle/in-flight expiry、空答、timeout/late response、service unavailable、連續送出、IME。
-- [ ] AI 回應走 DOM 安全文字／連結而非將不可信內容塞入原站 HTML 模板；只顯示最新卡，不累積完整 transcript；reset 清空 model／DOM／輸入，不清除收藏。
-- [ ] 新增 Mock＋瀏覽器 E2E 測試，驗證雙模式、追問、reset、expiry、錯誤、安全呈現、320/390px，並重跑 B1 原功能回歸。**留意 B1 SHA 基線：不能直接更新 source_baseline.json 讓測試綠燈；保留不可變 B1 參照，針對經授權修改的原檔另作整合版本測試。**
-- [ ] 將結果、實際改動、測試／未測試界線、branch／commit SHA 寫入 STATE／TASK，交 ChatGPT 驗收。未開始 B3 真實介接、Pages 部署。
-
-### B2 啟動條件
-
-**已達成**：使用者於 2026-10-08 明確要求「CX 還在準備中，先讓網頁繼續進行」。Web Codex 可立即依上述 checklist 實作 B2，不需等 CX 完成。驗收前仍標示 B2 尚未完成；不得將 Mock 結果宣稱 live CX 驗證。
-
-## 後續路線
-
-- **B2**：經驗收及後續授權後，執行最小 AI UI／mock 整合，保留原功能。
-- **B3**：取得CX資源／回應契約及正式網域後，另經授權測試live多輪、reset、錯誤與安全。
-- **B4**：資產／缺圖、Pages相對路徑、第三方依賴及公開存取驗收；另經授權才啟用／發布Pages。
+- 缺14張學習圖片及公開範圍；返回入口／Pages相對路徑、第三方API／遊戲可用性與正式存取方式未驗證，不假裝已補齊或部署。
+- Mock保持與真實CX分開；現在驗證的是Session／UI／事件協定，正式答案內容與SDK實際時序仍待B3。
+- B3真實介接及B4資產／Pages發布驗收各需後續授權；FAQ交接可從核准SHA離線重建，不宣稱已匯入CX。
 
 ## STOP boundary
 
-- 本輪完成 B1 即交付驗收；不直接開始 B2、Messenger live、Pages／CI發布或CX／GCP修改，不修改原網站8檔。
-- 不提交原ZIP容器、衍生CSV、使用者Excel、第三方測試副本、14張缺圖或未核准附件／敏感資料。來源hash不符須先停下確認，不自動重算baseline。
-- 不修改1999／Rental repo，不複製其正式Agent、Playbook、Environment、GA4 ID。
-- Pages網址、allowed domains與「不登入」均非同仁身分驗證；正式上線風險留待B4。
+- 本輪完成B2即交付驗收；不連Production、不開始正式Messenger live或B3設定、不改GCP／CX／IAM，不啟用Pages／CI發布。
+- 不提交ZIP、衍生CSV、使用者Excel、第三方XLSX測試副本、缺少圖片或未核准附件／敏感資料。不修改B1原hash manifest或用整合版冒充原貌。
+- 不改1999／Rental／CX Framework repo，不複製正式ID／binding／GA4。
+- 網址、allowed domains與不登入均非同仁身分驗證；正式存取／發布風險留待B3／B4。
