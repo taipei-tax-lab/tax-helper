@@ -1,9 +1,17 @@
 # TAX AI — Project State
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B1 ACCEPTED (DOCUMENTED CODE REVIEW) — B2 PLANNING / NOT AUTHORIZED**
+Status: **PHASE B2 AUTHORIZED — OFFLINE WEB INTEGRATION NOT YET VERIFIED**
 Execution: **八檔原貌納管、原網站功能基線、FAQ 轉換器與離線測試完成；B2／Pages／CX／GCP 未執行**
 Source import: **使用者已核准 ZIP 全部 8 個原始檔公開，已納管至 repo 根目錄；ZIP、衍生 CSV、Excel 與暫存未納管**
+
+## 2026-10-08 最新授權：Web B2 與 CX 後端平行開發
+
+- 使用者已明確要求「CX 還在準備中，先給提示詞讓網頁繼續進行」，因此 **B2 離線 Web AI 整合已取得實作授權**，不需等另一個 CX Session 完成。
+- Web Codex 可依 `NEXT_TASK.md` 實作原搜尋頁雙模式切換、TAX AI 獨立問答控制器、安全回應卡、1999 必要 Messenger transport 封裝、Mock 情境及原功能回歸測試；只顯示最新問答，同 CX Session 的追問脈絡、重置及逾期規則不變。
+- **只用本機／離線 Mock**，不寫入或引用猜測的正式 Agent ID、Playbook resource name、Environment、Messenger allowed domains，也不複製 1999 正式 binding；不碰另一個 CX repo。
+- B1 原貌來源基線保留不可變，授權修改的站台檔案另記 integration 差異與回歸測試，不以直接重算 `source_baseline.json` 的 hash 當作驗收。
+- **B2 已授權但尚未完成／測試／驗收**；Pages／正式 CX 串接／GCP 資源修改／正式部署尚未授權。待 Codex 回報 commit SHA 和可重現證據後，本 Session 審查。
 
 ## ChatGPT B1 驗收結論（2026-10-08）
 
