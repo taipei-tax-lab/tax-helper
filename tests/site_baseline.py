@@ -1,4 +1,4 @@
-"""Exercise the pristine site through local routes; never contact its external services."""
+"""Exercise B1 or the integrated site through local routes; deny all external services."""
 
 import argparse
 import hashlib
@@ -12,6 +12,7 @@ from xml.etree import ElementTree as ET
 import zipfile
 
 from playwright.sync_api import expect, sync_playwright
+from b1_reference import B1_COMMIT, source_files
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGIN = "http://127.0.0.1:8876"
@@ -59,10 +60,8 @@ def result_ids(page):
     return page.locator("#searchResults .result-card").evaluate_all("els => els.map(e => e.dataset.id)")
 
 
-def run(browser_path, xlsx_path=None):
-    manifest = json.loads((ROOT / "tests" / "source_baseline.json").read_text())
-    for name, expected in manifest["file_sha256"].items():
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == expected, name
+def run(browser_path, xlsx_path=None, source="integration"):
+    files = source_files(source)
     expected_search = json.loads((ROOT / "tests" / "search_baseline.json").read_text())
     library = xlsx_path.read_bytes() if xlsx_path else None
     if library is not None:
@@ -92,9 +91,8 @@ def run(browser_path, xlsx_path=None):
                     name = path[len(SITE_PATH):] if path.startswith(SITE_PATH) else ""
                     if path == SITE_PATH:
                         name = "index.html"
-                    if name in manifest["file_sha256"]:
-                        file = ROOT / name
-                        request_route.fulfill(status=200, body=file.read_bytes(),
+                    if name in files:
+                        request_route.fulfill(status=200, body=files[name],
                                               content_type=mimetypes.guess_type(name)[0] or "application/octet-stream")
                     else:
                         missing.add(path)
@@ -267,7 +265,8 @@ def run(browser_path, xlsx_path=None):
         browser.close()
 
     return {
-        "status": "PASS", "checks": checks, "check_count": len(checks),
+        "status": "PASS", "source": source, "b1_commit": B1_COMMIT,
+        "checks": checks, "check_count": len(checks),
         "chromium_version": browser_version, "page_errors": errors,
         "blocked_external_origins": sorted(blocked), "missing_requested_assets": sorted(missing),
         "known_missing_learning_images": sorted(set(missing_images)),
@@ -282,9 +281,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--browser", default=shutil.which("chromium"))
     parser.add_argument("--xlsx-script", type=Path, help="Optional offline copy of the pinned CDN dependency")
+    parser.add_argument("--source", choices=["b1", "integration"], default="integration")
     parser.add_argument("--report", type=Path, help="Local report path; keep it outside Git")
     args = parser.parse_args()
-    result = run(args.browser, args.xlsx_script)
+    result = run(args.browser, args.xlsx_script, args.source)
     text = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
     if args.report:
         args.report.write_text(text, encoding="utf-8")

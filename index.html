@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#0f6cbd">
   <title>TAX 小幫手</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/tax-ai/style.css">
 <style>
 .portal-back-btn{
 position:fixed!important;right:24px!important;bottom:24px!important;z-index:999999!important;
@@ -102,12 +103,34 @@ box-shadow:0 12px 30px rgba(20,70,130,.32)!important;border:2px solid #fff!impor
         </div>
       </section>
       <section id="searchView" class="view">
+        <div id="tax-search-modes" role="group" aria-label="搜尋模式">
+          <button type="button" data-tax-mode="quick" aria-pressed="true">快速搜尋</button>
+          <button type="button" data-tax-mode="ai" aria-pressed="false" aria-controls="tax-ai-panel" disabled>AI 智慧問答</button>
+        </div>
         <div class="search-page-head">
           <div><span class="eyebrow">SMART SEARCH</span><h2>智慧搜尋</h2><p>支援口語、同義詞、關鍵字與相關問題排序。</p></div>
           <form class="page-search search-form"><span>⌕</span><input class="search-input" placeholder="輸入民眾問題或關鍵字"><button>搜尋</button></form>
         </div>
         <div id="searchMeta" class="result-meta"></div>
         <div id="searchResults" class="result-list"></div>
+        <section id="tax-ai-panel" aria-label="AI 智慧問答" hidden>
+          <h2 class="tax-ai-heading">AI 智慧問答</h2>
+          <p id="tax-ai-notice">AI 服務準備中；目前可使用快速搜尋。</p>
+          <p id="tax-ai-bank-note">Excel 匯入僅供本機快速搜尋，不會更新 AI 問答來源。</p>
+          <form id="tax-ai-form" aria-busy="false">
+            <label for="tax-ai-query">您的問題</label>
+            <textarea id="tax-ai-query" rows="4" aria-describedby="tax-ai-help tax-ai-counter" placeholder="請輸入問題，也可以接續上一題追問。"></textarea>
+            <div class="tax-ai-help"><span id="tax-ai-help">Enter 送出，Shift＋Enter 換行；追問沿用同一對話。</span><span id="tax-ai-counter">0 / 1000</span></div>
+            <div class="tax-ai-actions"><button id="tax-ai-submit" type="submit" disabled>送出提問</button><button id="tax-ai-reset" type="button" disabled>重置提問</button></div>
+          </form>
+          <div id="tax-ai-status" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+          <article id="tax-ai-result" aria-labelledby="tax-ai-result-title" hidden>
+            <h3 id="tax-ai-result-title" tabindex="-1">本次問答</h3>
+            <h4>您的提問</h4><div data-ai-query></div>
+            <h4>AI 回答</h4><div data-ai-answer></div>
+            <section data-ai-source-section hidden><h4>參考來源</h4><ul data-ai-sources></ul></section>
+          </article>
+        </section>
       </section>
 
       <section id="bankView" class="view">
@@ -136,6 +159,7 @@ box-shadow:0 12px 30px rgba(20,70,130,.32)!important;border:2px solid #fff!impor
   <script src="search.js?v=20260817v4"></script>
   <script src="learningBank.js?v=20260728"></script>
   <script src="app.js?v=20260817"></script>
+  <script type="module" src="assets/tax-ai/controller.mjs"></script>
 
 <!-- TAX MELODY 遊戲頁面 -->
 <div id="taxMelodyPage" class="tax-melody-page">

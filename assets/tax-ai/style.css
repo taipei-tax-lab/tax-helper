@@ -1,0 +1,30 @@
+/* Scoped additions only; B1 style.css remains byte-identical. */
+#tax-search-modes { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+#tax-search-modes button { border: 1px solid var(--line); border-radius: 12px; padding: 11px 16px; background: white; color: var(--blue); cursor: pointer; font-weight: 700; min-height: 44px; }
+#tax-search-modes button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: white; }
+#tax-search-modes button:focus-visible, #tax-ai-panel :focus-visible { outline: 3px solid #174f9d; outline-offset: 3px; }
+#searchView .search-page-head[hidden], #searchMeta[hidden], #searchResults[hidden], #tax-ai-panel[hidden], #tax-ai-panel [hidden] { display: none !important; }
+#tax-ai-panel { min-width: 0; padding-bottom: 70px; }
+#tax-ai-panel .tax-ai-heading { margin: 8px 0 16px; font-size: 26px; }
+#tax-ai-panel #tax-ai-notice, #tax-ai-bank-note { color: #526170; line-height: 1.7; }
+#tax-ai-form { padding: 24px; background: white; border: 1px solid var(--line); border-radius: 18px; }
+#tax-ai-form label { display: block; font-weight: 700; margin-bottom: 10px; }
+#tax-ai-query { display: block; width: 100%; min-height: 126px; resize: vertical; border: 1px solid #b8c8d5; border-radius: 10px; padding: 12px; font: inherit; line-height: 1.65; }
+#tax-ai-panel .tax-ai-help { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: #526170; font-size: 13px; margin-top: 10px; }
+#tax-ai-panel .tax-ai-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+#tax-ai-panel .tax-ai-actions button { min-height: 44px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--blue); cursor: pointer; font: inherit; font-weight: 700; }
+#tax-ai-submit { background: var(--blue); color: white; }
+#tax-ai-reset { background: white; color: var(--blue); }
+#tax-ai-panel button:disabled { cursor: default; opacity: .55; }
+#tax-ai-status { padding: 16px 20px; background: var(--pale); border-radius: 12px; margin: 18px 0; line-height: 1.7; overflow-wrap: anywhere; }
+#tax-ai-result { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 24px; margin-top: 18px; overflow-wrap: anywhere; }
+#tax-ai-result h3 { margin: 0 0 20px; }
+#tax-ai-result h4 { margin: 18px 0 8px; color: var(--blue); }
+#tax-ai-result [data-ai-query], #tax-ai-result [data-ai-answer] { white-space: pre-wrap; line-height: 1.85; }
+#tax-ai-result a { color: #115ea3; text-decoration: underline; }
+#tax-ai-result li { margin: 8px 0; }
+@media (max-width: 420px) {
+  #tax-search-modes button { flex: 1; padding: 10px 8px; }
+  #tax-ai-form, #tax-ai-result { padding: 18px 14px; }
+  #tax-ai-panel .tax-ai-actions button { flex: 1; }
+}
