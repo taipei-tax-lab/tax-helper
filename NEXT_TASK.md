@@ -1,9 +1,9 @@
 # TAX AI — Next Task
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B2 OFFLINE COMPLETE — AWAITING CHATGPT ACCEPTANCE**
-Owner: **ChatGPT 專案 Session 驗收／下一輪規劃**；Web 由 Codex 維護，CX 後端由另一個 Framework Session 同步開發。
-Authorization: **B2 雙模式、獨立卡／transport、Mock 與完整原功能回歸已授權並完成；本輪未授權 B3 正式連線、Production、GCP/CX 或 Pages／CI 部署。**
+Status: **PHASE B2 ACCEPTED — B3 CX HANDOFF / LIVE GATE PENDING**
+Owner: **ChatGPT 專案 Session 接續與驗收**；Web 由 Codex 維護，CX 後端由另一個 Framework Session 同步開發。
+Authorization: **B2 已通過 GitHub 交付／靜態程式審查；目前僅允許 B3 介接契約盤點與準備，未授權正式 SDK/CX 呼叫、Production、GCP/CX 寫入或 Pages／CI 部署。**
 Branch: **本機 work → 遠端 main**；B2實作SHA **10509014fc2b4aaebae4d33b3b4b8e0bc2da9a1a**；驗收文件另作交接commit，main SHA以Codex收工回報核對。
 
 ## 已定案
@@ -24,12 +24,20 @@ Branch: **本機 work → 遠端 main**；B2實作SHA **10509014fc2b4aaebae4d33b
 - [x] 瀏覽器page errors 0、外部頁面請求送出0、正式SDK請求0；FAQ重跑129題／73,297 bytes／原output hash不變，CSV仍不入Git、不上傳GCP。
 - [x] 更新README／STATE／TASK，記錄來源差異、實作commit與重跑證據；commit／push至main，交ChatGPT驗收，不開始B3／部署。
 
-## 下一輪單一任務：ChatGPT 驗收 B2，確認 B3 交接契約
+## ChatGPT B2 驗收結論（2026-10-08）
 
-- [ ] 核對Codex回報的main交接SHA及STATE所列實作SHA、Git diff最小範圍、新增AI模組與固定B1 manifest；確認沒有靜默重算原hash。
-- [ ] 依README重跑Python／Node／兩層17組原功能回歸／21組AI情境，或明確標記僅靜態審閱。驗收只涵蓋離線Mock與原功能，不將結果稱作live CX／完整稅務品質通過。
-- [ ] 與另一個CX Session取得TAX獨立Agent／Playbook完整resource names、Environment／Messenger binding、正式URL／allowed domains、response／citation契約及FAQ ingestion交接；未提供的值保持缺省，不猜、不複製1999。
-- [ ] B2驗收通過且契約已提供後，另行明確授權B3的SDK loader／binding與live驗證範圍；核對promise／event settle、cancelability、極晚response相關性、多輪語意／reset／逾期及安全。**目前不直接執行B3。**
+- [x] main交接 `1360dd8be1bc6c5a77969145c3f664916755f614` 與實作 `10509014fc2b4aaebae4d33b3b4b8e0bc2da9a1a` 已查核；新增六個 AI 模組、Mock／Node／Browser E2E 及文件可於 repo 查閱。
+- [x] B1 不可變 manifest 與原始網站差異控制成立；B2 只局部更動原 index／app，保留六個原檔及既有搜尋邏輯。
+- [x] 已閱讀控制器／transport／安全 renderer／測試程式；Codex 記錄 Python21/21、Node21/21、原站17/17、整合17/17、AI Mock21/21。本次是 **GitHub 程式與交付審查，不是獨立重跑測試或 live CX 驗收**。
+- [x] 保留尚待的14張學習圖片、入口／Pages路徑、第三方可用性、正式 CX SDK／稅務品質驗證界線。
+
+## 下一輪單一任務：B3 介接契約交接與準備（先不連正式 CX）
+
+- [ ] 向獨立 CX Session 取得並核對：TAX Agent、入口 Playbook 的**完整 resource name**；Environment／Integration Messenger 專屬 binding、可使用的正式或測試網域／allowed domains；回應 messages／citations 契約；FAQ converter產物與 Data Store ingestion 驗證狀態。沒有就明確記 blocker，**不猜ID、不複製1999**。
+- [ ] 規劃 Mock→真實 SDK 的最小切換及安全載入機制，不把憑證放進前端；確認與目前 `setQueryParameters`、`sendQuery`、`startNewSession`、事件監聽的真實 SDK 相容性。
+- [ ] 預先列出 live 驗收案例：初問與追問同 Session／僅初問 Playbook override、reset 後新 Session、逾期與 timeout、事件先後與極晚回應、來源顯示、快速搜尋不受影響，以及公開網址／未登入風險。
+- [ ] 如 CX 尚未就緒，只完成文件與可離線完成的 adapter 盤點，回報缺項；**不要啟用正式 SDK 或部署，也不要為測試任意更動 GCP/CX**。取得必要契約並由使用者另行核准，才啟動 B3 實際接線及 live 測試。
+- [ ] 收工更新 STATE／TASK、commit／push，清楚區分「介接準備已完成」與「已接上／通過 live 驗證」。
 
 ## 持續限制及後續路線
 
