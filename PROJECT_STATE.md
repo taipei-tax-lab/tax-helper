@@ -5,6 +5,16 @@ Status: **PHASE A — PUBLIC REVIEW COMPLETE / FILE IMPORT APPROVAL PENDING**
 Execution: **本輪僅公開性審查、離線依賴驗證、納管準備及文件；未納管原始碼、未啟用 Pages、未實作 AI、未改 GCP**
 Source import: **ZIP 已實際取得及讀取；原始網頁、題庫與 CSV 未匯入 Git**
 
+## 2026-10-08 下一步規劃：由 Phase A 轉至 B1
+
+- **Phase A 盤點與公開性技術審查均已完成**；本輪是規劃更新，不代表已取得來源公開核准或開始實作。
+- 使用者已決定保持 Public，未來考慮 GitHub Pages；不再以改 Private 為必要前提。但公開 Repo 的可見性不代表整份題庫、學習案例和內嵌文字已准予公開。
+- **下一個執行階段 B1：經核准原始檔案的原貌納管、既有網站功能基線、確定性 FAQ CSV 轉換器及離線測試。** 原始題庫若不能公開於 Pages，須先定義受控部署／資料供應替代路線，不可用前端隱藏資料代替驗證。
+- B2：最小侵入 AI 問答模式與 Mock Messenger（保持快速搜尋和收藏等原功能）；B3：取得 CX Session 提供的正式介接契約後進行 Live 測試；B4：GitHub Pages 路徑、資產、缺少的14張學習圖片、公開存取與部署驗收。
+- 為避免多餘盤點，B1 不再重做八檔審查；僅核對 hash 與可公開範圍，進行原貌納管及可驗證交付。下一輪工作契約以更新後的 NEXT_TASK.md 為準。
+- **目前未執行的事項**：來源公開授權、檔案匯入、converter、AI UI、Pages／CX 部署。已完成的只有規劃更新。
+
+
 
 ## 本輪公開性審查與納管準備（2026-10-08）
 
