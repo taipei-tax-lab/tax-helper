@@ -1,49 +1,34 @@
 # TAX AI — Next Task
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE A PUBLIC REVIEW COMPLETE — FILE IMPORT APPROVAL PENDING**
-Owner: **Web Codex**；CX 資源由 dialogflow-cx-qa-framework 工作流處理。
-Authorization: **本輪僅公開性審查、納管準備、離線驗證及文件；未納管原檔，未授權 Pages／AI／converter／部署／GCP 寫入**。
+Status: **PHASE A COMPLETE → PHASE B1 READY / PUBLIC CONTENT APPROVAL GATE**
+Owner: **Web Codex**；CX 後端由 `dialogflow-cx-qa-framework` 的獨立 Session 負責。
+Authorization: **目前僅完成規劃；實際將原始檔案推送至 Public GitHub 前，須取得該檔案的明確公開／納管核准。Phase B1 實作須另經使用者啟動。**
 
-## 已確認決策
+## 已定案（不再重複討論）
+- `tax-helper` 維持 **Public**；GitHub Pages 是預計採用的靜態部署方式，**尚未啟用／部署**。
+- 不重構 TAX AI；既有快速搜尋、收藏、題庫瀏覽、Excel 匯入、學習與導覽保留。
+- AI 新增獨立單一問答卡；只呈現最新一問一答，但 CX 同 Session 保留多輪脈絡。切模式不 reset，手動重置才新 Session。
+- `questionBank.js` 是唯一原始題庫；`faq.csv` 是由 deterministic converter 產生的二欄衍生檔，不手工維護、不預設提交 Git。
+- Web 與 CX 各管各的 repo；正式 ID、Environment、Messenger binding／allowed domains 由 CX Session 確認。
+- Phase A 已完成 8 檔盤點及公開性技術審查；**三檔可公開候選、五檔待確認**。詳見 PROJECT_STATE 的逐檔清單。
 
-- Repo **維持 Public**，不需要再決定是否改 Private；預計採用 GitHub Pages，尚無啟用／部署授權。
-- 公開技術內容審查與檔案公開／納管授權分開記錄；候選通過不表示可整包提交 ZIP。
-- 原始 ZIP 已實際存在且 hash 與前輪一致；缺少的14張學習圖片仍須補齊／確認。
+## 後續交付路線（以實際可用為目標）
+- **B1 原始碼基線＋FAQ 轉換器**：核准可公開範圍後，原貌納管原網站、凍結 baseline、建立可重跑的 JS→CSV 工具及離線測試。優先讓 CX Session 可取得可靠的 FAQ 產物。
+- **B2 Web AI 離線整合**：原搜尋頁局部加入快速搜尋／AI 智慧問答切換；移植 1999 transport／安全 renderer 的必要部分；用 mock 驗證同 Session、reset、expiry、timeout 與原功能不變。此階段不依賴 CX 正式 ID。
+- **B3 Web × CX 真實介接**：核對 CX 完整資源／回應契約及正式網域，進行 live 多輪問答、reset 與錯誤／安全驗證；沒有核准設定不填猜測值。
+- **B4 Pages 發布驗收**：核對資產、相對路徑、缺少的 14 張學習圖片、第三方依賴與公開存取風險；另經授權才啟用／發布 Pages。必要時重新評估部署方式。
 
-## 本輪完成（證據見 PROJECT_STATE.md）
-
-- [x] pull 最新 main 至 090cdd26d54618a3ef3b1b294297a58c36d9107e，依序讀 README／AGENTS／STATE／TASK；核對 Public。
-- [x] ZIP 可存取性、SHA-256、8原檔逐 byte／hash 一致。
-- [x] 8檔公開性分類：search.js／searchDictionary.js／style.css 為 **可公開候選**；questionBank.js／learningBank.js／app.js／index.html／logo.png.gif 為 **需確認**；本輪沒有納管原檔。
-- [x] 7文字檔15類模式掃描、129題問答／學習／fallback 語境閱讀、GIF metadata／視覺檢查；未在 Public 文件抄錄疑似敏感原文／完整待確認端點。
-- [x] 網站相依性確認：題庫缺少會停在 init 前；學習檔缺少仍有 app fallback；14張圖片、兩個 optional JSON 與父層入口不在 ZIP。
-- [x] 5份 JS 語法檢查、2/2離線依賴試驗通過；所有外部請求阻擋，未觸及 live 服務。
-- [x] STATE 已記逐檔理由、候選 hash 白名單、排除策略與替代承載方案；本輪只提交 STATE／TASK，SHA 在收工回報提供。
-
-## 下一輪單一任務 — 取得逐檔公開／納管範圍，再按核准白名單原貌納管
-
-未取得明確核准前，只補充證據及文件；不能自行推定3個候選已獲匯入授權。
-
-- [ ] pull／讀四份文件；比對 ZIP 及欲納管檔案的審查 hash。新環境缺來源須明確回報；hash 改變須重審。
-- [ ] 記錄使用者／資料權責人核准的具體檔名及公開範圍。可以僅核准3個程式／樣式候選，不要求一次放行全部8檔。
-- [ ] questionBank：確認129題整份可公開或提供逐題來源／核准範圍；官網標記及申辦連結不當作公開授權。不得自行抽取20題、改寫或去除題目。
-- [ ] learningBank＋app fallback：確認文字／案例公開處理與來源範圍；logo：確認標誌及素材展示範圍。未獲確認者保留 repo 外。
-- [ ] index：確認入口設定 API／iframe／CDN 的公開用途與管理歸屬、父層入口相對路徑；只補充證據，不改 API／導覽或啟用 Pages。
-- [ ] 缺少14張圖片：取得可存取資產及公開範圍，或記錄另案核准的替代方式；不自行造圖／移除學習功能。
-- [ ] **明確核准原貌納管後才執行**：按檔名／hash 白名單逐檔加入，保留原相對結構，排除 ZIP／CSV／generated／work／attachments／Excel／紀錄；不整包 staging、不帶入未核准 fallback。
-- [ ] 更新 STATE／TASK、commit／push，回報實際納管清單、SHA、剩餘阻擋；只納管3候選不能宣稱完整網站可運作。
-
-### 驗收條件
-
-- 已授權與仍需確認名單清楚，核准檔案對得上審查 hash；有疑義的正文／素材／端點／ZIP／CSV 不進 Public Git。
-- 無授權時保持「審查完成、待逐檔納管授權」，不標示已匯入；只要需保密資料仍為依賴，就不能宣稱 Pages 可正式承載整站。
-- 未修改既有網頁、題庫及快速搜尋；未新增 AI／converter，未啟用 Pages／CI 發布、未部署或改 GCP/CX。
+## 下一輪實際任務：B1 — 授權後執行
+- [ ] **授權關卡**：由使用者／資料權責人明確確認哪些原始檔案可放在 Public repo。技術掃描通過不等於公開授權；未核准的檔案不推送。若 `questionBank.js` 不能公開，不得把原題庫放在 Pages 資產，需先回報部署替代方案。
+- [ ] 先 pull main，讀 README／AGENTS／STATE／TASK；核對 ZIP 能存取且 SHA-256 與前輪相符。新環境若無 ZIP，回報來源缺件。
+- [ ] 對**已核准**原檔逐檔以已審 hash 對照原貌納管，保留原相對結構。建立最小 `.gitignore` 排除 ZIP、`faq.csv`、`generated/`、`work/`、測試暫存與使用者匯入 Excel；不整包 staging。
+- [ ] 在原始碼 baseline 重跑既有本機搜尋／收藏／分類／詳情測試，確認 129 題／11 分類（若核准題庫完整匯入）；標明缺少的14張學習圖片為已知限制，不自行造圖或刪功能。
+- [ ] 依 STATE 既定規格建立 deterministic `questionBank.js` → `faq.csv` 轉換器及測試；完整答案、二欄 `question,answer`、多行／逗號／雙引號、round-trip、錯誤拒絕、重跑 byte-identical。產物保留於核准作業空間，不自動提交公開 Git 或上傳 GCP。
+- [ ] 更新 STATE／TASK（含檔案 hash、測試實證、阻擋與 CX 交接資訊），commit/push 並回報 SHA；交付 ChatGPT 驗收後才做 B2。
 
 ## STOP boundary
-
-- 不更改 Public 決策；未核准原檔及敏感原文不公開，不自行將候選轉成授權。
-- 不啟用 Pages／部署／CI 發布，不設定正式網域、Messenger allowed domains 或 Production binding。
-- 不寫 GCP／CX Agent、Playbook、Tool、Data Store、GCS、IAM／Production；不修改1999／Rental。
-- 未有 Phase B/C 授權，不修改原網站／移除功能／剝離 fallback，不開發 AI UI／transport／converter。
-- 離線檢查不是外部端點可用性、CORS、真實 Excel／live CX 或稅務品質證明。
+- **沒有明確公開／納管核准，不得公開內部題庫、學習案例、ZIP 或敏感原碼。** 不把 Public／Pages 決策當成全部來源獲准公開。
+- B1 不修改既有搜尋演算法或 UI，不做 AI 面板、Messenger live、GCP/CX 修改或 Pages 部署。
+- 不修改 1999／Rental repo，不複製其正式 Agent、Playbook、Environment、GA4 ID。
+- Pages allowed domains、特定網址與「不登入」均非同仁身分驗證；正式上線風險留待 B4 核對。
