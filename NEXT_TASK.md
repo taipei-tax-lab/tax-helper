@@ -1,9 +1,9 @@
 # TAX AI — Next Task
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B1 COMPLETE — AWAITING CHATGPT ACCEPTANCE; B2 NOT STARTED**
+Status: **PHASE B1 ACCEPTED — B2 READY FOR EXPLICIT AUTHORIZATION**
 Owner: **ChatGPT 專案 Session 驗收／規劃**；後續 Web 實作由 Codex，CX 後端由 `dialogflow-cx-qa-framework` 獨立 Session 負責。
-Authorization: **八個原檔公開納管與 B1 工具／離線測試已授權並完成；尚未授權 B2／B3、Pages 或 CX／GCP 設定。**
+Authorization: **B1 已完成並經 ChatGPT GitHub 交付／程式審查驗收；B2 待使用者明確授權後才可開始，B3／Pages／CX/GCP 仍未授權。**
 
 ## 已定案
 
@@ -22,12 +22,25 @@ Authorization: **八個原檔公開納管與 B1 工具／離線測試已授權�
 - [x] 實際產生被 Git 忽略的 `generated/faq.csv`：129筆、73,297 bytes；SHA-256 `2a5220e55604e8463ef3e289841cb6d25cf81102650457cfc75097292f9712c8`。未提交CSV、未上傳GCP／匯入CX。
 - [x] 更新 README／STATE／TASK，明列八檔 hash、工具版本、測試命令／證據、限制與 CX 重建交接；本輪成果 commit／push 至 main，SHA 以 Codex 收工回報為準。
 
-## 下一輪單一任務：ChatGPT 驗收 B1 並決定 B2 工作契約
+## B1 驗收結論（2026-10-08）
 
-- [ ] 核對 Codex 回報的 main SHA、八檔原貌 manifest、19項 converter＋1項 hash 測試、17組瀏覽器基線及 CSV hash／129筆證據；確認來源、產物與外部服務的驗證範圍。
-- [ ] 確認14張學習圖片仍缺件、返回入口／第三方服務尚未live驗證，原網站尚未部署；不把離線PASS當作正式站完整可用。
-- [ ] 若 B1 驗收通過，明確下達 **B2 最小 Web AI 離線整合**：僅搜尋頁模式切換、TAX 獨立控制器／單一問答卡、必要1999 transport／安全 renderer、mock 與原功能回歸；採 STATE 的同 Session／reset／expiry／timeout 事件契約，不需填正式CX ID。
-- [ ] 需要交接CSV時，由CX Session從驗收SHA離線重跑工具並核對hash，或另行確認實際檔案交接方式；不推論已送達或已驗證Data Store ingestion。
+- [x] main `e01ef42e7e0caa05c96083c5709b0554127d8e5f` 確認含八原檔、轉換器、測試與 hash manifest；未匯入 ZIP 容器／CSV，Repo 維持 Public。
+- [x] 靜態檢視 converter／測試實作、B1 baseline 保護與原功能回歸矩陣；20/20 Python、17/17 Chromium、5/5 Node 為 Codex 記錄，**本驗收未獨立重跑全部測試**。
+- [x] 保留14張學習圖片、返回入口／Pages 路徑、第三方服務與 live CX 的未驗證限制。
+
+## 下一個執行階段：B2 — 最小 Web AI 離線整合（待授權）
+
+- [ ] 先 pull main，讀四份文件；核對 B1 commit，保護已凍結原網站基線。
+- [ ] 僅在原 `#searchView` 搜尋區局部加入「快速搜尋／AI 智慧問答」切換與獨立 AI form、status、**最新一問一答卡**。所有原有搜尋、分類、收藏、Excel、學習及站內導覽維持；首頁搜尋入口仍採快速搜尋。
+- [ ] 參考 1999 repo 的 Messenger transport、result normalization、最小安全 Markdown renderer，僅移植必要程式，採 TAX 獨立 config 與控制器；**離線 Mock 模式不載入正式 SDK、不接觸 GCP/CX，也不使用1999正式 ID**。
+- [ ] 同一 CX Session 可多輪追問；切模式及站內導覽不 reset／不重 mount；手動重置才新 Session。處理初問／追問的 Playbook override、idle/in-flight expiry、空答、timeout/late response、service unavailable、連續送出、IME。
+- [ ] AI 回應走 DOM 安全文字／連結而非將不可信內容塞入原站 HTML 模板；只顯示最新卡，不累積完整 transcript；reset 清空 model／DOM／輸入，不清除收藏。
+- [ ] 新增 Mock＋瀏覽器 E2E 測試，驗證雙模式、追問、reset、expiry、錯誤、安全呈現、320/390px，並重跑 B1 原功能回歸。**留意 B1 SHA 基線：不能直接更新 source_baseline.json 讓測試綠燈；保留不可變 B1 參照，針對經授權修改的原檔另作整合版本測試。**
+- [ ] 將結果、實際改動、測試／未測試界線、branch／commit SHA 寫入 STATE／TASK，交 ChatGPT 驗收。未開始 B3 真實介接、Pages 部署。
+
+### B2 啟動條件
+
+必須由使用者下一輪明確授權 B2 實作；目前只有規劃與交接文件更新，**沒有開始 AI UI 修改**。
 
 ## 後續路線
 
