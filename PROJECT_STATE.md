@@ -1,9 +1,17 @@
 # TAX AI — Project State
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B1 COMPLETE — AWAITING CHATGPT ACCEPTANCE**
+Status: **PHASE B1 ACCEPTED (DOCUMENTED CODE REVIEW) — B2 PLANNING / NOT AUTHORIZED**
 Execution: **八檔原貌納管、原網站功能基線、FAQ 轉換器與離線測試完成；B2／Pages／CX／GCP 未執行**
 Source import: **使用者已核准 ZIP 全部 8 個原始檔公開，已納管至 repo 根目錄；ZIP、衍生 CSV、Excel 與暫存未納管**
+
+## ChatGPT B1 驗收結論（2026-10-08）
+
+- **Phase B1 通過 GitHub 交付與靜態程式審查**：main SHA `e01ef42e7e0caa05c96083c5709b0554127d8e5f`，Repo Public，八個原始檔、轉換器、hash manifest、Python／Chromium 測試及文檔均存在。Commit 實際包含網站原始碼及新增測試，未新增 Pages／CI 發布或 CX/GCP 配置。
+- 已直接審閱 `tools/question_bank_to_faq.py`、`tests/test_question_bank_to_faq.py`、`tests/site_baseline.py`、`tests/source_baseline.json`：轉換器使用嚴格 JSON parser、不執行 JS、保留完整問答、固定 CSV 格式、round-trip、驗證後原子替換；Chromium 測試涵蓋既有搜尋、收藏、學習及 Excel 匯入等。
+- Codex 在 STATE 記錄的 **20/20 Python、17/17 Chromium、5/5 Node 語法檢查**及產物 `129` 題、`73,297` bytes、SHA-256 `2a5220e55604e8463ef3e289841cb6d25cf81102650457cfc75097292f9712c8`，均屬**提交者的測試實證**。本次透過 GitHub 直接核對程式和報告，但未在獨立執行環境重跑完整測試，不誤稱已獨立執行通過。
+- 已知限制繼續保留：學習中心缺14張圖片、Pages相對路徑／返回入口待檢、第三方服務與正式 CX 未驗證，不能宣稱網站可正式部署。
+- **B2 還未實作或授權。** 提醒：B1 的 `tests/source_baseline.json` 及 `tests/site_baseline.py` 會檢查原始八檔 hash；B2 預期須局部修改 HTML／CSS／原控制器，所以**不可將原始基線靜默改寫成新版本**。B2 應保留 B1 immutable 對照（SHA），對被授權修改的檔案建立明確的 integration baseline 或測試分層，將既有功能回歸與新增功能測試區分清楚。
 
 ## 最新決策與 B1 交付（2026-10-08）
 
