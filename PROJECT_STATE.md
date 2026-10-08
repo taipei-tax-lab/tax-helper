@@ -1,10 +1,20 @@
 # TAX AI — Project State
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B2 OFFLINE COMPLETE — AWAITING CHATGPT ACCEPTANCE**
+Status: **PHASE B2 ACCEPTED (GITHUB CODE / DELIVERY REVIEW) — B3 LIVE CX PENDING**
 Execution: **雙模式、最新問答卡、獨立 Messenger transport／Mock 與完整原功能回歸完成；未開始 B3／Pages／CX／GCP 操作**
 Source baseline: **B1 固定於 e01ef42e7e0caa05c96083c5709b0554127d8e5f；原 hash manifest 不變。B2 僅局部修改 index.html／app.js，其他六個原檔 byte-identical**
 Implementation commit: **10509014fc2b4aaebae4d33b3b4b8e0bc2da9a1a**（本機branch `work`，推送至`main`；驗收文件另作交接commit，main SHA以收工回報核對）。
+
+## ChatGPT B2 驗收（2026-10-08）
+
+- **驗收結論：Phase B2 的 GitHub 程式交付與靜態審查通過，可作為 B3 起點。** 已核對遠端 main 交接 SHA `1360dd8be1bc6c5a77969145c3f664916755f614`、實作 SHA `10509014fc2b4aaebae4d33b3b4b8e0bc2da9a1a`、兩次提交範圍與新增模組。
+- 原檔僅 `index.html` 加雙模式／AI 卡／模組引用；`app.js` 增單一 `tax-quick-search` 事件，其他六個原檔未改，既有快速搜尋容器與原搜尋邏輯保留。B1 `e01ef42...` 與 `tests/source_baseline.json` 未直接重算／覆寫，測試另以 Git 固定來源建立對照。
+- 已逐一檢視 `assets/tax-ai/controller.mjs`、`messenger-transport.mjs`、`result-model.mjs`、`mock-messenger.mjs` 與 Node／Playwright 測試。Mock 使用明確 `?tax-ai-demo=1` 才啟動，預設準備中；無正式 SDK／Agent ID。控制器具單一最新卡、同 Session 追問、reset、expiry／timeout lock、IME、安全 DOM 渲染及原功能隔離。
+- **測試證據界線：** Codex 在提交文件記錄 Python 21/21、Node 21/21、B1 原站17/17、B2 原站回歸17/17、Mock E2E21/21、語法10/10，並有相應測試原始碼；本次查核依據為 GitHub 內容與程式審閱，**未在獨立環境重新執行測試**，不能宣稱已獨立驗證 Chromium 或真實 CX。
+- 後續不需要重做 B2 的 Mock 開發；**B3 必須另行取得 CX Agent／Playbook／Environment／Messenger binding、回應契約、核准網域與操作授權後才可連線**。特別確認真實 Messenger SDK 的 promise／事件先後、取消事件可否阻擋歷史顯示、極晚到回應是否可能跨新 Session 污染結果。
+- 14 張學習圖片、返回入口／Pages 路徑、第三方服務與無登入的公開存取風險仍歸 B4，不以 B2 模擬成功推論正式服務可用。
+- 此次只驗收與更新專案文件，不新增 Web 程式修改、不啟用 Pages、不修改 CX／GCP。CX 後端仍由獨立 Session 準備。
 
 ## 本輪 B2 交付與授權（2026-10-08）
 
