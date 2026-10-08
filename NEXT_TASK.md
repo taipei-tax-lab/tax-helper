@@ -1,9 +1,9 @@
 # TAX AI — Next Task
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B1 ACCEPTED — B2 READY FOR EXPLICIT AUTHORIZATION**
+Status: **PHASE B2 AUTHORIZED — OFFLINE WEB AI INTEGRATION IN PROGRESS / NOT YET VERIFIED**
 Owner: **ChatGPT 專案 Session 驗收／規劃**；後續 Web 實作由 Codex，CX 後端由 `dialogflow-cx-qa-framework` 獨立 Session 負責。
-Authorization: **B1 已完成並經 ChatGPT GitHub 交付／程式審查驗收；B2 待使用者明確授權後才可開始，B3／Pages／CX/GCP 仍未授權。**
+Authorization: **2026-10-08 使用者已授權 Web Codex 直接進行 B2 的 AI 介面離線整合與 Mock／回歸測試；CX 後端仍在另一 Session 準備中。本次不授權 B3 正式連線、Pages／CI 部署或 GCP/CX 寫入。**
 
 ## 已定案
 
@@ -28,7 +28,7 @@ Authorization: **B1 已完成並經 ChatGPT GitHub 交付／程式審查驗收�
 - [x] 靜態檢視 converter／測試實作、B1 baseline 保護與原功能回歸矩陣；20/20 Python、17/17 Chromium、5/5 Node 為 Codex 記錄，**本驗收未獨立重跑全部測試**。
 - [x] 保留14張學習圖片、返回入口／Pages 路徑、第三方服務與 live CX 的未驗證限制。
 
-## 下一個執行階段：B2 — 最小 Web AI 離線整合（待授權）
+## 本輪執行階段：B2 — 最小 Web AI 離線整合（已授權）
 
 - [ ] 先 pull main，讀四份文件；核對 B1 commit，保護已凍結原網站基線。
 - [ ] 僅在原 `#searchView` 搜尋區局部加入「快速搜尋／AI 智慧問答」切換與獨立 AI form、status、**最新一問一答卡**。所有原有搜尋、分類、收藏、Excel、學習及站內導覽維持；首頁搜尋入口仍採快速搜尋。
@@ -40,7 +40,7 @@ Authorization: **B1 已完成並經 ChatGPT GitHub 交付／程式審查驗收�
 
 ### B2 啟動條件
 
-必須由使用者下一輪明確授權 B2 實作；目前只有規劃與交接文件更新，**沒有開始 AI UI 修改**。
+**已達成**：使用者於 2026-10-08 明確要求「CX 還在準備中，先讓網頁繼續進行」。Web Codex 可立即依上述 checklist 實作 B2，不需等 CX 完成。驗收前仍標示 B2 尚未完成；不得將 Mock 結果宣稱 live CX 驗證。
 
 ## 後續路線
 
