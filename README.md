@@ -1,6 +1,6 @@
 # TAX AI / tax-helper
 
-本 repository 用於既有 TAX AI 網頁的版本管理，以及後續與獨立 Dialogflow CX Agent 的整合。現階段為 **Phase B2 離線整合已完成，待 ChatGPT 驗收**：原搜尋頁可切換快速搜尋／AI 智慧問答，獨立最新問答卡與 Messenger transport 已用 Mock 驗證；B1 原貌 commit、題庫與 FAQ 工具保留。正式 CX 介接及部署尚未開始。
+本 repository 用於既有 TAX AI 網頁的版本管理，以及後續與獨立 Dialogflow CX Agent 的整合。現階段為 **Phase B2 離線整合已通過 GitHub 程式／交付審查，B3 等待 CX 正式介接契約**：原搜尋頁可切換快速搜尋／AI 智慧問答，獨立最新問答卡與 Messenger transport 已用 Mock 驗證；B1 原貌 commit、題庫與 FAQ 工具保留。正式 CX 介接及部署尚未開始。
 
 ## 專案原則
 
