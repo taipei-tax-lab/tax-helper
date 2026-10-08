@@ -171,3 +171,11 @@ tax-helper/
 - **STOP**：先回報 ChatGPT 審閱，未有 Phase B/C 授權前不實作 UI／transport／converter，不部署、不寫 CX／GCP／Messenger／IAM、不改1999／Rental。
 
 下一輪單一任務見 NEXT_TASK.md；未建立另一份競爭性的 workflow 文件。
+
+## 2026-10-08 使用者新增決策：Public 與 Pages
+
+- 使用者明確決定 `tax-helper` 維持 Public，預計將 GitHub Pages 作為靜態網站部署方式；日後仍可評估其他部署。此時未啟用 Pages、未正式部署。
+- 原先「先改 Private」不再是前置條件，但 Public Repo 不代表原 ZIP、內部題庫及其他檔案已取得公開授權。
+- GitHub Pages 的 JS 與靜態資料可被外部檢視。前端隱藏資料、固定網址或 Messenger allowed domains 均不構成同仁身分驗證。
+- 下一輪優先逐檔檢查是否可公開，再依核准範圍原貌納管；未獲准的題庫、內部資料或憑證不得提交。原始 ZIP 與 faq.csv 預設不提交。
+- 本決策取代上文「先決定 Private 或公開範圍」的二選一表述：visibility 已決定為 Public，**仍須決定可公開的檔案範圍**。請以更新後的 NEXT_TASK.md 為下一輪工作依據。
