@@ -1,9 +1,18 @@
 # TAX AI — Project State
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE A — PUBLIC REVIEW COMPLETE / FILE IMPORT APPROVAL PENDING**
+Status: **PHASE B1 AUTHORIZED — SOURCE BASELINE AND FAQ CONVERTER PENDING**
 Execution: **本輪僅公開性審查、離線依賴驗證、納管準備及文件；未納管原始碼、未啟用 Pages、未實作 AI、未改 GCP**
 Source import: **ZIP 已實際取得及讀取；原始網頁、題庫與 CSV 未匯入 Git**
+
+## 最新使用者決策（2026-10-08）：8 個原始檔案准予公開並納管
+
+- 使用者已明確確認：原始 `tax-helper.zip` 中**全部 8 個原始檔案**，包括 `index.html`、`app.js`、`search.js`、`searchDictionary.js`、`questionBank.js`（129 題）、`learningBank.js`、`style.css`、`logo.png.gif`，**均可公開並推送至本 Public GitHub repo**。
+- 先前逐檔審查中「3 個候選、5 個待確認」為**當時的歷史盤點結果**，其「等待使用者公開／納管核准」阻擋已由本決策解除。這是使用者的公開及納管授權，不是獨立的法律或著作權審查結論。
+- **正式授權 Phase B1**：Web Codex 可依 `NEXT_TASK.md` 匯入上述 8 檔原貌，建立可重跑的 `questionBank.js → faq.csv` 二欄轉換器及離線測試；不得順便重構原網站或開始 B2、部署、CX/GCP 設定。
+- 原始 ZIP 本身、`generated/faq.csv`、匯入 Excel、臨時檔案仍不必納入 Git；若要供 CX 後端使用 CSV，需以另行確認的交接方式提供。缺少的 14 張學習圖片不在這次 8 檔授權範圍，未取得來源與可公開範圍前不假裝已補齊。
+- GitHub Pages 仍只是未來預計部署方式，**未啟用、未核准正式發布**；允許將原始碼放在 Public Git 不代表已取得正式站上線與外部服務運作許可。
+
 
 ## 2026-10-08 下一步規劃：由 Phase A 轉至 B1
 
