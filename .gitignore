@@ -1,0 +1,17 @@
+# 可再生產物、原始容器及使用者匯入資料
+*.zip
+faq.csv
+/generated/
+/work/
+/attachments/
+*.xlsx
+*.xls
+
+# 本機測試與 Python 暫存
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+/test-results/
+/playwright-report/
+*.tmp

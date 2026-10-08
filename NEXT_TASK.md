@@ -1,34 +1,43 @@
 # TAX AI — Next Task
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B1 AUTHORIZED — IMPLEMENTATION NOT YET VERIFIED**
-Owner: **Web Codex**；CX 後端由 `dialogflow-cx-qa-framework` 的獨立 Session 負責。
-Authorization: **使用者已核准原 ZIP 內全部 8 個原始檔案公開並納入本 Public repo，並依 B1 規劃執行原貌納管、FAQ 轉換器與離線測試；仍未授權啟用 Pages、B2/B3、CX/GCP 寫入。**
+Status: **PHASE B1 COMPLETE — AWAITING CHATGPT ACCEPTANCE; B2 NOT STARTED**
+Owner: **ChatGPT 專案 Session 驗收／規劃**；後續 Web 實作由 Codex，CX 後端由 `dialogflow-cx-qa-framework` 獨立 Session 負責。
+Authorization: **八個原檔公開納管與 B1 工具／離線測試已授權並完成；尚未授權 B2／B3、Pages 或 CX／GCP 設定。**
 
-## 已定案（不再重複討論）
-- `tax-helper` 維持 **Public**；GitHub Pages 是預計採用的靜態部署方式，**尚未啟用／部署**。
-- 不重構 TAX AI；既有快速搜尋、收藏、題庫瀏覽、Excel 匯入、學習與導覽保留。
-- AI 新增獨立單一問答卡；只呈現最新一問一答，但 CX 同 Session 保留多輪脈絡。切模式不 reset，手動重置才新 Session。
-- `questionBank.js` 是唯一原始題庫；`faq.csv` 是由 deterministic converter 產生的二欄衍生檔，不手工維護、不預設提交 Git。
-- Web 與 CX 各管各的 repo；正式 ID、Environment、Messenger binding／allowed domains 由 CX Session 確認。
-- Phase A 的「三檔候選、五檔待確認」是歷史盤點；**2026-10-08 使用者已明確核准原 ZIP 的全部八個原始檔公開納管**。詳見 PROJECT_STATE 最新決策。
+## 已定案
 
-## 後續交付路線（以實際可用為目標）
-- **B1 原始碼基線＋FAQ 轉換器**：核准可公開範圍後，原貌納管原網站、凍結 baseline、建立可重跑的 JS→CSV 工具及離線測試。優先讓 CX Session 可取得可靠的 FAQ 產物。
-- **B2 Web AI 離線整合**：原搜尋頁局部加入快速搜尋／AI 智慧問答切換；移植 1999 transport／安全 renderer 的必要部分；用 mock 驗證同 Session、reset、expiry、timeout 與原功能不變。此階段不依賴 CX 正式 ID。
-- **B3 Web × CX 真實介接**：核對 CX 完整資源／回應契約及正式網域，進行 live 多輪問答、reset 與錯誤／安全驗證；沒有核准設定不填猜測值。
-- **B4 Pages 發布驗收**：核對資產、相對路徑、缺少的 14 張學習圖片、第三方依賴與公開存取風險；另經授權才啟用／發布 Pages。必要時重新評估部署方式。
+- `tax-helper` 維持 **Public**；GitHub Pages 是預計採用的部署方式，尚未啟用／部署。
+- 原 ZIP 八檔全部已獲准公開並原貌納管；Phase A「三檔候選、五檔待確認」已由使用者授權解除阻擋，不再重問。
+- 不重構 TAX AI；原快速搜尋、收藏、題庫瀏覽、Excel 匯入、學習與導覽保持原貌。
+- 未來 AI 使用獨立單一問答卡，只呈現最新一問一答；CX 同 Session 保留多輪脈絡。模式切換不 reset，主動重置才開始新 Session。
+- `questionBank.js` 是唯一題庫來源；`faq.csv` 為 deterministic 二欄衍生檔，不手改、不預設提交。CX 正式 ID、Environment、binding／allowed domains 由 CX Session 確認。
 
-## 下一輪實際任務：B1 — 已授權，交 Web Codex 實作
-- [x] **公開與納管授權**：使用者確認 ZIP 內原始八檔（index.html、app.js、search.js、searchDictionary.js、questionBank.js、learningBank.js、style.css、logo.png.gif）均可推送至 Public repo；不可擴大解釋為其餘附件、使用者匯入 Excel、14 張缺少的圖片或 Secrets 也可公開。
-- [ ] 先 pull main，讀 README／AGENTS／STATE／TASK；核對 ZIP 能存取且 SHA-256 與前輪相符。新環境若無 ZIP，回報來源缺件。
-- [ ] 將**已核准八檔**逐檔核對來源 ZIP 與已審 hash，原貌納管到 repo 根目錄，包含 GIF 二進位原檔，不要修改網站邏輯。建立最小 `.gitignore` 排除 ZIP、`faq.csv`、`generated/`、`work/`、測試暫存與使用者匯入 Excel；不整包 staging。
-- [ ] 在原始碼 baseline 重跑既有本機搜尋／收藏／分類／詳情測試，確認 129 題／11 分類（若核准題庫完整匯入）；標明缺少的14張學習圖片為已知限制，不自行造圖或刪功能。
-- [ ] 依 STATE 既定規格建立 deterministic `questionBank.js` → `faq.csv` 轉換器及測試；完整答案、二欄 `question,answer`、多行／逗號／雙引號、round-trip、錯誤拒絕、重跑 byte-identical。產物保留於核准作業空間，不自動提交公開 Git 或上傳 GCP。
-- [ ] 更新 STATE／TASK（含檔案 hash、測試實證、阻擋與 CX 交接資訊），commit/push 並回報 SHA；交付 ChatGPT 驗收後才做 B2。
+## B1 完成清單（供本輪驗收）
+
+- [x] Pull main 至 `37b2b55c5f85d487358f56cc4e071755e6806672`，依序讀四份文件；實際核對 ZIP 存在、SHA-256 與前輪一致。
+- [x] 八檔逐 byte 核對 ZIP 與已審 hash，原貌納管至根目錄，含 GIF／BOM／換行；新增 `.gitattributes`、`.gitignore` 與八檔 hash manifest／測試。無 ZIP／CSV／Excel／附件／缺圖納管。
+- [x] 原網站 isolated Chromium **17/17 組 PASS**：129題／11分類、搜尋排序／50筆上限、收藏與重載、分類、詳情／關聯／複製／Escape、熱門題、學習文字、390px導覽、XLSX unavailable，以及真實 XLSX 0.18.5 解析合成 workbook 的成功／錯誤／重載路徑。Page errors 0、瀏覽器外部頁面請求0。
+- [x] `tools/question_bank_to_faq.py` 完成；Python **20/20 PASS**（19 converter＋1八檔 hash），原始 JS 語法 **5/5 PASS**。覆蓋完整答案／二欄／特殊字元／round-trip／錯誤拒絕／原子輸出保護／byte-identical。
+- [x] 實際產生被 Git 忽略的 `generated/faq.csv`：129筆、73,297 bytes；SHA-256 `2a5220e55604e8463ef3e289841cb6d25cf81102650457cfc75097292f9712c8`。未提交CSV、未上傳GCP／匯入CX。
+- [x] 更新 README／STATE／TASK，明列八檔 hash、工具版本、測試命令／證據、限制與 CX 重建交接；本輪成果 commit／push 至 main，SHA 以 Codex 收工回報為準。
+
+## 下一輪單一任務：ChatGPT 驗收 B1 並決定 B2 工作契約
+
+- [ ] 核對 Codex 回報的 main SHA、八檔原貌 manifest、19項 converter＋1項 hash 測試、17組瀏覽器基線及 CSV hash／129筆證據；確認來源、產物與外部服務的驗證範圍。
+- [ ] 確認14張學習圖片仍缺件、返回入口／第三方服務尚未live驗證，原網站尚未部署；不把離線PASS當作正式站完整可用。
+- [ ] 若 B1 驗收通過，明確下達 **B2 最小 Web AI 離線整合**：僅搜尋頁模式切換、TAX 獨立控制器／單一問答卡、必要1999 transport／安全 renderer、mock 與原功能回歸；採 STATE 的同 Session／reset／expiry／timeout 事件契約，不需填正式CX ID。
+- [ ] 需要交接CSV時，由CX Session從驗收SHA離線重跑工具並核對hash，或另行確認實際檔案交接方式；不推論已送達或已驗證Data Store ingestion。
+
+## 後續路線
+
+- **B2**：經驗收及後續授權後，執行最小 AI UI／mock 整合，保留原功能。
+- **B3**：取得CX資源／回應契約及正式網域後，另經授權測試live多輪、reset、錯誤與安全。
+- **B4**：資產／缺圖、Pages相對路徑、第三方依賴及公開存取驗收；另經授權才啟用／發布Pages。
 
 ## STOP boundary
-- **使用者核准的公開範圍限來源 ZIP 八個原始檔。** 不額外提交原 ZIP 容器、14 張缺少的圖片、未核准附件、匯入 Excel、憑證或其他敏感資料；來源 hash 不符先停下確認。
-- B1 不修改既有搜尋演算法或 UI，不做 AI 面板、Messenger live、GCP/CX 修改或 Pages 部署。
-- 不修改 1999／Rental repo，不複製其正式 Agent、Playbook、Environment、GA4 ID。
-- Pages allowed domains、特定網址與「不登入」均非同仁身分驗證；正式上線風險留待 B4 核對。
+
+- 本輪完成 B1 即交付驗收；不直接開始 B2、Messenger live、Pages／CI發布或CX／GCP修改，不修改原網站8檔。
+- 不提交原ZIP容器、衍生CSV、使用者Excel、第三方測試副本、14張缺圖或未核准附件／敏感資料。來源hash不符須先停下確認，不自動重算baseline。
+- 不修改1999／Rental repo，不複製其正式Agent、Playbook、Environment、GA4 ID。
+- Pages網址、allowed domains與「不登入」均非同仁身分驗證；正式上線風險留待B4。

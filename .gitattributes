@@ -1,0 +1,9 @@
+# 原貌基線須保留 ZIP 的 BOM／換行／二進位 bytes。
+app.js -text
+index.html -text
+learningBank.js -text
+logo.png.gif -text
+questionBank.js -text
+search.js -text
+searchDictionary.js -text
+style.css -text

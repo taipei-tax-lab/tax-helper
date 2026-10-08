@@ -1,0 +1,23 @@
+{
+  "zip_sha256": "824dc5020641ad3423a1364e737a51dae989e77923eaa7f43a3f67c492707c0e",
+  "file_sha256": {
+    "app.js": "e22c95f94f74fe70e1666634713ff3a52075dfb10a99a230226d5bc77c24f3af",
+    "index.html": "ee69206aa7ff7f98ea60a77fcfd1116a3a84b3c336893c7375fb754b1ce89405",
+    "learningBank.js": "a1396fe06fa12b80decee84797666c852b7eb95d4451d1c566aeab796a59c451",
+    "logo.png.gif": "d7c189c93d2ed9f035854a7dccd8d9cba4fb77173aa32ccafef3389e563edf31",
+    "questionBank.js": "b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258",
+    "search.js": "e5a654b9187a281d16e737c1c790a3806dba9d1370c76be900f1d2d77c3d159d",
+    "searchDictionary.js": "e020590d1a7a6d5ae72a66c89df139b7264f9646107bee06c92a1ca9e7a1cb85",
+    "style.css": "afb88aa24a70babf928c00d5633dcd7d13d794f9b6fe070c5bcb40484e1f5435"
+  },
+  "file_bytes": {
+    "app.js": 26884,
+    "index.html": 9842,
+    "learningBank.js": 9690,
+    "logo.png.gif": 3595,
+    "questionBank.js": 212639,
+    "search.js": 17492,
+    "searchDictionary.js": 17457,
+    "style.css": 26274
+  }
+}

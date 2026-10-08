@@ -1,80 +1,58 @@
 # TAX AI — Project State
 
 Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B1 AUTHORIZED — SOURCE BASELINE AND FAQ CONVERTER PENDING**
-Execution: **本輪僅公開性審查、離線依賴驗證、納管準備及文件；未納管原始碼、未啟用 Pages、未實作 AI、未改 GCP**
-Source import: **ZIP 已實際取得及讀取；原始網頁、題庫與 CSV 未匯入 Git**
+Status: **PHASE B1 COMPLETE — AWAITING CHATGPT ACCEPTANCE**
+Execution: **八檔原貌納管、原網站功能基線、FAQ 轉換器與離線測試完成；B2／Pages／CX／GCP 未執行**
+Source import: **使用者已核准 ZIP 全部 8 個原始檔公開，已納管至 repo 根目錄；ZIP、衍生 CSV、Excel 與暫存未納管**
 
-## 最新使用者決策（2026-10-08）：8 個原始檔案准予公開並納管
+## 最新決策與 B1 交付（2026-10-08）
 
-- 使用者已明確確認：原始 `tax-helper.zip` 中**全部 8 個原始檔案**，包括 `index.html`、`app.js`、`search.js`、`searchDictionary.js`、`questionBank.js`（129 題）、`learningBank.js`、`style.css`、`logo.png.gif`，**均可公開並推送至本 Public GitHub repo**。
-- 先前逐檔審查中「3 個候選、5 個待確認」為**當時的歷史盤點結果**，其「等待使用者公開／納管核准」阻擋已由本決策解除。這是使用者的公開及納管授權，不是獨立的法律或著作權審查結論。
-- **正式授權 Phase B1**：Web Codex 可依 `NEXT_TASK.md` 匯入上述 8 檔原貌，建立可重跑的 `questionBank.js → faq.csv` 二欄轉換器及離線測試；不得順便重構原網站或開始 B2、部署、CX/GCP 設定。
-- 原始 ZIP 本身、`generated/faq.csv`、匯入 Excel、臨時檔案仍不必納入 Git；若要供 CX 後端使用 CSV，需以另行確認的交接方式提供。缺少的 14 張學習圖片不在這次 8 檔授權範圍，未取得來源與可公開範圍前不假裝已補齊。
-- GitHub Pages 仍只是未來預計部署方式，**未啟用、未核准正式發布**；允許將原始碼放在 Public Git 不代表已取得正式站上線與外部服務運作許可。
+- 開工已 `git pull --ff-only origin main` 至 **37b2b55c5f85d487358f56cc4e071755e6806672**，依序讀 README／AGENTS／STATE／TASK。前輪「三檔候選、五檔待確認」為歷史狀態；使用者已明確核准原 ZIP 全部八檔於本 Public repo 公開並原貌納管，來源公開／納管 blocker 已解除。此授權不是獨立法律或著作權審查結論。
+- 實際 ZIP 可存取，**77,628 bytes**；SHA-256 **824dc5020641ad3423a1364e737a51dae989e77923eaa7f43a3f67c492707c0e**，與前輪一致。八檔先全部核對成功才逐檔放入 repo 根目錄，原檔內容未改一 byte，含 GIF 與文字 BOM／換行。
+- 新增 `.gitattributes` 防止八檔換行轉換；`tests/source_baseline.json` 與 hash 測試凍結 byte 基線。後續有授權的網站修改須明確更新 baseline，不能為讓測試通過而自行重算。
+- 新增 `.gitignore` 排除 ZIP、faq.csv、generated/、work/、attachments/、Excel 與 Python／瀏覽器暫存。沒有提交原 ZIP、衍生 CSV、第三方 XLSX 測試副本或使用者資料；十四張缺圖未補造。
+- 新增 `tools/question_bank_to_faq.py`、converter／原檔 hash 測試及 `tests/site_baseline.py`。本輪只新增工具與測試，原網站搜尋演算法、UI、收藏、Excel 匯入、學習、導覽保持原貌；AGENTS 未修改。
+- **B1 實作已完成，交 ChatGPT 驗收**。尚未做 AI 面板／transport、Pages／CI 發布、正式網域／Messenger binding、CX／GCP 讀寫；未修改 1999／Rental repo。
 
+### 八檔原貌 hash
 
-## 2026-10-08 下一步規劃：由 Phase A 轉至 B1
+| 原檔 | bytes | SHA-256 |
+| --- | ---: | --- |
+| app.js | 26,884 | e22c95f94f74fe70e1666634713ff3a52075dfb10a99a230226d5bc77c24f3af |
+| index.html | 9,842 | ee69206aa7ff7f98ea60a77fcfd1116a3a84b3c336893c7375fb754b1ce89405 |
+| learningBank.js | 9,690 | a1396fe06fa12b80decee84797666c852b7eb95d4451d1c566aeab796a59c451 |
+| logo.png.gif | 3,595 | d7c189c93d2ed9f035854a7dccd8d9cba4fb77173aa32ccafef3389e563edf31 |
+| questionBank.js | 212,639 | b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258 |
+| search.js | 17,492 | e5a654b9187a281d16e737c1c790a3806dba9d1370c76be900f1d2d77c3d159d |
+| searchDictionary.js | 17,457 | e020590d1a7a6d5ae72a66c89df139b7264f9646107bee06c92a1ca9e7a1cb85 |
+| style.css | 26,274 | afb88aa24a70babf928c00d5633dcd7d13d794f9b6fe070c5bcb40484e1f5435 |
 
-- **Phase A 盤點與公開性技術審查均已完成**；本輪是規劃更新，不代表已取得來源公開核准或開始實作。
-- 使用者已決定保持 Public，未來考慮 GitHub Pages；不再以改 Private 為必要前提。但公開 Repo 的可見性不代表整份題庫、學習案例和內嵌文字已准予公開。
-- **下一個執行階段 B1：經核准原始檔案的原貌納管、既有網站功能基線、確定性 FAQ CSV 轉換器及離線測試。** 原始題庫若不能公開於 Pages，須先定義受控部署／資料供應替代路線，不可用前端隱藏資料代替驗證。
-- B2：最小侵入 AI 問答模式與 Mock Messenger（保持快速搜尋和收藏等原功能）；B3：取得 CX Session 提供的正式介接契約後進行 Live 測試；B4：GitHub Pages 路徑、資產、缺少的14張學習圖片、公開存取與部署驗收。
-- 為避免多餘盤點，B1 不再重做八檔審查；僅核對 hash 與可公開範圍，進行原貌納管及可驗證交付。下一輪工作契約以更新後的 NEXT_TASK.md 為準。
-- **目前未執行的事項**：來源公開授權、檔案匯入、converter、AI UI、Pages／CX 部署。已完成的只有規劃更新。
+### 本輪測試實證
 
+環境：Python **3.12.14**、Node **24.19.0**、Playwright **1.62.0**、Chromium **151.0.7922.173**。可重跑命令見 README；報告及 XLSX 副本保留 repo 外工作暫存，正文未另列公開報告。
 
+- `python -m unittest discover -s tests -p 'test_*.py' -v`：**20/20 PASS**，其中19項 converter、1項八檔 hash（覆蓋全部8檔）。包括真實129題完整 round-trip／重跑一致、中文／逗號／雙引號／CRLF／CR／LF／空白／URL／HTML 純文字／公式樣式、BOM、optional metadata、缺值／null／錯型別、duplicate key／ID／問題、動態／額外 JS、無效 JSON／UTF-8／Unicode、輸入保護、既有輸出保護與 atomic replace 失敗清理。
+- 五份原始 JS 逐一 `node --check`：**5/5 PASS**。
+- 隔離 Chromium `tests/site_baseline.py` 搭配 pinned XLSX 副本：**17/17 組 PASS，page errors 0**。14組原功能包含129題／11分類、分類24題與題庫篩選、完整詳情／Escape／關聯、收藏重載與刪除、首頁／搜尋頁一致及3組凍結搜尋排序、無結果、分類捷徑、熱門題詳情、空查詢129題／最多50筆、實際剪貼簿完整答案、XLSX unavailable 保留題庫、7篇學習文字與drawer、390px行動選單。
+- 另外3組使用**真實 XLSX 0.18.5 函式庫＋記憶體內合成 OOXML workbook**：匯入2題後可搜尋／顯示完整答案且寫入 localStorage；重複ID及缺題目欄位失敗保留原runtime bank；重載回到原JS129題，而 localStorage仍存2題。未使用使用者 Excel、未修改現有載入邏輯。
+- 依賴僅為測試下載原站指定 CDN 版本至 repo 外，其 SHA-256 **c9506197caf809a075b6dee1da0d36fb19da7158ffe8a88e7b0c96c5d8623c99**，測試先核對hash／版本，再以route離線供應。瀏覽器全程 route fulfill／abort，外部頁面請求實際送出 **0**；入口API與遊戲iframe未接觸，未呼叫CX／GCP。單獨下載CDN依賴不代表正式站第三方服務已驗收。
+- `tests/search_baseline.json` 保存已核對原貌程式的三組query結果ID／順序，瀏覽器比對通過；不是同次計算兩份結果就當作凍結基線。
+- `git check-ignore` 核對 ZIP／CSV／generated／work／attachments／Excel／pycache 排除均生效。Git staged blobs 亦逐檔核對上述 SHA-256，不只檢查工作樹。
 
-## 本輪公開性審查與納管準備（2026-10-08）
+### FAQ CSV 產物與 CX 交接
 
-審查基線：已 pull main 至 **090cdd26d54618a3ef3b1b294297a58c36d9107e**，依序讀四份文件；GitHub metadata 確認仍為 Public。八個原檔逐 byte 對照 ZIP 一致，ZIP SHA-256 仍為 824dc5020641ad3423a1364e737a51dae989e77923eaa7f43a3f67c492707c0e。
+- 工具版本 **1.0.0**。預設命令 `python tools/question_bank_to_faq.py`，或以 `--input`／`--output` 指定核准 workspace；唯一來源為原貌 `questionBank.js`。
+- 本機已實際產生 `generated/faq.csv`：**129 data records＋1 header、2欄、73,297 bytes**。Input SHA-256：**b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258**；Output SHA-256：**2a5220e55604e8463ef3e289841cb6d25cf81102650457cfc75097292f9712c8**。CLI與測試重跑均一致；不是尚未執行的規劃。
+- `faq.csv` 已由 `.gitignore` 排除，**不在此commit、不自動上傳GCS／匯入Data Store**。CX Session 可從本輪已提交SHA取得題庫與工具，在核准空間重跑並核對題數／input／output hash。需交接實際CSV時另行確認方式；未宣稱已送達CX或完成ingestion。
+- 保留完整answer、不用摘要／aliases替代，不修正原資料；CSV不是獨立真相，不手改、去重、排序、加日期或以試算表重存。二欄Data Store ingestion相容性仍由CX Framework後續實驗確認。
 
-**結論：3 檔可公開候選、5 檔需確認；本輪不納管任何原檔，只提交 STATE／TASK。** 維持 Public 已是確定決策，不再要求改 Private。以下「可公開」表示技術內容審查未見公開阻擋、可列入下一輪候選，不能代替逐檔公開及納管授權；「需確認」不表示已證實為機密。
+## 既有來源／相依性審查與限制
 
-### 八檔公開性清單
-
-| 檔案 | 分類 | 審查結果與納管條件 |
-| --- | --- | --- |
-| search.js | **可公開（候選）** | 本機搜尋／正規化／排序演算法，無硬編碼網路端點、憑證、完整題庫或個案紀錄；依賴 TaxSearchDictionary 及呼叫者傳入 bank。可原貌納管候選。 |
-| searchDictionary.js | **可公開（候選）** | 一般稅務術語、同義詞、查詢意圖與排序權重；未含完整答案、個案資料或端點／憑證。人工排序註解與一般短提示不等於原始測試個案；保留原貌。 |
-| style.css | **可公開（候選）** | UI／RWD 樣式，無 url()/@import 外部資產、inline 資料或憑證；字型為系統字型引用，未夾帶字型檔。 |
-| questionBank.js | **需確認** | 已逐題檢視129題問題／答案並掃描其餘欄位。主要為稅務說明，未發現可確證的直接識別個資／憑證；但108題版本標記、1題缺版本及20題官網標記，皆沒有逐題可追溯來源欄位。申辦網址不是該段文字的公開來源證據；須資料權責人確認整份可公開，或提供逐題公開來源／核准範圍。示例人物與服務聯絡語境沒有直接判為個資，也未引用原字串。整檔暫停納管，不自行切出20題或改寫題庫。 |
-| learningBank.js | **需確認** | 7篇內容，含1篇個案敘事（L004，原檔52行起）；日期／機關標記沒有來源 URL 或公開依據。須確認案例已獲公開處理、文字轉載／改寫範圍及素材來源。不得把案例原文寫入 Public 文件。 |
-| app.js | **需確認** | 控制器本身未見憑證，但第7行起內嵌1篇 featured＋3篇 news 備用內容，不能當作純程式碼放行。須確認這4篇的公開範圍；Excel 匯入為本機解析與 localStorage，本輪未見上傳 Excel／bank 的程式路徑。 |
-| index.html | **需確認** | 包含外部入口設定 API（175行）、遊戲 iframe（147行起）、XLSX CDN（133行）及 ../index.html 返回連結。端點沒有硬編碼憑證，但其公開用途／管理歸屬與 Pages 跨來源可用性尚未確認；不在 Public 文件抄錄待確認的完整端點。頁面標示同仁／內部使用者，不構成身分驗證。須連同題庫、學習文字及 logo 審查結果放行。 |
-| logo.png.gif | **需確認** | 已視覺查驗為 TRS 識別圖，實際 GIF 96×96、單 frame；無 EXIF／comment／XMP keys，未見個人影像。圖片可讀取不等於機關標誌／素材的公開展示範圍已獲確認；本輪不納管。 |
-
-八個原檔未發現足以直接定性為「不可公開」的確證憑證／直接識別個資；有疑義者全部保留於 repo 外暫存。**目前不得公開／提交的項目**：整份 ZIP（包含5個待確認原檔）、未核准題庫衍生的 faq.csv、使用者匯入的 Excel／匯出紀錄，以及任何後續發現的憑證／未核准個資。ZIP／CSV 為預設排除項，不因3檔候選通過而整包提交。
-
-### 原貌納管的 hash 白名單
-
-下列摘要只識別審查版本，不包含題庫／案例原文。來源變更後須重審，不能沿用本輪分類。
-
-| 候選檔案 | SHA-256 |
-| --- | --- |
-| search.js | e5a654b9187a281d16e737c1c790a3806dba9d1370c76be900f1d2d77c3d159d |
-| searchDictionary.js | e020590d1a7a6d5ae72a66c89df139b7264f9646107bee06c92a1ca9e7a1cb85 |
-| style.css | afb88aa24a70babf928c00d5633dcd7d13d794f9b6fe070c5bcb40484e1f5435 |
-
-其餘5檔的本機待確認清單亦綁定原檔 hash；尚無已授權匯入的原始檔。建議下一輪只按明確核准白名單，將檔案原貌放至 repo 根目錄同檔名，保留相對結構；不得整包解壓到 Git 或使用全量 staging。ZIP、faq.csv、generated/、work/、attachments/、匯入 Excel 須列入後續排除策略；本輪只準備清單，未新增 .gitignore 或修改網站。
-
-### 相依性、限制與替代方案
-
-1. **題庫是初始化必要依賴**：app.js 的 loadBank 找不到 questionBank.js 時改讀 questionBank.json，但 ZIP 沒有該 JSON。兩者都不可用會 alert 並在 init 前 return；搜尋表單及其他初始化未完成，不能把只納管3個候選檔案宣稱為完整可運作網站。
-2. **學習內容不能只移除 learningBank.js**：learningBank.json 也不在 ZIP；缺少兩者仍使用 app.js 內嵌 fallback，且學習 DOM 會在初始化產生。導覽 display:none 不阻止靜態 JS／文字被下載或查看。
-3. **圖片來源缺件**：learningBank 引用 assets/01.png～07.png 及對應 *_thumb.png，共14張，全部不在 ZIP。原 ZIP 本身已實際取得；缺的是圖像資產，不假設另有 assets archive。若保留學習中心，須提供圖片及公開範圍，或另案核准處理方式。
-4. **外部服務分開確認**：XLSX 固定 CDN 版本，未附本機 vendor 檔，未驗證供應可用性／未引用其授權結論；入口設定 API 的 response／CORS／公開用途未驗證，iframe 在初始 HTML 即有 src，隱藏導覽也可能載入。只做靜態與離線檢查，未發出真實 API／iframe／CDN 請求。
-5. **返回入口不在來源包**：../index.html 沒有隨 ZIP 提供；未來 Pages 的路徑與既有入口不能假設相同。本輪不改連結、不填正式網域、不設定 Pages。
-6. **若內容不得公開**：可保持 Public 程式 repo，但 Public Git／Pages 只能承載已核准資料。原題庫若必須保密，完整網站須另案設計受控資料承載／身分驗證；只換成無驗證 JSON/API、隱藏畫面或允許特定網域都不能保密。任何剝離 fallback、替換資料／logo、調整 API 或導覽均待另案授權，本輪未實作。
-
-### 本輪驗證與未完成項目
-
-- 7個文字檔全檔掃描15類模式：私鑰、Google/GitHub/AWS credentials、JWT、Bearer、密碼／secret 賦值、email、手機、身分證格式、IPv4／本機域名、URL 內憑證／secret parameter、電話格式，未命中。另對129題問答、7篇學習內容、4篇 fallback 作語境閱讀；有限模式掃描不是全面保證或法規／公開授權證明。
-- GIF 型別／尺寸／frame／metadata 與視覺檢查完成；5份 JS 的 node --check 通過。沒有執行 converter 或 AI 整合。
-- 原檔不改碼的隔離 Chromium 相依性試驗 **2/2 PASS**：省略題庫會中止初始化；省略 learningBank 仍產生 app fallback（featured＋3 news）。route 供應暫存原檔且阻擋所有外部請求；Production／GCP 請求0。未啟動對外網站。
-- 前輪 Node 14/14 與8組網站基線是歷史結果，本輪未重跑，不據此宣稱公開性／部署已通過。
-- 尚待：5個待確認原檔的公開依據、3候選檔的逐檔納管授權、14張缺件圖片、外部服務／入口的公開用途及未來路徑決策。原始碼匯入、Pages、AI、converter、CX/GCP 寫入均未開始。
-- 公開文件只記檔名、行號、hash、分類與原因，未複製疑似敏感正文／個案細節／待確認完整端點。本輪 commit 範圍只有 PROJECT_STATE.md／NEXT_TASK.md；README／AGENTS 不變。
+- Phase A與公開性技術審查已完成；本輪依NEXT不重做審查。前輪7文字檔15類模式掃描未命中確證憑證／直接識別個資，並查驗題庫／學習／fallback內容及GIF。有限掃描不構成全面保證；公開範圍以使用者此次八檔授權為準。
+- **來源ZIP未缺件**；缺的是learningBank引用的 `assets/01.png`～`07.png`與各自`*_thumb.png`共**14張學習圖片**，不在ZIP或本次八檔授權範圍。文字及drawer已離線驗證，圖像呈現仍不完整，未假裝另外取得assets包。
+- 外部XLSX沒有隨來源納管vendor檔；正式站仍會依原HTML從CDN取得。入口設定API response／CORS／可用性與遊戲iframe未live驗證。`../index.html`返回入口未隨ZIP提供，未來Pages相對路徑待B4決策；本輪不改連結。
+- 前輪相依性試驗2/2（歷史）：題庫JS與缺少的JSON都不可用會在初始化前停止；省略learningBank仍會展示app內嵌fallback。不能藉隱藏導覽或移除單一learning檔達成資料保密。
+- Public及未來Pages仍為使用者決策。沒有登入的靜態站不能用網址、前端隱藏或allowed domains辨識同仁；公開八檔不代表正式上線已核准。
 
 ## 已確認需求與架構邊界
 
@@ -84,33 +62,6 @@ Source import: **ZIP 已實際取得及讀取；原始網頁、題庫與 CSV 未
 - Web repo 管網頁與題庫轉換；獨立 CX Framework repo 管 Agent／Playbook／Tool／Data Store／Bucket／Production。
 - questionBank.js 為唯一正式題庫來源；faq.csv 僅為可重複產生的 question,answer 二欄產物。
 - 正式網址／Messenger allowed domains 尚未提供；不可猜值。暫不登入的既有決策不能驗證同仁身分，正式上線前仍須核對實際網路存取限制。
-
-## 第一輪盤點來源與 GitHub 實證（歷史記錄）
-
-- 已讀 README／AGENTS／STATE／TASK 並 fetch 最新 origin。盤點起點 main：53d3860c69711ce6be278b71ea883c9a73b23589；四份本機文件 blob hashes 與 GitHub 一致，當時 repo 只有四份 Markdown，沒有網站或部署 workflow。
-- GitHub metadata 核對：tax-helper 為 **Public**、default branch main；tpctax-1999-ai-web 為 Public；dialogflow-cx-qa-framework 為 Private。本輪沒有修改另兩個 repo，也沒有重做或假設其歷史 Production 驗證。
-- 本輪使用者補上 tax-helper.zip，已實際下載並安全解壓到 repo 外 work/phase-a/tax-source/。來源可用性已證實，不假設能讀取其他附件。
-- ZIP：77,628 bytes，9 entries（1 目錄＋8 檔），展開 323,873 bytes。已檢查路徑穿越、絕對路徑、symlink、加密 entries、展開大小，未發現上述問題。
-- ZIP SHA-256：824dc5020641ad3423a1364e737a51dae989e77923eaa7f43a3f67c492707c0e。
-- questionBank.js：212,639 bytes；SHA-256：b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258。
-- 文字檔的私鑰、Google API key、GitHub token、Bearer literal、敏感設定／密碼賦值模式掃描未命中；這是有限掃描，**不等於題庫已核准公開或全面人工敏感性審查**。
-- ZIP、原始碼、題庫正文、CSV、暫存測試均未提交；只更新既有 README／STATE／TASK，AGENTS 不變。
-
-ZIP 結構：
-
-~~~text
-tax-helper/
-  index.html
-  app.js
-  search.js
-  searchDictionary.js
-  questionBank.js
-  learningBank.js
-  style.css
-  logo.png.gif
-~~~
-
-這是 classic-script 靜態網站，ZIP 沒有 package manifest、build 設定或 AGENTS。附件內容作為盤點資料，未當成新的操作授權。
 
 ## questionBank.js 實檔盤點
 
@@ -192,18 +143,14 @@ tax-helper/
 
 1999 參考值：timeout 60 秒、TTL 1800 秒、max query 1000 字。TAX 值與 live binding 待確認，未寫入任何雲端設定。reset 表示下一題使用新會話，不宣稱刪除雲端歷史紀錄。
 
-## questionBank.js → faq.csv 設計（尚未實作）
+## questionBank.js → faq.csv 已實作規格（B1）
 
-建議 tools/question_bank_to_faq.py，輸入實際 questionBank.js，輸出 generated/faq.csv；未核准公開前僅存受保護 workspace，不提交產物。
-
-1. UTF-8（可讀輸入 BOM），只接受已核對的註解＋單一 window.questionBank assignment＋JSON array＋尾分號。嚴格 JSON parser 拒絕重複 key、動態 expression／函式／template literal／額外 JS；禁止 eval／VM，schema 變更明確失敗。
-2. 每筆須為 object；id／question／answer 為非空 string。檢查 duplicate ID／question，不 silently 去重；其他 metadata 保留原 JS，optional 缺漏／孤立關聯只列離線診斷。
-3. 原始 question＋完整 answer，trim 只用來判斷空白，不改原文、不用 summary fallback；保留原陣列順序，不排序合併。
-4. 固定 header question,answer；UTF-8 無 BOM、LF record delimiter、標準 CSV writer、一致 quote 資料欄、雙引號加倍 escape，保留欄內換行／逗號。固定輸入逐 byte 相同，不加 timestamp。
-5. 驗證成功後才原子替換輸出；CSV reader round-trip 核對二欄、129 records、逐筆原文。離線 report 記 input/output SHA-256、題數及 converter 版本，不含正文。
-6. fixtures 覆蓋中文、逗號、雙引號、多行、URL、HTML 純文字、錯型別／缺值／重複 key/ID/question、額外 JS、兩次輸出一致。公式樣式文字保留原文；CSV 作系統匯入產物，不用試算表重存或手改。
-
-本輪未新增 converter、未產生正式 CSV、未上傳 GCS／匯入 Data Store；二欄 ingestion 相容性由 CX Framework 後續驗證。
+1. UTF-8（輸入可有BOM），只接受可選單一block comment＋`window.questionBank =`＋嚴格非空JSON array＋尾分號；不允許額外JS、動態expression、重複JSON key、非標準JSON constants。不使用eval／VM／JS runtime。
+2. 每筆是object；id／question／answer須為非空string，拒絕缺值、null、錯型別與重複ID／question（比對鍵含trim）。其他metadata不匯出、不用來補缺少的answer；原JS完整保留。
+3. trim只供驗證，不更動輸出文字；保留原順序、首尾空白、完整答案及欄內CR／LF／CRLF。
+4. 固定header `question,answer`；UTF-8無BOM，標準CSV writer，LF記錄分隔；data二欄一律quote、雙引號加倍escape。公式樣式、HTML與URL保留為原文字，不執行或抓取。
+5. 先在記憶體CSV reader round-trip逐欄核對成功，才於輸出目錄建立暫存並`os.replace`。錯誤不覆寫既有輸出、暫存清理；禁止output指向來源本身。
+6. CLI只列converter版本、題數、input／output hash及output路徑，無timestamp與正文。成功exit0、失敗exit1；具體fixtures與拒絕測試已納管，可離線重跑。
 
 ## 第一輪驗證結果及後續測試矩陣（歷史記錄）
 
@@ -211,7 +158,7 @@ tax-helper/
 - 固定1999暫存副本執行 node tests/phase7e3a.test.mjs：**14/14 PASS**，涵蓋 normalization／URL／Markdown／去重、首次 override／followup、reset／expiry、timeout lock／late response、service error／clear。
 - 原 ZIP 不改碼的 isolated Chromium：**8 組基線 PASS，page errors 0**。涵蓋129題／11分類、分類24題、drawer／Escape／收藏、首頁／搜尋頁排序一致、無結果、首頁分類捷徑、複製、XLSX 被阻擋時保留題庫。
 - 瀏覽器 route 供應原檔，外部 CDN／portal API／遊戲 iframe 全部阻擋；未連 live CX、GA4、Production 或 GCP，未部署網站。
-- 尚未執行整合後 E2E、1999 browser suite、真實 Excel 成功匯入、live SDK、Production、正式網域及稅務品質驗收。
+- 原站真實 XLSX／合成 workbook 路徑已由 B1 補驗，未使用真實業務 Excel。尚未執行整合後 E2E、1999 browser suite、live SDK、Production、正式網域及稅務品質驗收。
 
 下列是後續驗收設計，**不是已通過結果**：
 
@@ -233,20 +180,12 @@ tax-helper/
 | 行動／無障礙 | 320／390px、鍵盤、focus、aria | 原 layout 保留，AI 狀態可操作 |
 | Live | 另案授權後，專屬 TAX Agent／核准網域 | 真實脈絡／reset／SDK／ingestion；不操作1999／Rental |
 
-## 阻擋與 handoff
+## 阻擋與 handoff（目前）
 
-- **ZIP 缺件已解除**：已實際讀取，不需再次上傳；尚未入 Git 不等於缺少來源。
-- **來源納管待決策**：維持 Public 已確認；須依本輪逐檔審查核准公開／納管範圍。3檔為可公開候選，5檔待確認；原 ZIP／CSV 預設不提交，不再以改 Private 為前置條件。
-- **資料差異**：靜態109 vs 實際129、optional metadata 缺漏、2 個孤立關聯、Excel runtime bank vs AI 正式來源；本輪只記錄，未修正或同步。
-- **CX handoff**：獨立 TAX Agent／Playbook resource names、Environment/Messenger binding、正式網址／allowed domains／網路限制待提供；Bucket／Data Store 區域、命名、權限、CSV ingestion 由 Framework 處理。本輪未讀寫 live GCP。
-- **STOP**：先回報 ChatGPT 審閱，未有 Phase B/C 授權前不實作 UI／transport／converter，不部署、不寫 CX／GCP／Messenger／IAM、不改1999／Rental。
+- **B1無來源或公開授權阻擋**：ZIP已讀取，八檔已獲核准原貌納管，converter與離線驗證已完成。等待ChatGPT驗收本輪SHA，B2尚未開始。
+- **已知原資料差異**：HTML靜態109／實際129、optional metadata缺漏、2個孤立關聯、Excel runtime bank與正式JS來源不同；本輪不修正資料或同步CX。
+- **B4缺件**：14張學習圖片與公開範圍、返回入口、第三方服務／相對路徑及正式存取方式待確認。這些限制不妨礙本輪B1的原貌與工具驗證，但不宣稱完整發布可用。
+- **CX handoff**：獨立TAX Agent／Playbook完整resource names、Environment／Messenger binding、正式網址／allowed domains／網路限制待CX Session提供；Bucket／Data Store區域、命名、權限、CSV ingestion由Framework處理。可依上述已驗證hash離線重建FAQ；未交付或操作live雲端資源。
+- **STOP**：先由ChatGPT驗收B1，再以後續明確任務授權B2最小AI UI與mock。未取得後續授權不部署Pages／CI發布、不寫CX／GCP／Messenger／IAM、不改1999／Rental，不提交額外附件或CSV。
 
-下一輪單一任務見 NEXT_TASK.md；未建立另一份競爭性的 workflow 文件。
-
-## 2026-10-08 使用者新增決策：Public 與 Pages
-
-- 使用者明確決定 `tax-helper` 維持 Public，預計將 GitHub Pages 作為靜態網站部署方式；日後仍可評估其他部署。此時未啟用 Pages、未正式部署。
-- 原先「先改 Private」不再是前置條件，但 Public Repo 不代表原 ZIP、內部題庫及其他檔案已取得公開授權。
-- GitHub Pages 的 JS 與靜態資料可被外部檢視。前端隱藏資料、固定網址或 Messenger allowed domains 均不構成同仁身分驗證。
-- 本輪已完成逐檔公開性審查；下一輪取得具體檔名及公開／納管範圍核准後才原貌納管。未獲准的題庫、內部資料或憑證不得提交，原始 ZIP 與 faq.csv 預設排除。
-- Visibility 固定為 Public；待決事項是逐檔核准範圍，不再重新決定 visibility。請以本輪公開性清單及 NEXT_TASK.md 為工作依據。
+下一輪單一任務見 NEXT_TASK.md；未建立另一份競爭性的workflow文件。

@@ -1,6 +1,6 @@
 # TAX AI / tax-helper
 
-本 repository 用於既有 TAX AI 網頁的版本管理，以及後續與獨立 Dialogflow CX Agent 的整合。現階段為 **Phase B1：已取得八檔原始碼公開與納管授權，準備由 Codex 執行**。已實際讀取原始 ZIP；截至本次規劃更新，原始網頁／題庫尚未匯入 Git，未實作 AI 整合或部署。
+本 repository 用於既有 TAX AI 網頁的版本管理，以及後續與獨立 Dialogflow CX Agent 的整合。現階段為 **Phase B1 已完成，待 ChatGPT 驗收**：已依使用者公開授權原貌納管 ZIP 八檔、驗證原功能，並建立 FAQ CSV 轉換器與離線測試。AI 整合及部署尚未開始。
 
 ## 專案原則
 
@@ -20,13 +20,13 @@
 
 > 公開原則：使用者已決定本 repo **維持 Public**，以便未來採用 GitHub Pages；**目前尚未啟用 Pages，也未部署**。Public Repo 並不等於原始題庫／內部資料已獲准公開。匯入前須逐項確認公開範圍，不得提交帳密、Token、服務帳戶金鑰或未核准公開的內容。
 
-## Phase A 盤點結果（2026-10-08）
+## Phase A 盤點結果（2026-10-08，歷史）
 
 - 已實際下載並唯讀檢查使用者提供的 tax-helper.zip；questionBank.js 共 **129 題、11 個分類**，問題／答案非空，無重複 ID／問題。
 - 搜尋頁可局部增加獨立 AI 表單與單一結果卡；保留原 TaxSearch、題庫瀏覽、收藏、Excel 匯入與詳情／導覽。
 - 1999 Messenger transport 與安全文字處理可局部重用；需 TAX 獨立 config／控制器，模式切換保留 Session，主動重置才開新 Session。
 - 1999 Node 14/14、原網頁離線 Chromium 8 組基線通過；整合後 UI／真實 Excel 成功匯入／live CX 尚未驗證。
-- repo 仍 **Public**；ZIP、原始碼、題庫正文與 CSV 未提交。證據、差異、converter 設計、事件序列與矩陣見 [PROJECT_STATE.md](PROJECT_STATE.md)，下一步見 [NEXT_TASK.md](NEXT_TASK.md)。
+- 當時尚未提交原始碼；目前八檔已依 B1 授權原貌納管，ZIP 與 CSV 仍排除。最新證據、限制、Session 事件序列與矩陣見 [PROJECT_STATE.md](PROJECT_STATE.md)，下一步見 [NEXT_TASK.md](NEXT_TASK.md)。
 
 ## Public Repo／GitHub Pages 決策（2026-10-08）
 
@@ -39,4 +39,33 @@
 
 使用者已同意將原始 `tax-helper.zip` 所包含的 **8 個原始檔案全部公開**並原貌納管至本 Public repo，包含 129 題的 `questionBank.js`、學習內容與網頁程式。先前逐檔審查「待確認」是歷史狀態，公開納管授權已解除阻擋。
 
-Web Codex 下一輪依 `NEXT_TASK.md` 執行 **B1 原貌匯入、原功能基線及 deterministic FAQ CSV 轉換器與離線測試**。沒有授權提交原 ZIP、衍生 `faq.csv`、缺少的 14 張圖片或其他附件；不啟用 GitHub Pages、不做正式 CX／GCP 操作。B2 AI UI 及 B3 真實 CX 介接仍為後續階段。
+本輪已完成 **B1 原貌匯入、原功能基線及 deterministic FAQ CSV 轉換器與離線測試**。沒有提交原 ZIP、衍生 `faq.csv`、缺少的 14 張圖片或其他附件；未啟用 GitHub Pages、未做 CX／GCP 操作。B2 AI UI 及 B3 真實 CX 介接仍為後續階段。
+
+## B1 重跑方式
+
+FAQ 工具只需 Python 3.10 以上與標準函式庫，不執行輸入 JavaScript。預設讀根目錄 `questionBank.js`，產生已忽略的 `generated/faq.csv`；CLI 回報版本、題數與 input/output SHA-256，不列正文。
+
+```bash
+python tools/question_bank_to_faq.py
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+CSV 固定二欄 `question,answer`、UTF-8 無 BOM、LF 記錄分隔；保留原陣列順序、完整答案、欄內換行及首尾空白。輸入缺值、錯型別、重複 key／ID／問題、動態或額外 JavaScript 會失敗，既有輸出不受影響。產物不可手改或以試算表重存，也不自動提交或上傳。
+
+本輪 **20/20 Python 測試**（19 項 converter＋1 項八檔原貌 hash）及 **17/17 Chromium 基線**通過。`tests/source_baseline.json` 保存八檔 SHA-256；`.gitattributes` 保留原檔 bytes，`tests/search_baseline.json` 凍結三組搜尋 ID／排序。
+
+瀏覽器測試需 Chromium 與 `tests/requirements-browser.txt` 的 Playwright。它以 route 供應本機原檔，不啟動 HTTP server，阻擋入口設定 API、遊戲與 CDN 的實際請求；不測 live CX 或部署。以下先執行 14 組原功能基線：
+
+```bash
+python -m pip install -r tests/requirements-browser.txt
+python tests/site_baseline.py --browser /usr/bin/chromium
+```
+
+若需重跑全部 17 組，先將原站指定的 XLSX 0.18.5 依賴下載至 repo 外暫存，再由瀏覽器 route 離線提供；不是 XLSX mock，也不將第三方檔或 Excel 納入 Git。
+
+```bash
+curl --fail --location --output /tmp/tax-helper-xlsx-0.18.5.js https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js
+python tests/site_baseline.py --browser /usr/bin/chromium --xlsx-script /tmp/tax-helper-xlsx-0.18.5.js
+```
+
+測試會核對依賴 hash，並以記憶體內合成的真實 OOXML workbook 驗證成功匯入、重複編號／缺題目欄位拒絕與重載行為。14 張學習圖片及返回入口未隨 ZIP 提供；外部服務可用性、Pages 路徑、live CX 與正式上線仍未驗證。
