@@ -18,26 +18,20 @@ Authorization: **本輪僅唯讀盤點、文件與離線方案；未授權來源
 - [x] 1999 Node 14/14、原 ZIP Chromium 8 組基線通過；未連 Production；整合後 E2E／真實 Excel 成功匯入尚未執行。
 - [x] 更新既有 README／STATE／TASK；文件 commit SHA 與遠端驗證於收工回報提供。
 
-## 下一輪單一任務 — 確認來源保護與原貌納管方式
+## 新決策：Public Repo 與 GitHub Pages（2026-10-08）
 
-先取得來源納管決策，維持 Phase A，不開始整合實作。
+- 使用者決定繼續保留 Public；不需要先改 Private。
+- GitHub Pages 為預計採用的靜態部署方式，尚未啟用或獲准部署。
+- Public 不代表全部 ZIP 或內部題庫皆獲公開核准；靜態 JS 題庫即使畫面隱藏也可被取得。
 
-- [ ] 先 fetch／讀四份文件；查驗本輪 checksum 對應原檔仍能存取。新環境若缺來源，明確要求可存取附件／路徑，不假設延續可用。
-- [ ] 確認 visibility／可公開範圍：改 Private 或明確核准可公開檔案。Public 狀態本身不等於題庫公開授權；未授權停在來源匯入前。
-- [ ] 決策涵蓋 ZIP 安全保存、原碼版控位置、敏感性審查及 generated CSV 排除；不連動網站或其他 repo Production。
-- [ ] **只有明確授權來源匯入後**，才原貌納管核准檔案並核對 hash；不順手修正網頁／題庫，不建立 AI UI 或 converter。
-- [ ] 記錄決策／未決事項，更新 STATE／TASK、commit／push、回報 branch／SHA／差異／未完成驗證。
+## 下一輪單一任務：檔案公開性檢查與原始碼納管準備
 
-### 驗收條件
+- [ ] fetch 最新文件及確認 Public；查核原始 ZIP 的 SHA-256 與可存取性。
+- [ ] 逐檔檢視 ZIP 的八個檔案，標記「可公開／需確認／不可公開」，特別檢查題庫正文、內部連結、個資與憑證，文件不可引用疑似敏感原文。
+- [ ] 說明網站是否依賴尚未核准公開的檔案；如果有，先列明限制及替代方案。
+- [ ] 只有明確授權公開及納管的檔案才可原貌提交；有疑義須暫停匯入。不得順便修改網頁、建立 converter 或 AI UI。
+- [ ] 更新 STATE／TASK 並推送文件，回報檢查結果、commit SHA、尚待決策項目。
 
-- 可公開範圍、可納管檔案及目的地有明確記錄；未核准題庫／ZIP／CSV／Secret 不進 GitHub。
-- 已授權匯入才標示「已匯入」，原貌檔案與129題 baseline 可追溯；未授權則標示等待決策。
-- 原快速搜尋／收藏／Excel／導覽不變；整合／converter 方案仍見 STATE，不另立 workflow 真相。
+### STOP
 
-## STOP boundary
-
-- 未授權來源公開／匯入，不 push 內部資料，不自行改 repository visibility。
-- 未取得 Phase B/C 授權，不新增 AI UI／模式切換／transport integration／converter，也不修既有網站／題庫。
-- 不寫 CX Agent、Playbook、Tool、Data Store、GCS、Messenger allowed domains、Environment／Production、IAM；禁止部署或觸發部署。
-- 不複製1999正式 config/binding、不修改1999／Rental、不猜網域／資源 ID／成功狀態。
-- 來源／權限／live 驗證缺失記 blocker；offline fixtures 不是 live CX／稅務品質實證。
+不自行更改 Repo visibility、不啟用 Pages、不部署、不修改 GCP/CX/1999；未核准的原始題庫、ZIP、CSV、憑證不得推送至 Public GitHub。Phase B/C 實作尚未授權。
