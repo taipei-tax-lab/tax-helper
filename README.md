@@ -18,7 +18,7 @@
 3. 最後讀 `NEXT_TASK.md`（下一輪檢查清單）。
 4. 依任務明確授權範圍執行，完成後更新 State/Task、commit、push，再回報實證。
 
-> 安全注意：本 repo 建立時為 **Public**。匯入任何內部題庫、程式或環境配置之前，先判斷敏感性並建議將此 repo 調整為 Private；不得提交帳密、Token、服務帳戶金鑰或未核准公開的內部資料。
+> 公開原則：使用者已決定本 repo **維持 Public**，以便未來採用 GitHub Pages；**目前尚未啟用 Pages，也未部署**。Public Repo 並不等於原始題庫／內部資料已獲准公開。匯入前須逐項確認公開範圍，不得提交帳密、Token、服務帳戶金鑰或未核准公開的內容。
 
 ## Phase A 盤點結果（2026-10-08）
 
@@ -27,3 +27,10 @@
 - 1999 Messenger transport 與安全文字處理可局部重用；需 TAX 獨立 config／控制器，模式切換保留 Session，主動重置才開新 Session。
 - 1999 Node 14/14、原網頁離線 Chromium 8 組基線通過；整合後 UI／真實 Excel 成功匯入／live CX 尚未驗證。
 - repo 仍 **Public**；ZIP、原始碼、題庫正文與 CSV 未提交。證據、差異、converter 設計、事件序列與矩陣見 [PROJECT_STATE.md](PROJECT_STATE.md)，下一步見 [NEXT_TASK.md](NEXT_TASK.md)。
+
+## Public Repo／GitHub Pages 決策（2026-10-08）
+
+- **保留 Public**；GitHub Pages 是預計使用的靜態網站部署方式，日後仍可重新評估其他部署方案；本次只更新規劃，未啟用 Pages 或變更網站。
+- Pages 提供的 HTML、JavaScript、靜態題庫及可下載資產，均須當作**任何取得網址的人皆可讀取**。沒有登入的靜態站不能憑網址不公開、Messenger allowed domains 或前端程式來辨識內部同仁。
+- 先盤點原 ZIP 全部資產的可公開性，特別確認 `questionBank.js`、`learningBank.js`、匯入資料、內部連結／端點與可能含敏感資訊的文字；確認可公開者才納管。若原題庫必須保密，**不得把原題庫放在 Public Git 或 Pages 靜態資產**；應停止該部分並提出替代承載方案。
+- `faq.csv` 是可再生產物，預設不提交；CX 後端匯入與 GCS 資源仍由獨立 Session 負責。未取得部署授權不啟用 Pages、CI 發布或正式 Messenger binding。
