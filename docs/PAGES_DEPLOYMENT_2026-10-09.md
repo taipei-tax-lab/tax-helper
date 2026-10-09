@@ -1,3 +1,16 @@
+## Deployment architecture change authorized（2026-10-09）
+
+The project will replace the current branch-source dynamic Pages build with a repo-controlled GitHub Actions workflow.
+
+See `docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`.
+
+The old queued dynamic `pages build and deployment` run belongs to the previous branch-source model and must not be used as proof for the new B3 deployment.
+
+New target: `relevant main push → repo workflow → verified runtime package → upload-pages-artifact → deploy-pages`.
+
+No CX/product change is part of this migration.
+
+---
 # TAX AI B3 Pages deployment evidence
 
 Date: 2026-10-09 (Asia/Taipei)
