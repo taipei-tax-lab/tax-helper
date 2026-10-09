@@ -1,7 +1,7 @@
 # TAX AI Web B3 — 正式 FAQ Flow 介接
 
 Date: 2026-10-09 (Asia/Taipei)
-Status: **B3 OFFLINE PASS / PAGES DEPLOYMENT IN PROGRESS**
+Status: **B3 OFFLINE PASS / PAGES TRIGGER PENDING / HUMAN LIVE ACCEPTANCE PENDING**
 Web main: `ec727a3df54a9e72c03d0e25ea4887640a860843`。
 Backend main: `3c214fde52d17810af85bd601e05b72291df67ff`，PR #4 已 merge。
 本輪使用者已明確授權 SDK／Production browser smoke／既定 Pages 發布；
@@ -62,3 +62,13 @@ Backend/CX/GCP／1999／Rental mutation：0。
 實作與 offline 全 PASS：Python21、Node34、B1 Chromium17、integration17、AI27、syntax10。
 14runtime deterministic candidate 359,048bytes，SHA256 dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775。
 測試／manifest／screenshots／Web-CX handoff 見 docs；下一步 push implementation→既有 Pages→hosted parity→真實 browser。
+
+## 發布進度證據（2026-10-09 18:12 Asia/Taipei）
+
+Implementation main：`ac9ab28f4ec7a8ca30229be9a8fbefe447449717`，已 push 且遠端 branch 核對相等。
+現有 Pages 尚為 ec727a3 的 B2 bytes，未觀察到此次 push 的新 run；B3 部署仍未勾。
+真實 Chromium 於 18:11 開 hosted Pages 即 `ERR_CERT_AUTHORITY_INVALID`，無 mock、正常 TLS／proxy、0 CX requests。
+currentPage／0～5／第二題／URL／mobile live browser 驗收全部 **PENDING**，不稱 FAIL 或 PASS。
+
+自動核准審查拒絕重跑舊 Pages build job113717503209（run37899184297），理由：run 綁定舊 ec727a3，可能回退舊 B2；該操作未執行。
+採安全替代：以新的 B3 main 文件 commit 記錄實際狀態，觀察現有 Pages 是否為新 commit 產生新 run；不重跑舊 run、不改 Source／CX。
