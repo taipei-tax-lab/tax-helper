@@ -1,3 +1,19 @@
+## Pages deployment architecture decision — GitHub Actions（2026-10-09）
+
+Plan: `docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`
+
+Status: **AUTHORIZED — MIGRATE TO GITHUB ACTIONS PAGES SOURCE**
+
+- Replace current `Deploy from a branch` / dynamic Pages build with repo-owned `.github/workflows/pages.yml`.
+- Model it on the accepted 1999 Web workflow.
+- Keep the existing Pages URL.
+- Deploy only the deterministic runtime allowlist from `tools/package_web.py`, not the repository root.
+- Relevant `main` pushes deploy automatically; `workflow_dispatch` is the explicit manual redeploy path.
+- Workflow must fail closed unless Settings > Pages > Source is `GitHub Actions`.
+- Deployment automation only; no CX/product behavior change.
+- The currently queued old dynamic Pages run is historical branch-source behavior and is not proof for the new model.
+
+---
 # TAX AI — Project State
 
 Last updated: 2026-10-09 (Asia/Taipei)
