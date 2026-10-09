@@ -1,0 +1,15 @@
+{
+  "url": "https://taipei-tax-lab.github.io/tax-helper/",
+  "utc": "2026-10-09T10:11:00.554268+00:00",
+  "status": "PENDING",
+  "tls_verification": true,
+  "mock": false,
+  "routes_or_response_interception": false,
+  "stage": "hosted navigation",
+  "production_requests": 0,
+  "request_contracts": [],
+  "checks": [],
+  "blocker": "Page.goto: net::ERR_CERT_AUTHORITY_INVALID at https://taipei-tax-lab.github.io/tax-helper/\nCall log:\n  - navigating to \"https://taipei-tax-lab.github.io/tax-helper/\", waiting until \"domcontentloaded\"\n",
+  "browser_error": "ERR_CERT_AUTHORITY_INVALID",
+  "page_errors": []
+}

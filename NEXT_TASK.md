@@ -1,7 +1,7 @@
 # TAX AI Web B3 — 正式 FAQ Flow 介接
 
 Date: 2026-10-09 (Asia/Taipei)
-Status: **B3 OFFLINE PASS / PAGES TRIGGER PENDING / HUMAN LIVE ACCEPTANCE PENDING**
+Status: **B3 IMPLEMENTED / OFFLINE PASS / PAGES DEPLOYMENT PENDING / LIVE ACCEPTANCE PENDING**
 Web main: `ec727a3df54a9e72c03d0e25ea4887640a860843`。
 Backend main: `3c214fde52d17810af85bd601e05b72291df67ff`，PR #4 已 merge。
 本輪使用者已明確授權 SDK／Production browser smoke／既定 Pages 發布；
@@ -48,9 +48,9 @@ Backend/CX/GCP／1999／Rental mutation：0。
 
 ## D. 文件、rollback 與 STOP
 
-- [ ] README／STATE／TASK／Web-CX handoff／deployment records 更新實際證據。
-- [ ] launch-critical 檢查與 rollback disposition：只關 liveEnabled 回準備中，Quick Search 正常；不恢復舊 Playbook／借用1999/Rental／改 Production。
-- [ ] Commit／push final handoff，核對 remote main／clean tree，STOP 等待 Web ChatGPT review。
+- [x] README／STATE／TASK／Web-CX handoff／deployment records 更新實際證據。
+- [x] launch-critical 檢查與 rollback disposition：只關 liveEnabled 回準備中，Quick Search 正常；不恢復舊 Playbook／借用1999/Rental／改 Production。
+- [x] Commit／push final handoff，核對 remote main／clean tree，STOP 等待 Web ChatGPT review。
 
 ## 保留 backlog（不阻擋本輪接線）
 
@@ -61,7 +61,12 @@ Backend/CX/GCP／1999／Rental mutation：0。
 
 實作與 offline 全 PASS：Python21、Node34、B1 Chromium17、integration17、AI27、syntax10。
 14runtime deterministic candidate 359,048bytes，SHA256 dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775。
-測試／manifest／screenshots／Web-CX handoff 見 docs；下一步 push implementation→既有 Pages→hosted parity→真實 browser。
+實作及進度文件已commit／push；final handoff亦提交，main實際SHA以GitHub及收工回報為準。
+測試／manifest／screenshots／Web-CX handoff／Pages狀態／browser proof見docs。
+Pages重跑已接受但queued／無新job，hosted仍舊B2；C各項保持未勾，不標DEPLOYED／LIVE。
+真實browserTLS blocker保持PENDING，無CX request；單純Cloud信任問題不觸發產品rollback。
+STOP等待WebChatGPT review。下輪先核對run37899184297的實際checkout／new artifact／deploy與14檔parity；
+若Pages重跑未啟動，需GitHub Pages排程/管理面處理；不要改backend或把舊run成功當本輪成功。
 
 ## 發布進度證據（2026-10-09 18:12 Asia/Taipei）
 
@@ -71,4 +76,11 @@ Implementation main：`ac9ab28f4ec7a8ca30229be9a8fbefe447449717`，已 push 且�
 currentPage／0～5／第二題／URL／mobile live browser 驗收全部 **PENDING**，不稱 FAIL 或 PASS。
 
 自動核准審查拒絕重跑舊 Pages build job113717503209（run37899184297），理由：run 綁定舊 ec727a3，可能回退舊 B2；該操作未執行。
-採安全替代：以新的 B3 main 文件 commit 記錄實際狀態，觀察現有 Pages 是否為新 commit 產生新 run；不重跑舊 run、不改 Source／CX。
+採安全替代：以新的 B3 main 文件 commit 記錄實際狀態；新 commit 仍未自動產生 run。
+使用者核准後，第二次舊 job 重跑仍被審查拒絕；補足 hosted 仍為 B2、checkout 明確 ref:main／fetch當前main 的可信證據後，第三次同一審查允許。
+已接受 run37899184297 build job 重跑（10:16:34 UTC），目前 QUEUED／未有新job，實際checkout／artifact／deploy仍待結果。
+前兩次被拒均未執行，不繞過審查、不改 Source／CX。
+
+最後觀察：2026-10-09 18:27:38 Asia/Taipei，重跑接受約11分鐘仍QUEUED／latest jobs=[]。
+C保留未勾；新deployed SHA／Actions artifact／hosted target parity尚無證據。
+詳見 docs/B3_PAGES_STATUS_2026-10-09.json；不是deployment FAIL，也不是DEPLOYED。

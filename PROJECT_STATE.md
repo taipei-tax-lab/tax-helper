@@ -1,7 +1,7 @@
 # TAX AI — Project State
 
 Last updated: 2026-10-09 (Asia/Taipei)
-Status: **B3 OFFLINE PASS / PAGES DEPLOYMENT IN PROGRESS**
+Status: **B3 IMPLEMENTED / OFFLINE PASS / PAGES DEPLOYMENT PENDING / LIVE ACCEPTANCE PENDING**
 
 本輪使用者已授權正式 FAQ Flow 接線、SDK／Production browser smoke 與既定 Pages 部署。
 Web 輸入 main `ec727a3df54a9e72c03d0e25ea4887640a860843`；backend 最新 main
@@ -44,13 +44,25 @@ ZIP不入Git，非Actions實際Pagesartifact；逐檔 [runtime manifest](docs/B3
 
 已核對既有Pages：https://taipei-tax-lab.github.io/tax-helper/ ，初始HTTP200／index/config parity、
 main ec727a3，既有dynamic Pages run37899184297成功；沿用main部署，不改Source或猜agency URL。
-B3 implementation SHA／deployment run／deployed SHA／hosted parity於發布後補入。
+B3 implementation `ac9ab28f4ec7a8ca30229be9a8fbefe447449717`、進度文件 main
+`c9f3a1889cfae6600e5a7c9801380c747126e8d3` 已提交／核對遠端；runtime14檔相同。
+兩次 main 更新未自動產生新 Pages run。既有 build log 明確 checkout ref:main／fetch當前main；
+使用者核准並補足 hosted 仍是 B2 等可信證據後，審查允許重跑 build job113717503209。
+此前兩次審查拒絕均未執行，理由為舊 run 的部署風險；已在同一審查補證解除，無繞過。
+10:16:34 UTC 接受重跑，目前 queued／無新job、artifact／deployed SHA／hosted target parity仍 **PENDING**。
+run37899184297 的 metadata head仍ec727a3，不可當新source；須查真正checkout SHA／artifact／hosted bytes。
+詳見 [Pages狀態證據](docs/B3_PAGES_STATUS_2026-10-09.json)。hosted index/config 最後核對仍exact舊B2，不宣稱B3已部署。
 
 ## Acceptance 與 rollback
 
 只有真正browser＋CX Production成功才可標 **TAX AI WEB + FAQ FLOW LIVE / USABLE**。
 若CloudTLS／proxy信任阻擋，已部署後標 **DEPLOYED / LIVE ACCEPTANCE PENDING**，browser checklist不勾，
 不能把fixture／backend既有36+36／6 native HTTP驗證寫成Web live PASS。
+
+真實 Chromium 在 10:11 UTC（18:11臺北）正常TLS／proxy navigation遇 ERR_CERT_AUTHORITY_INVALID；
+無mock或trust bypass、CX requests=0。[browser proof](docs/B3_LIVE_BROWSER_2026-10-09.json)。
+因此 request／native0～5／第二題／URL／mobile／Quick Search 的 **live** 驗收全部未勾。
+目前尚有Pages排程blocker，不能標DEPLOYED；離線與發布candidate完成，後續先核對Pages實際結果。
 
 Launch-critical rollback只關liveEnabled、AI回準備中，推main並驗Pages；Quick Search正常。
 不恢復B2Playbook／借其他Agent／改Production。flag=false離線已驗；Cloudbrowser信任限制本身不觸發產品rollback。

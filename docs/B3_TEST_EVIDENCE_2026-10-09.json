@@ -20,7 +20,7 @@
   ],
   "secret_scan": {
     "patterns": 7,
-    "text_files": 34,
+    "text_files": 36,
     "hits": 0,
     "scope": "repository files, not Git history; pattern scan is not proof of absence of every secret"
   },
@@ -141,5 +141,6 @@
     "No live CX proof from offline fixtures.",
     "Real SDK event/promise ordering and extremely late responses still require browser acceptance.",
     "14 pre-existing Learning images absent; live third-party services not asserted."
-  ]
+  ],
+  "final_docs_runtime_parity": true
 }

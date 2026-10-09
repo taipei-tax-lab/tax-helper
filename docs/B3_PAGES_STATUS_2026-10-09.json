@@ -1,0 +1,24 @@
+{
+  "observed_utc": "2026-10-09 10:27:38 UTC",
+  "status": "queued",
+  "conclusion": null,
+  "run_id": 37899184297,
+  "run_attempt": 1,
+  "run_metadata_head_sha": "ec727a3df54a9e72c03d0e25ea4887640a860843",
+  "run_updated_at": "2026-10-09T10:16:34Z",
+  "url": "https://github.com/taipei-tax-lab/tax-helper/actions/runs/37899184297",
+  "implementation_sha": "ac9ab28f4ec7a8ca30229be9a8fbefe447449717",
+  "main_release_progress_sha": "c9f3a1889cfae6600e5a7c9801380c747126e8d3",
+  "latest_attempt_jobs": [],
+  "built_source_sha": null,
+  "new_deployed_sha": null,
+  "new_pages_artifact": null,
+  "target_hosted_byte_parity": "PENDING",
+  "previous_hosted_release": "ec727a3 B2; index/config exact bytes verified 2026-10-09 10:15 UTC",
+  "rebuild_authorization": "User approval plus verified explicit checkout main; automatic review approved third submission.",
+  "remaining_blockers": [
+    "GitHub rerun accepted 2026-10-09T10:16:34Z; still QUEUED after 11 minutes, no new job/artifact/deploy.",
+    "Normal-TLS true Chromium navigation ERR_CERT_AUTHORITY_INVALID, zero CX requests."
+  ],
+  "queued_for_minutes_observed": 11
+}

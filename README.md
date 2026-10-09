@@ -4,6 +4,10 @@
 
 Pages：https://taipei-tax-lab.github.io/tax-helper/
 
+**B3 implementation／offline PASS；Pages deployment PENDING／live acceptance PENDING**。
+既有build重跑已核准但仍queued，hosted最後核對是舊B2；另有Cloud Chromium TLS信任blocker。
+尚未標DEPLOYED或LIVE；本頁正式config描述指GitHub的B3 source。
+
 本輪 B3 狀態見 [PROJECT_STATE.md](PROJECT_STATE.md)、[NEXT_TASK.md](NEXT_TASK.md)、[部署證據](docs/PAGES_DEPLOYMENT_2026-10-09.md)。只有真實 browser＋CX Production 成功才標 **TAX AI WEB + FAQ FLOW LIVE / USABLE**；離線測試不能代替 live 驗收。
 
 ## AI 搜尋契約
