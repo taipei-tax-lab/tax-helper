@@ -1,3 +1,25 @@
+## TAX AI backend architecture decision update（2026-10-09）
+
+Status: **WEB B2 ACCEPTED / B3 WAITING FOR NEW FLOW HANDOFF**
+
+The prior B3 plan expected a Playbook-based multi-turn TAX AI backend. That contract is superseded.
+
+New backend source of truth:
+`taipei-tax-lab/dialogflow-cx-qa-framework/docs/TAX_AI_INTERNAL_FAQ_FLOW_IMPLEMENTATION_PLAN_2026-10-09.md`
+
+New product contract:
+- TAX AI AI-mode is FAQ semantic search;
+- backend is a new independent Agent using Flow + Data Store;
+- each AI query is independent;
+- native 0–5 related Q/A results;
+- no Playbook/currentPlaybook conversational dependency;
+- no visible reset-conversation concept in the final AI mode;
+- Quick Search and all existing local Web features remain unchanged.
+
+B2 code remains valuable as UI/transport/mock groundwork, but its multi-turn/reset assumptions are historical and will be adapted only after backend handoff.
+
+---
+
 # TAX AI — Project State
 
 Last updated: 2026-10-08 (Asia/Taipei)
