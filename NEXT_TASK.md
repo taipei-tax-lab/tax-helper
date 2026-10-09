@@ -1,3 +1,34 @@
+## Next B3 gate — wait for TAX AI FAQ Flow backend handoff
+
+Do not start live CX wiring until backend publishes:
+
+`TAX AI INTERNAL FAQ FLOW BACKEND READY FOR WEB CUTOVER`
+
+Required backend handoff:
+- new Agent ID;
+- location;
+- Production Environment;
+- Flow ID;
+- full START_PAGE currentPage;
+- Messenger binding;
+- 0–5 result text/structured contract;
+- fallback;
+- independent-query semantics;
+- rollback.
+
+When handoff is ready, Web B3 should:
+- keep Quick Search unchanged;
+- replace old Playbook/multi-turn transport assumptions with per-query currentPage;
+- render 1–5 FAQ results;
+- remove visible reset-conversation UX;
+- latest AI result replaces previous;
+- preserve Favorites/Excel/Learning/site behavior;
+- do not redesign backend architecture.
+
+Until then: no GCP/CX guesses, no formal SDK binding, no Pages launch claim.
+
+---
+
 # TAX AI — Next Task
 
 Last updated: 2026-10-08 (Asia/Taipei)
