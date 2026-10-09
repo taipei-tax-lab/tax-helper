@@ -1,7 +1,7 @@
 # TAX AI Web — GitHub Pages Actions Migration Plan
 
 Date: 2026-10-09
-Status: **AUTHORIZED — MIGRATE FROM BRANCH SOURCE TO GITHUB ACTIONS**
+Status: **TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE**
 
 ## Goal
 
@@ -82,5 +82,9 @@ After migration, normal releases are automatic from approved relevant `main` cha
 ## Implementation progress（2026-10-09）
 
 repo-owned pages.yml與verify_package.py已依本計畫實作；offline Python27／Node34／syntax10 PASS，兩ZIP相同、fresh15檔、runtime14不改。
-詳見PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json及PAGES_DEPLOYMENT_2026-10-09.md；實際Source與first deployment仍須新run證據。
+詳見PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json及PAGES_DEPLOYMENT_2026-10-09.md；實際guard已workflow，run37922319766 build/deploy PASS，hosted15檔exact／MIME、17internal paths404。
 未變更管理設定／CX／產品，不再重跑舊dynamicjob。
+
+正式source/deployed d614b423d33281667fb7d94f3df73a8a7634f0a5；github-pages artifact11611894162。
+Source已是workflow，未由本輪透過管理API更改。main relevant push自動發布已實證；doc-only不觸發。
+Web/CX browser仍CloudTLS PENDING，不宣稱LIVE／USABLE。

@@ -50,11 +50,15 @@
     "python-tests.log": "819f07ca1cd1796a6a35c42e6361c9f8040a8ef3b890c6b5acc33be8255fee9d",
     "node-tests.log": "4a88651e997b8fb87a942a62f8b7a27dfed729eefb82fe9e71b225056d60d47f"
   },
-  "CI_source_check": "PENDING until new workflow run",
-  "deployed_sha": null,
-  "github_pages_artifact": null,
-  "hosted_byte_parity": "PENDING",
-  "live_browser": "PENDING; not a pre-deploy gate",
+  "CI_source_check": "PASS: actual build_type workflow",
+  "deployed_sha": "d614b423d33281667fb7d94f3df73a8a7634f0a5",
+  "github_pages_artifact": {
+    "id": 11611894162,
+    "name": "github-pages",
+    "digest": "sha256:09a9a6d3fc9af2d0f4814704770650a376a1210cd74401ffe651560a9bfcba74"
+  },
+  "hosted_byte_parity": "PASS: all15 published files; 17excluded paths404",
+  "live_browser": "PENDING: ERR_CERT_AUTHORITY_INVALID at hosted navigation, zeroCX requests",
   "chromium_in_ci": false,
   "chromium_reason": "Requires Playwright/browser provisioning and real third-party XLSX dependency; B3 regression already recorded, runtime remains exact bytes.",
   "release_automation_source_scan": {
@@ -65,5 +69,10 @@
     ],
     "hits": 0,
     "negative_fixture_note": "tests/test_verify_package.py intentionally contains a synthetic client_secret for the rejection test; tests are excluded from the Pages artifact."
-  }
+  },
+  "actions_run_id": 37922319766,
+  "ci_python_tests_pass": 27,
+  "ci_node_tests_pass": 34,
+  "ci_build": "PASS",
+  "ci_deploy": "PASS"
 }

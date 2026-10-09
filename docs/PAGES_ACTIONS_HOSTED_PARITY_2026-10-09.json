@@ -1,0 +1,237 @@
+{
+  "observed_utc": "2026-10-09T11:16:47.188395+00:00",
+  "url": "https://taipei-tax-lab.github.io/tax-helper/",
+  "source_sha": "d614b423d33281667fb7d94f3df73a8a7634f0a5",
+  "run_id": 37922319766,
+  "tls_verification": true,
+  "status": "PASS",
+  "package_sha256": "dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775",
+  "published_files": 15,
+  "runtime_and_manifest_byte_parity": "PASS",
+  "mime": "PASS",
+  "internal_exclusion_404_checks": 17,
+  "checks": [
+    {
+      "path": "MANIFEST.json",
+      "http": 200,
+      "content_type": "application/json",
+      "bytes": 2082,
+      "sha256": "0ba8eb37b3b53c076b50e233ec8160079db12c2fa9b57cfc1bf01390da78c916",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "app.js",
+      "http": 200,
+      "content_type": "application/javascript",
+      "bytes": 26936,
+      "sha256": "88d72e56975238aa2e8861df2faaac2ed57a9f4f5b8169bebbe929bf3337111b",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "assets/tax-ai/config.mjs",
+      "http": 200,
+      "content_type": "text/javascript",
+      "bytes": 704,
+      "sha256": "5bb709c2817601f30b019379937362c3a1b95822adfcd3ca0db2960a2fb8b99c",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "assets/tax-ai/controller.mjs",
+      "http": 200,
+      "content_type": "text/javascript",
+      "bytes": 7061,
+      "sha256": "86d5729e0e3a7dd9693cb5f54e3c9cc0282564b31838d0847157eaf5a3cb4b1c",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "assets/tax-ai/messenger-transport.mjs",
+      "http": 200,
+      "content_type": "text/javascript",
+      "bytes": 5895,
+      "sha256": "dc02a51fde03700d6d6f02a8d18e6e5dd23b46f91f7f25b9185e733f2d856a22",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "assets/tax-ai/mock-messenger.mjs",
+      "http": 200,
+      "content_type": "text/javascript",
+      "bytes": 3302,
+      "sha256": "b667381ab17d063c1cfb93ebbbbdc47e6d074c3fb62c4c14497729c9a599fdf1",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "assets/tax-ai/result-model.mjs",
+      "http": 200,
+      "content_type": "text/javascript",
+      "bytes": 9141,
+      "sha256": "231d989dea97d71cd7038e7fd87839362b3b258c57d28f4119fba930f98eb334",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "assets/tax-ai/style.css",
+      "http": 200,
+      "content_type": "text/css",
+      "bytes": 3301,
+      "sha256": "5bf4b48e9e15446a0ca0e9ea63ae1a798eb746f2ed897a2d302a699ce10c0387",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "index.html",
+      "http": 200,
+      "content_type": "text/html",
+      "bytes": 11753,
+      "sha256": "e55cd3e2fd3da312fb595106ba42d11801a3f0de351b3ed519c9e066537cb50a",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "learningBank.js",
+      "http": 200,
+      "content_type": "application/javascript",
+      "bytes": 9690,
+      "sha256": "a1396fe06fa12b80decee84797666c852b7eb95d4451d1c566aeab796a59c451",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "logo.png.gif",
+      "http": 200,
+      "content_type": "image/gif",
+      "bytes": 3595,
+      "sha256": "d7c189c93d2ed9f035854a7dccd8d9cba4fb77173aa32ccafef3389e563edf31",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "questionBank.js",
+      "http": 200,
+      "content_type": "application/javascript",
+      "bytes": 212639,
+      "sha256": "b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "search.js",
+      "http": 200,
+      "content_type": "application/javascript",
+      "bytes": 17492,
+      "sha256": "e5a654b9187a281d16e737c1c790a3806dba9d1370c76be900f1d2d77c3d159d",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "searchDictionary.js",
+      "http": 200,
+      "content_type": "application/javascript",
+      "bytes": 17457,
+      "sha256": "e020590d1a7a6d5ae72a66c89df139b7264f9646107bee06c92a1ca9e7a1cb85",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "style.css",
+      "http": 200,
+      "content_type": "text/css",
+      "bytes": 26274,
+      "sha256": "afb88aa24a70babf928c00d5633dcd7d13d794f9b6fe070c5bcb40484e1f5435",
+      "byte_parity": true,
+      "mime_pass": true
+    },
+    {
+      "path": "AGENTS.md",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "PROJECT_STATE.md",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "NEXT_TASK.md",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "README.md",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "docs/PAGES_DEPLOYMENT_2026-10-09.md",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "docs/B3_RELEASE_MANIFEST.json",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "tools/package_web.py",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "tools/verify_package.py",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "tests/tax_ai.test.mjs",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "tests/test_source_baseline.py",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "generated/faq.csv",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "hosting.zip",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "example.xlsx",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "docs/",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "tests/",
+      "http": 404,
+      "not_published": true
+    },
+    {
+      "path": "tools/",
+      "http": 404,
+      "not_published": true
+    }
+  ],
+  "observed_taipei": "2026-10-09T19:16:47.188395+08:00",
+  "deployed_sha": "d614b423d33281667fb7d94f3df73a8a7634f0a5"
+}

@@ -1,7 +1,7 @@
 # TAX AI — Pages Actions migration state
 
 Date: 2026-10-09 (Asia/Taipei)
-Status: **ACTIONS WORKFLOW IMPLEMENTED / OFFLINE GATES PASS / SOURCE CHECK PENDING**
+Status: **TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE**
 Input main: `084e6cb8c6accb55d6e0923dfe5319fff22b240f`。
 本輪只做 deployment automation，讀取1999 workflow／verifier作唯讀參考；不改產品或CX。
 
@@ -23,13 +23,26 @@ Input main: `084e6cb8c6accb55d6e0923dfe5319fff22b240f`。
 兩份ZIP均359,048bytes，SHA256 `dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775`；
 fresh extraction15檔，internal files=0。ZIP不入Git，Actions github-pages artifact才是部署artifact。
 
-## 下一個 gate／STOP
+## 正式發布證據／STOP
 
-新workflow push後以其guard讀取的Pages配置為準，不猜Source，也不重跑舊dynamic run。
-若仍branch source，標 **ACTIONS WORKFLOW READY / PAGES SOURCE SWITCH PENDING** 並STOP，
-owner手動設定Settings > Pages > Build and deployment > Source > GitHub Actions後，透過新workflow_dispatch發布。
-Source已workflow才能記新run的source/deployed SHA、artifact與hosted bytes／MIME／internal exclusions。
-真正browser＋CX Production完成才可升級LIVE／USABLE；CloudTLS阻擋保留PENDING，不阻擋Actionsgate。
+main push自動觸發 [run37922319766](https://github.com/taipei-tax-lab/tax-helper/actions/runs/37922319766)。
+Source／deployed SHA：`d614b423d33281667fb7d94f3df73a8a7634f0a5`。
+2026-10-09 19:12:44臺北，實際guard顯示 `Pages build_type: workflow`；已是GitHub Actions，未透過管理API修改。
+Build／deploy PASS，CI同樣Python27／Node34／syntax10 PASS，兩ZIP同SHA、verify／upload均PASS。
+github-pages artifact11611894162，91,121bytes，digest
+`sha256:09a9a6d3fc9af2d0f4814704770650a376a1210cd74401ffe651560a9bfcba74`。
+這是Actionsartifact封裝digest；359,048bytes runtime ZIP SHA仍dd8a739b...，兩者不混用。
+
+Hosted15檔HTTP200／與部署ZIPexact bytes／MIME PASS，17個internal paths404；B3config與正式source完全相同。
+[run證據](docs/PAGES_ACTIONS_RUN_2026-10-09.json)、[hosted parity](docs/PAGES_ACTIONS_HOSTED_PARITY_2026-10-09.json)。
+Pages：https://taipei-tax-lab.github.io/tax-helper/ 。不再publish repo root，不使用舊dynamicrun作任何新deployment proof。
+
+真實Chromium於19:17 normalTLS／proxy navigation仍 `ERR_CERT_AUTHORITY_INVALID`，無mock／bypass，CXrequests=0；
+[browser證據](docs/PAGES_ACTIONS_LIVE_BROWSER_2026-10-09.json)。Web/CX live acceptance仍 **DEPLOYED / LIVE ACCEPTANCE PENDING**，
+未升級TAX AI WEB + FAQ FLOW LIVE / USABLE，未觸發產品rollback。
+
+本輪final handoff只更新docs，不重新部署；deployed SHA留d614b42，runtime／release automation保持相同。
+Commit/push、核對remote main／clean tree後STOP等WebChatGPT review。
 
 ## 歷史 B3 交付（以下保留實作/測試事實；branch-source模式已由本輪遷移取代）
 

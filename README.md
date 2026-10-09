@@ -4,9 +4,10 @@
 
 Pages：https://taipei-tax-lab.github.io/tax-helper/
 
-**B3 runtime不變；Actions workflow實作／offline gates PASS，Pages Source待新run核對。**
-舊branch-source dynamic run不作本輪證據；只有新workflow發布成功才標Actions deployment active。
-真實browser／CX acceptance另列，CloudTLS blocker不加入CI。
+**TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE**。Pages Source已由新run確認workflow；build／deploy／hosted parity均PASS。
+真實browser／CX狀態 **DEPLOYED / LIVE ACCEPTANCE PENDING**：Cloud Chromium navigation仍有TLS信任blocker，未宣稱LIVE／USABLE。
+正式 [run37922319766](https://github.com/taipei-tax-lab/tax-helper/actions/runs/37922319766)，source/deployed d614b423d33281667fb7d94f3df73a8a7634f0a5；artifact11611894162。
+舊dynamic run為歷史，不重跑、不作本輪truth。
 
 本輪 B3 狀態見 [PROJECT_STATE.md](PROJECT_STATE.md)、[NEXT_TASK.md](NEXT_TASK.md)、[部署證據](docs/PAGES_DEPLOYMENT_2026-10-09.md)。只有真實 browser＋CX Production 成功才標 **TAX AI WEB + FAQ FLOW LIVE / USABLE**；離線測試不能代替 live 驗收。
 
@@ -57,7 +58,7 @@ B3：Python **21/21**、Node **34/34**、Chromium **B1 17/17＋原功能整合17
 ## 發布與 rollback
 
 repo-owned [.github/workflows/pages.yml](.github/workflows/pages.yml) 由relevant main runtime／release／tests修改自動觸發，亦支援workflow_dispatch；純STATE／TASK／README／docs更新不部署。
-需owner一次性設定 **Settings > Pages > Build and deployment > Source > GitHub Actions**。
+Source已確認是GitHub Actions。新repo或恢復時的一次性owner設定為 **Settings > Pages > Build and deployment > Source > GitHub Actions**。
 workflow讀Pages配置，build_type不等於workflow即fail closed，輸出明確切換指示；不透過管理API改Source、不重跑舊dynamic job。
 
 每次先跑Python／Node離線測試，兩獨立temp path重建ZIP且byte-identical，再verify CRC／entry set／manifest／source parity／credential patterns／JS syntax，fresh extract後只upload該15檔目錄。
@@ -73,7 +74,7 @@ python3 tools/package_web.py --output /tmp/tax-ai-b3.zip --manifest /tmp/tax-ai-
 python3 tools/verify_package.py /tmp/tax-ai-b3.zip --extract /tmp/tax-ai-pages-fresh
 ```
 
-14 runtime檔＋MANIFEST，固定順序／時間／權限／ZIP_STORED，重建 byte-identical。發布 manifest 見 [B3_RELEASE_MANIFEST.json](docs/B3_RELEASE_MANIFEST.json)。ZIP／CSV／Excel／測試依賴不入Git。Source切換後Actions只upload verified extraction，包含runtime14＋MANIFEST.json；docs／tests／tools／STATE／TASK／AGENTS／使用者資料不發布。
+14 runtime檔＋MANIFEST，固定順序／時間／權限／ZIP_STORED，重建 byte-identical。發布 manifest 見 [B3_RELEASE_MANIFEST.json](docs/B3_RELEASE_MANIFEST.json)。ZIP／CSV／Excel／測試依賴不入Git。Actions只upload verified extraction，包含runtime14＋MANIFEST.json；docs／tests／tools／STATE／TASK／AGENTS／使用者資料不發布。
 
 Launch-critical frontend rollback：只關 liveEnabled、重建並推main／核對Pages，AI回準備中，Quick Search正常；不得恢復舊Playbook／借Agent／改backend Production。
 
@@ -90,3 +91,5 @@ python3 tools/question_bank_to_faq.py
 14張原Learning圖片仍缺；返回入口／遊戲／外部服務可用性留B4 backlog。本輪未補造或宣稱通過。B1／B2歷史驗收見STATE的歷史段落。
 
 本輪deployment gates：Python27（含6個package防退化／負向驗證）、Node34、JS syntax10 PASS；兩ZIP及fresh15檔檢查PASS。所有runtime bytes與輸入main相同。
+
+首次Actions部署已PASS：15檔HTTP200／ZIP exact bytes／合理MIME，17個internal paths404。最終handoff文件commit不重deploy；正式deployed SHA仍d614b42。

@@ -1,0 +1,23 @@
+{
+  "run_id": 37922319766,
+  "url": "https://github.com/taipei-tax-lab/tax-helper/actions/runs/37922319766",
+  "attempt": 1,
+  "event": "push",
+  "source_sha": "d614b423d33281667fb7d94f3df73a8a7634f0a5",
+  "deployed_sha": "d614b423d33281667fb7d94f3df73a8a7634f0a5",
+  "build": "PASS",
+  "deploy": "PASS",
+  "pages_build_type": "workflow",
+  "source_guard_log": "2026-10-09T11:12:44.5303775Z Pages build_type: workflow",
+  "artifact": {
+    "id": 11611894162,
+    "name": "github-pages",
+    "bytes": 91121,
+    "digest": "sha256:09a9a6d3fc9af2d0f4814704770650a376a1210cd74401ffe651560a9bfcba74",
+    "created_at_utc": "2026-10-09T11:12:52Z"
+  },
+  "package_sha256": "dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775",
+  "ci_python_pass": 27,
+  "ci_node_pass": 34,
+  "ci_js_syntax_pass": 10
+}

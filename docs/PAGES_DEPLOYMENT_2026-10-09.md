@@ -1,7 +1,7 @@
 # TAX AI Pages Actions deployment evidence
 
 Date: 2026-10-09 (Asia/Taipei)
-Status: **WORKFLOW IMPLEMENTED / OFFLINE PASS / SOURCE CHECK PENDING**。
+Status: **TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE / LIVE ACCEPTANCE PENDING**。
 Migration input main：`084e6cb8c6accb55d6e0923dfe5319fff22b240f`。
 
 ## 正式發布模型
@@ -17,15 +17,16 @@ Pages URL：https://taipei-tax-lab.github.io/tax-helper/
 
 | 本輪欄位 | 已確認狀態 |
 | --- | --- |
-| Implementation/source SHA | workflow push後記新commit／run |
-| 新workflow run ID | 待push觀察 |
-| Pages Source | 必須由新guard讀取；目前未冒稱切換 |
-| Deployed SHA／artifact | PENDING，尚無新Actionsdeployment證據 |
+| Implementation/source/deployed SHA | d614b423d33281667fb7d94f3df73a8a7634f0a5 |
+| 新workflow run ID | [37922319766](https://github.com/taipei-tax-lab/tax-helper/actions/runs/37922319766)，push／attempt1／success |
+| Pages Source | guard19:12:44臺北顯示build_type: workflow；無管理API mutation |
+| github-pages artifact | 11611894162，91,121bytes，digest見下方 |
+| CI build／deploy | PASS／PASS，Python27／Node34／syntax10與package／upload PASS |
 | Local build／tests | PASS：Python27／Node34／syntax10 |
 | Package | 359,048bytes／14runtime＋MANIFEST；兩build byte-identical |
 | Package SHA256 | dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775 |
-| Hosted parity／MIME／internal exclusions | PENDING，需新Actions正式deploy後驗證 |
-| 真實browser／CX | PENDING；與deploymentgate分開 |
+| Hosted parity／MIME／internal exclusions | PASS：15檔HTTP200／ZIP exact／MIME；17個excluded paths404 |
+| 真實browser／CX | PENDING：19:17 navigation ERR_CERT_AUTHORITY_INVALID／0CX requests |
 
 ## Package gate 與範圍證據
 
@@ -50,13 +51,24 @@ CloudTLS live blocker不作Actionsdeployment blocker；只有真實browser＋CX 
 
 ## 發布後驗收（未完成不得勾）
 
-- [ ] 新run guard顯示workflow、build PASS、deploy PASS，記source/deployed SHA與github-pages artifact。
-- [ ] Hosted14runtime＋MANIFEST HTTP200、每檔exact package bytes；JS/.mjs／CSS／HTML／JSON／GIF MIME合理。
-- [ ] Repo internal paths不發布：AGENTS、STATE、TASK、README、docs、tests、tools、CSV／ZIP／Excel等。
-- [ ] Hosted B3 config等於正式source；原功能／CX真實browser smoke，CA限制則PENDING。
+- [x] 新run guard顯示workflow、build PASS、deploy PASS，source=deployed d614b42／artifact11611894162。
+- [x] Hosted14runtime＋MANIFEST HTTP200、每檔exact package bytes；全部MIME合理。
+- [x] Repo internal paths不發布：17個AGENTS／STATE／TASK／README／docs／tests／tools／CSV／ZIP／Excel等paths404。
+- [x] Hosted B3 config等於正式source，runtime14不改。
+- [x] 正常TLS browser嘗試已記錄；navigation CA阻擋、0CXrequests，未bypass。
+- [ ] 真實原功能／CX browser acceptance；保留PENDING，不當FAIL／PASS。
 
-Source未切換時收工狀態 **ACTIONS WORKFLOW READY / PAGES SOURCE SWITCH PENDING**。
-新Actionsbuild/deploy＋hosted驗證成功才標 **TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE**。
+Source guard實際已workflow，首次main push deployment成功，標 **TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE**。
+正式artifact digest：`sha256:09a9a6d3fc9af2d0f4814704770650a376a1210cd74401ffe651560a9bfcba74`。
+[run proof](PAGES_ACTIONS_RUN_2026-10-09.json)、[hosted15＋17exclusions proof](PAGES_ACTIONS_HOSTED_PARITY_2026-10-09.json)、
+[normalTLS browser proof](PAGES_ACTIONS_LIVE_BROWSER_2026-10-09.json)。
+新run/source/deployed SHA與deploy log的artifact_id/pages_build_version一致；沒有沿用舊run metadata。
+
+部署後 browser仍在document遇 ERR_CERT_AUTHORITY_INVALID（19:17臺北），無CX request，未用mock或忽略TLS。
+所以Web/CX狀態 **DEPLOYED / LIVE ACCEPTANCE PENDING**，未升級LIVE／USABLE、未做產品rollback。
+final handoff只有docs／metadata修改，runtime14與d614b42及部署ZIP完全相同，按path policy不重deploy。
+目前正式deployed SHA d614b42；review main SHA為另一次文件commit，須區分二者。
+Commit/push並核對remote／clean tree後STOP等WebChatGPT review。
 
 ## 歷史 B3／branch-source證據（以下不作新部署truth）
 
