@@ -1,24 +1,33 @@
-# Active task — migrate TAX AI Pages from branch source to GitHub Actions
+# Active task — TAX AI Pages GitHub Actions migration
 
-Plan: `docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`
+Date: 2026-10-09 (Asia/Taipei)
+Status: **WORKFLOW IMPLEMENTED / OFFLINE PASS / SOURCE CHECK PENDING**
+Input main `084e6cb8c6accb55d6e0923dfe5319fff22b240f`；plan見docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md。
 
-- [ ] Read the 1999 reference workflow.
-- [ ] Create `.github/workflows/pages.yml` with automatic relevant-main triggers and `workflow_dispatch`.
-- [ ] Add `build_type=workflow` fail-closed guard.
-- [ ] Run deterministic pre-deploy tests/package checks.
-- [ ] Build `tools/package_web.py` twice and require byte-identical ZIPs.
-- [ ] Extract/upload only runtime allowlist + MANIFEST; never publish repo root.
-- [ ] Use configure-pages, upload-pages-artifact and deploy-pages official actions.
-- [ ] Preserve correct Pages/id-token permissions and pages concurrency.
-- [ ] Do not modify CX backend or TAX AI product behavior.
-- [ ] Commit/push workflow and docs.
-- [ ] If Source is still branch mode, stop at `ACTIONS WORKFLOW READY / PAGES SOURCE SWITCH PENDING` and ask owner to select GitHub Actions.
-- [ ] After switch, run/dispatch and record run/source/deployed SHA/artifact.
-- [ ] Verify hosted byte parity and internal-file exclusions.
-- [ ] Then run trusted-browser TAX AI smoke if possible.
-- [ ] Update PROJECT_STATE/NEXT_TASK/README/deployment evidence.
+- [x] Pull main，依序讀AGENTS／STATE／TASK／README／migration／deployment，唯讀1999 pages.yml和verify_hosting.py。
+- [x] 新pages.yml：relevant main paths＋workflow_dispatch、concurrency pages、官方checkout/configure/upload/deploy actions。
+- [x] Pages build_type=workflow fail-closed guard；legacy／null／API error停，只有workflow過；不改Source。
+- [x] Python27、Node34、JS syntax10、YAML／shell／trigger coverage PASS；full B1 Git history仍保留。
+- [x] 兩獨立path deterministic ZIP byte-identical；CRC／entries／manifest／source-byte parity／secret scan PASS。
+- [x] Fresh verified extraction15檔，只upload14runtime＋MANIFEST；repo internal檔案不入artifact。
+- [x] 最小permissions、github-pages environment、pages concurrency；不以Cloud browser CA作pre-deploy gate。
+- [x] Runtime14 exact input-main bytes；不修改TAX AI／CX／1999／Rental；不重跑舊dynamic job。
+- [ ] Commit/push implementation及docs，觀察新workflow Source guard與run ID。
+- [ ] 若Source仍branch模式：記ACTIONS WORKFLOW READY / PAGES SOURCE SWITCH PENDING，STOP等owner手動切換。
+- [ ] Source已workflow：以新workflow relevant push／dispatch完成第一正式build/deploy。
+- [ ] 記run/source/deployed SHA／github-pages artifact／package SHA／build&deploy PASS／Pages URL。
+- [ ] Hosted14runtime+MANIFEST HTTP200／exact package bytes／MIME合理；internal docs/tests/tools等不得發布。
+- [ ] 可行的真實browser smoke；若CA/proxy阻擋維持PENDING，不影響Actionsdeployment認定。
+- [ ] 更新STATE／TASK／README／deployment實證、final commit/push／clean tree／STOP review。
 
-Target: `TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE`
+Offline package SHA：dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775，359,048bytes。
+[本輪測試證據](docs/PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json)。
+只在新Actionsbuild/deploy及hosted驗證成功後標TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE；
+只有真人browser＋CX Production正常才標TAX AI WEB + FAQ FLOW LIVE / USABLE。
+
+## 歷史 B3 checklist（保留原實作事實；部署改看上方新Actions項目）
+
+舊dynamic Pages queued run不再是本輪證據，不重跑。以下先前建議沿用branch-source已失效。
 
 ---
 # TAX AI Web B3 — 正式 FAQ Flow 介接

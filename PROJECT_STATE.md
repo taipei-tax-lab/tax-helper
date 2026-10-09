@@ -1,17 +1,39 @@
-## Pages deployment architecture decision — GitHub Actions（2026-10-09）
+# TAX AI — Pages Actions migration state
 
-Plan: `docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`
+Date: 2026-10-09 (Asia/Taipei)
+Status: **ACTIONS WORKFLOW IMPLEMENTED / OFFLINE GATES PASS / SOURCE CHECK PENDING**
+Input main: `084e6cb8c6accb55d6e0923dfe5319fff22b240f`。
+本輪只做 deployment automation，讀取1999 workflow／verifier作唯讀參考；不改產品或CX。
 
-Status: **AUTHORIZED — MIGRATE TO GITHUB ACTIONS PAGES SOURCE**
+## 已完成
 
-- Replace current `Deploy from a branch` / dynamic Pages build with repo-owned `.github/workflows/pages.yml`.
-- Model it on the accepted 1999 Web workflow.
-- Keep the existing Pages URL.
-- Deploy only the deterministic runtime allowlist from `tools/package_web.py`, not the repository root.
-- Relevant `main` pushes deploy automatically; `workflow_dispatch` is the explicit manual redeploy path.
-- Workflow must fail closed unless Settings > Pages > Source is `GitHub Actions`.
-- Deployment automation only; no CX/product behavior change.
-- The currently queued old dynamic Pages run is historical branch-source behavior and is not proof for the new model.
+- repo-owned `.github/workflows/pages.yml`：relevant main push＋workflow_dispatch，pages concurrency／cancel-in-progress=false。
+- checkout@v4／fetch-depth=0保留B1歷史；Source guard要求build_type=workflow，否則fail closed。
+  configure-pages@v5只在guard後執行；不使用enablement／管理API更改Source。
+- Python3.12／Node24.19.0，Python27／Node34／JS syntax10 PASS；無live network或browser prerequisite。
+- 每次Actions在兩獨立temp路徑重建ZIP、cmp，verify_package檢查CRC／15entry set／manifest／source bytes／credential patterns／JS。
+- 驗證後fresh extract，只upload該目錄14runtime＋MANIFEST.json；不publish repo root／tests／docs／tools／Excel等。
+- build contents:read/pages:read；deploy pages:write/id-token:write、github-pages environment、deploy-pages@v5。
+- docs-only STATE／TASK／README等不觸發部署；runtime14全部涵蓋，新增verifier/test/workflow自身也觸發。
+- runtime14檔與輸入main exact bytes；正式B3config／currentPage／Quick Search／UI／FAQ均未改，backend／1999／Rental mutation=0。
+
+[遷移方案](docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md)、
+[本輪實證](docs/PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json)、
+[正式部署記錄](docs/PAGES_DEPLOYMENT_2026-10-09.md)。
+兩份ZIP均359,048bytes，SHA256 `dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775`；
+fresh extraction15檔，internal files=0。ZIP不入Git，Actions github-pages artifact才是部署artifact。
+
+## 下一個 gate／STOP
+
+新workflow push後以其guard讀取的Pages配置為準，不猜Source，也不重跑舊dynamic run。
+若仍branch source，標 **ACTIONS WORKFLOW READY / PAGES SOURCE SWITCH PENDING** 並STOP，
+owner手動設定Settings > Pages > Build and deployment > Source > GitHub Actions後，透過新workflow_dispatch發布。
+Source已workflow才能記新run的source/deployed SHA、artifact與hosted bytes／MIME／internal exclusions。
+真正browser＋CX Production完成才可升級LIVE／USABLE；CloudTLS阻擋保留PENDING，不阻擋Actionsgate。
+
+## 歷史 B3 交付（以下保留實作/測試事實；branch-source模式已由本輪遷移取代）
+
+舊dynamic run／queued重跑只是歷史，不再作正式deployment truth，也不再重跑；後續只看新pages.yml run。
 
 ---
 # TAX AI — Project State

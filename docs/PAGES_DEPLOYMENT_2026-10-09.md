@@ -1,14 +1,66 @@
-## Deployment architecture change authorized（2026-10-09）
+# TAX AI Pages Actions deployment evidence
 
-The project will replace the current branch-source dynamic Pages build with a repo-controlled GitHub Actions workflow.
+Date: 2026-10-09 (Asia/Taipei)
+Status: **WORKFLOW IMPLEMENTED / OFFLINE PASS / SOURCE CHECK PENDING**。
+Migration input main：`084e6cb8c6accb55d6e0923dfe5319fff22b240f`。
 
-See `docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`.
+## 正式發布模型
 
-The old queued dynamic `pages build and deployment` run belongs to the previous branch-source model and must not be used as proof for the new B3 deployment.
+repo-owned [.github/workflows/pages.yml](../.github/workflows/pages.yml)，name **TAX AI runtime Pages**。
+沿用1999已驗證的guard／artifact／deploy pattern，適配TAX的14檔package；不改1999 repo。
+relevant main push＋workflow_dispatch，pages concurrency／cancel-in-progress=false；doc-only不觸發。
+checkout@v4 fetch-depth=0；build contents:read/pages:read；deploy pages:write/id-token:write。
+Source build_type必須workflow才configure-pages@v5；不加enablement或更改管理設定。
+upload-pages-artifact@v3只uploadfresh verified temp extraction；deploy-pages@v5／github-pages environment。
 
-New target: `relevant main push → repo workflow → verified runtime package → upload-pages-artifact → deploy-pages`.
+Pages URL：https://taipei-tax-lab.github.io/tax-helper/
 
-No CX/product change is part of this migration.
+| 本輪欄位 | 已確認狀態 |
+| --- | --- |
+| Implementation/source SHA | workflow push後記新commit／run |
+| 新workflow run ID | 待push觀察 |
+| Pages Source | 必須由新guard讀取；目前未冒稱切換 |
+| Deployed SHA／artifact | PENDING，尚無新Actionsdeployment證據 |
+| Local build／tests | PASS：Python27／Node34／syntax10 |
+| Package | 359,048bytes／14runtime＋MANIFEST；兩build byte-identical |
+| Package SHA256 | dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775 |
+| Hosted parity／MIME／internal exclusions | PENDING，需新Actions正式deploy後驗證 |
+| 真實browser／CX | PENDING；與deploymentgate分開 |
+
+## Package gate 與範圍證據
+
+[本輪test evidence](PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json)：Python27含6個gate tests，Node34保持正式B3 regression。
+驗CRC、exact entries／無duplicate／無traversal／無extra、manifest完整／每檔SHA及bytes、SOURCE exact bytes、regular files、10JS syntax、8個credential patterns。
+fresh destination才可extract，extract後再比entry set／bytes；只有15檔，不publishrepo root。
+新的負向tests確認self-consistent stale release／bad CRC／missing manifest／額外docs或CSV／credential .mjs都不可extract/upload。
+
+ZIP沿用package_web allowlist，不提交Git。Actions部署artifact是upload action由verified extraction製作的封裝；ZIP SHA和artifact digest分別記錄，不能混為一談。
+MANIFEST的purpose描述ZIP本身不是GitHub artifact封裝，未改payload或metadata以保持可重製hash。
+所有14runtime與輸入main exact bytes，B3liveEnabled／Agent／currentPage／FAQ／Quick Search／UI未改；CX／1999／Rental mutation=0。
+無新增local runtime依賴；XLSX等既有remote dependency不納入此artifact，14缺圖仍是B4歷史項目。
+
+Source guard離線legacy／null／API error均STOP，workflow才PASS；實際Source以新runlog `Pages build_type:`為準。
+若仍legacy則輸出：
+`Set Settings > Pages > Source to GitHub Actions before deployment.`
+並STOP，owner手動 **Settings > Pages > Build and deployment > Source > GitHub Actions**。
+切換後使用新workflow_dispatch或relevant main push，不重跑舊dynamic branch-source job。
+
+不加入ChromiumCI：需要額外browser／Playwright／XLSX dependency；既有B3完整regression已記錄且runtime未改。
+CloudTLS live blocker不作Actionsdeployment blocker；只有真實browser＋CX Production成功才升級LIVE/USABLE。
+
+## 發布後驗收（未完成不得勾）
+
+- [ ] 新run guard顯示workflow、build PASS、deploy PASS，記source/deployed SHA與github-pages artifact。
+- [ ] Hosted14runtime＋MANIFEST HTTP200、每檔exact package bytes；JS/.mjs／CSS／HTML／JSON／GIF MIME合理。
+- [ ] Repo internal paths不發布：AGENTS、STATE、TASK、README、docs、tests、tools、CSV／ZIP／Excel等。
+- [ ] Hosted B3 config等於正式source；原功能／CX真實browser smoke，CA限制則PENDING。
+
+Source未切換時收工狀態 **ACTIONS WORKFLOW READY / PAGES SOURCE SWITCH PENDING**。
+新Actionsbuild/deploy＋hosted驗證成功才標 **TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE**。
+
+## 歷史 B3／branch-source證據（以下不作新部署truth）
+
+舊dynamic run與重跑queue保留歷史；本輪不再重跑、不等待、不以舊run作Actions部署證據。
 
 ---
 # TAX AI B3 Pages deployment evidence

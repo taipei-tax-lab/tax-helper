@@ -78,3 +78,9 @@ Deployment automation rollback: revert workflow and only switch Pages Source bac
 ## Maintenance rule
 
 After migration, normal releases are automatic from approved relevant `main` changes. Do not manually rerun old dynamic branch-source Pages builds. Use `workflow_dispatch` only for intentional redeploy/recovery.
+
+## Implementation progress（2026-10-09）
+
+repo-owned pages.yml與verify_package.py已依本計畫實作；offline Python27／Node34／syntax10 PASS，兩ZIP相同、fresh15檔、runtime14不改。
+詳見PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json及PAGES_DEPLOYMENT_2026-10-09.md；實際Source與first deployment仍須新run證據。
+未變更管理設定／CX／產品，不再重跑舊dynamicjob。

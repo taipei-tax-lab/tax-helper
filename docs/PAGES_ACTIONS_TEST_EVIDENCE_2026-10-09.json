@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-09 (Asia/Taipei)",
+  "input_main": "084e6cb8c6accb55d6e0923dfe5319fff22b240f",
+  "scope": "deployment automation only; runtime14 byte-identical",
+  "python_tests_pass": 27,
+  "node_tests_pass": 34,
+  "js_syntax_checks_pass": 10,
+  "new_package_gate_tests": 6,
+  "yaml_and_shell_syntax": "PASS",
+  "runtime_trigger_coverage": 14,
+  "doc_only_examples_trigger": false,
+  "source_guard_offline_cases": {
+    "legacy": "STOP, required owner Source instruction",
+    "null": "STOP, required owner Source instruction",
+    "workflow": "PASS",
+    "api_error": "STOP, cannot read Source"
+  },
+  "package": {
+    "files": 15,
+    "runtime_files": 14,
+    "bytes": 359048,
+    "sha256": "dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775",
+    "two_independent_builds_byte_identical": true,
+    "CRC": "PASS",
+    "entry_set": "PASS",
+    "manifest_hashes": "PASS",
+    "source_byte_parity": "PASS",
+    "fresh_extract": "PASS",
+    "extraction_internal_files": 0,
+    "credential_scan_patterns": 8,
+    "credential_scan": "PASS"
+  },
+  "runtime_sha256": {
+    "app.js": "88d72e56975238aa2e8861df2faaac2ed57a9f4f5b8169bebbe929bf3337111b",
+    "assets/tax-ai/config.mjs": "5bb709c2817601f30b019379937362c3a1b95822adfcd3ca0db2960a2fb8b99c",
+    "assets/tax-ai/controller.mjs": "86d5729e0e3a7dd9693cb5f54e3c9cc0282564b31838d0847157eaf5a3cb4b1c",
+    "assets/tax-ai/messenger-transport.mjs": "dc02a51fde03700d6d6f02a8d18e6e5dd23b46f91f7f25b9185e733f2d856a22",
+    "assets/tax-ai/mock-messenger.mjs": "b667381ab17d063c1cfb93ebbbbdc47e6d074c3fb62c4c14497729c9a599fdf1",
+    "assets/tax-ai/result-model.mjs": "231d989dea97d71cd7038e7fd87839362b3b258c57d28f4119fba930f98eb334",
+    "assets/tax-ai/style.css": "5bf4b48e9e15446a0ca0e9ea63ae1a798eb746f2ed897a2d302a699ce10c0387",
+    "index.html": "e55cd3e2fd3da312fb595106ba42d11801a3f0de351b3ed519c9e066537cb50a",
+    "learningBank.js": "a1396fe06fa12b80decee84797666c852b7eb95d4451d1c566aeab796a59c451",
+    "logo.png.gif": "d7c189c93d2ed9f035854a7dccd8d9cba4fb77173aa32ccafef3389e563edf31",
+    "questionBank.js": "b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258",
+    "search.js": "e5a654b9187a281d16e737c1c790a3806dba9d1370c76be900f1d2d77c3d159d",
+    "searchDictionary.js": "e020590d1a7a6d5ae72a66c89df139b7264f9646107bee06c92a1ca9e7a1cb85",
+    "style.css": "afb88aa24a70babf928c00d5633dcd7d13d794f9b6fe070c5bcb40484e1f5435"
+  },
+  "logs_sha256": {
+    "python-tests.log": "819f07ca1cd1796a6a35c42e6361c9f8040a8ef3b890c6b5acc33be8255fee9d",
+    "node-tests.log": "4a88651e997b8fb87a942a62f8b7a27dfed729eefb82fe9e71b225056d60d47f"
+  },
+  "CI_source_check": "PENDING until new workflow run",
+  "deployed_sha": null,
+  "github_pages_artifact": null,
+  "hosted_byte_parity": "PENDING",
+  "live_browser": "PENDING; not a pre-deploy gate",
+  "chromium_in_ci": false,
+  "chromium_reason": "Requires Playwright/browser provisioning and real third-party XLSX dependency; B3 regression already recorded, runtime remains exact bytes.",
+  "release_automation_source_scan": {
+    "files": [
+      ".github/workflows/pages.yml",
+      "tools/package_web.py",
+      "tools/verify_package.py"
+    ],
+    "hits": 0,
+    "negative_fixture_note": "tests/test_verify_package.py intentionally contains a synthetic client_secret for the rejection test; tests are excluded from the Pages artifact."
+  }
+}

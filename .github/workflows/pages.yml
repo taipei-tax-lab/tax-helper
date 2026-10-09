@@ -1,0 +1,85 @@
+name: TAX AI runtime Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - app.js
+      - style.css
+      - questionBank.js
+      - learningBank.js
+      - search.js
+      - searchDictionary.js
+      - logo.png.gif
+      - assets/tax-ai/**
+      - tools/package_web.py
+      - tools/verify_package.py
+      - tests/**
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Python source tests require the immutable B1 Git object.
+          fetch-depth: 0
+      - name: Require Actions Pages source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! build_type="$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq .build_type)"; then
+            echo '::error::Cannot read Pages Source; deployment stopped.'
+            exit 1
+          fi
+          echo "Pages build_type: $build_type"
+          if [ "$build_type" != workflow ]; then
+            echo '::error::Set Settings > Pages > Source to GitHub Actions before deployment.'
+            exit 1
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - name: Offline pre-deploy tests
+        run: |
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+          node --test --test-isolation=none tests/tax_ai.test.mjs
+      - name: Build and verify exact runtime package
+        run: |
+          python3 tools/package_web.py --output "$RUNNER_TEMP/build-one/hosting.zip"
+          python3 tools/package_web.py --output "$RUNNER_TEMP/build-two/hosting.zip"
+          cmp "$RUNNER_TEMP/build-one/hosting.zip" "$RUNNER_TEMP/build-two/hosting.zip"
+          python3 tools/verify_package.py "$RUNNER_TEMP/build-one/hosting.zip" --extract "$RUNNER_TEMP/pages"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/pages
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified TAX AI runtime
+        id: deployment
+        uses: actions/deploy-pages@v5

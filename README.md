@@ -1,23 +1,12 @@
-## GitHub Pages deployment model
-
-TAX AI Web is migrating from Pages **Deploy from a branch** to a repository-owned **GitHub Actions** deployment, following the proven 1999 Web release model.
-
-Plan: [`docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`](docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md)
-
-After migration, relevant approved `main` changes automatically test/package/deploy only the verified runtime allowlist. The repository root is not published.
-
-One-time owner setting: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-
----
 # TAX AI Web
 
 臺北市稅捐稽徵處 TAX AI 題庫網站。保留快速搜尋、分類、題庫瀏覽、收藏、詳情／相關題、複製、Excel 匯入、Learning 與既有導覽；AI 模式使用獨立 TAX AI Agent 的 FAQ semantic search。
 
 Pages：https://taipei-tax-lab.github.io/tax-helper/
 
-**B3 implementation／offline PASS；Pages deployment PENDING／live acceptance PENDING**。
-既有build重跑已核准但仍queued，hosted最後核對是舊B2；另有Cloud Chromium TLS信任blocker。
-尚未標DEPLOYED或LIVE；本頁正式config描述指GitHub的B3 source。
+**B3 runtime不變；Actions workflow實作／offline gates PASS，Pages Source待新run核對。**
+舊branch-source dynamic run不作本輪證據；只有新workflow發布成功才標Actions deployment active。
+真實browser／CX acceptance另列，CloudTLS blocker不加入CI。
 
 本輪 B3 狀態見 [PROJECT_STATE.md](PROJECT_STATE.md)、[NEXT_TASK.md](NEXT_TASK.md)、[部署證據](docs/PAGES_DEPLOYMENT_2026-10-09.md)。只有真實 browser＋CX Production 成功才標 **TAX AI WEB + FAQ FLOW LIVE / USABLE**；離線測試不能代替 live 驗收。
 
@@ -67,15 +56,24 @@ B3：Python **21/21**、Node **34/34**、Chromium **B1 17/17＋原功能整合17
 
 ## 發布與 rollback
 
-沿用現有 main dynamic pages build and deployment，不改 Pages Source、不新增 workflow。核對 Actions deployed SHA、hosted bytes／MIME。Cloud TLS／proxy 信任 blocker 導致真實browser無法執行時，保持PENDING，不假稱PASS／FAIL。
+repo-owned [.github/workflows/pages.yml](.github/workflows/pages.yml) 由relevant main runtime／release／tests修改自動觸發，亦支援workflow_dispatch；純STATE／TASK／README／docs更新不部署。
+需owner一次性設定 **Settings > Pages > Build and deployment > Source > GitHub Actions**。
+workflow讀Pages配置，build_type不等於workflow即fail closed，輸出明確切換指示；不透過管理API改Source、不重跑舊dynamic job。
 
-可重製 runtime review candidate（不是 Actions 實際 Pages artifact）：
+每次先跑Python／Node離線測試，兩獨立temp path重建ZIP且byte-identical，再verify CRC／entry set／manifest／source parity／credential patterns／JS syntax，fresh extract後只upload該15檔目錄。
+官方upload-pages-artifact@v3／deploy-pages@v5、github-pages environment、最小pages/id-token權限；artifact為正式deployment truth。
+完整Chromium不放CI：需額外Playwright/browser及第三方XLSX設定，這輪runtime未改且B3 regression已有實證。
+新 [migration plan](docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md)、[離線證據](docs/PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json)。
+發布後核對source/deployed SHA／artifact、hosted bytes／MIME／internal files404。Cloud browser TLS blocker保留live PENDING，不能假稱LIVE。
+
+可重製被Actions驗證／fresh extract的runtime ZIP（ZIP本身不同於GitHub artifact封裝）：
 
 ```bash
 python3 tools/package_web.py --output /tmp/tax-ai-b3.zip --manifest /tmp/tax-ai-b3-manifest.json
+python3 tools/verify_package.py /tmp/tax-ai-b3.zip --extract /tmp/tax-ai-pages-fresh
 ```
 
-14 runtime檔＋MANIFEST，固定順序／時間／權限／ZIP_STORED，重建 byte-identical。發布 manifest 見 [B3_RELEASE_MANIFEST.json](docs/B3_RELEASE_MANIFEST.json)。ZIP／CSV／Excel／測試依賴不入 Git。main Pages 仍由現有服務 build repo，不聲稱 review candidate 就是 Actions artifact。
+14 runtime檔＋MANIFEST，固定順序／時間／權限／ZIP_STORED，重建 byte-identical。發布 manifest 見 [B3_RELEASE_MANIFEST.json](docs/B3_RELEASE_MANIFEST.json)。ZIP／CSV／Excel／測試依賴不入Git。Source切換後Actions只upload verified extraction，包含runtime14＋MANIFEST.json；docs／tests／tools／STATE／TASK／AGENTS／使用者資料不發布。
 
 Launch-critical frontend rollback：只關 liveEnabled、重建並推main／核對Pages，AI回準備中，Quick Search正常；不得恢復舊Playbook／借Agent／改backend Production。
 
@@ -90,3 +88,5 @@ python3 tools/question_bank_to_faq.py
 預設產生忽略的 generated/faq.csv，固定二欄 question／answer、UTF-8無BOM／LF，保留完整值與原順序；129 records、73,297bytes，SHA256 2a5220e55604e8463ef3e289841cb6d25cf81102650457cfc75097292f9712c8。不手改、不自動上傳GCS／Data Store。
 
 14張原Learning圖片仍缺；返回入口／遊戲／外部服務可用性留B4 backlog。本輪未補造或宣稱通過。B1／B2歷史驗收見STATE的歷史段落。
+
+本輪deployment gates：Python27（含6個package防退化／負向驗證）、Node34、JS syntax10 PASS；兩ZIP及fresh15檔檢查PASS。所有runtime bytes與輸入main相同。

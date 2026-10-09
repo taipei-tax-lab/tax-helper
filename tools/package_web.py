@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic runtime review package; existing main Pages still builds the repo."""
+"""Deterministic runtime ZIP; Actions uploads only its verified fresh extraction."""
 import argparse
 import hashlib
 import json
