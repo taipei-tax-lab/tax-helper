@@ -1,22 +1,67 @@
-## TAX AI backend architecture decision update（2026-10-09）
+# TAX AI — Project State
 
-Status: **WEB B2 ACCEPTED / B3 WAITING FOR NEW FLOW HANDOFF**
+Last updated: 2026-10-09 (Asia/Taipei)
+Status: **B3 OFFLINE PASS / PAGES DEPLOYMENT IN PROGRESS**
 
-The prior B3 plan expected a Playbook-based multi-turn TAX AI backend. That contract is superseded.
+本輪使用者已授權正式 FAQ Flow 接線、SDK／Production browser smoke 與既定 Pages 部署。
+Web 輸入 main `ec727a3df54a9e72c03d0e25ea4887640a860843`；backend 最新 main
+`3c214fde52d17810af85bd601e05b72291df67ff`（PR #4 已 merge），狀態
+**TAX AI INTERNAL FAQ FLOW BACKEND READY FOR WEB CUTOVER**。不再等待 Flow handoff。
 
-New backend source of truth:
-`taipei-tax-lab/dialogflow-cx-qa-framework/docs/TAX_AI_INTERNAL_FAQ_FLOW_IMPLEMENTATION_PLAN_2026-10-09.md`
+## B3 現況與契約
 
-New product contract:
-- TAX AI AI-mode is FAQ semantic search;
-- backend is a new independent Agent using Flow + Data Store;
-- each AI query is independent;
-- native 0–5 related Q/A results;
-- no Playbook/currentPlaybook conversational dependency;
-- no visible reset-conversation concept in the final AI mode;
-- Quick Search and all existing local Web features remain unchanged.
+- 已依序讀 Web／backend 指定文件，handoff 與 machine config 及使用者固定值逐欄一致。
+  正式新 Agent `786d0cf9-fd1b-4eb9-af1f-16e41891a603`／global，Production
+  `e8f1496a-3e23-43b9-a75d-dc53b551e99c`，FAQ Flow `5bee3876-e595-413d-be3c-729227145e4d`。
+- 正式 runtime liveEnabled=true，首次切 AI lazy 載入 hidden 官方 Messenger SDK，integration 控制 Production；
+  不加 environment-id，不借1999／Rental Agent。
+- 每題 request＋defaults 都用完整 FAQ START_PAGE／Asia/Taipei、重置 tax_answers／tax_questions／tax_answer_count；
+  無 first-turn override／re-arm，刪 stale currentPlaybook。語言 zh-tw。
+- AI 是獨立 semantic search；最新查詢／0～5完整 Q/A 取代舊結果，無 reset／transcript／前題 context 承諾。
+  accepted 後清空原輸入，接受前失敗保留；新草稿不被清除。single in-flight／IME／timeout／late／session recovery 保留。
+- 全部 raw text messages 依序合併為 baseline；optional question/answer items 用原生 arrays＋可見 message exact match，
+  不靠答案數字切段。沒有合成 title／來源 URL／citation；安全 answer URL／換行／HTML-like inert。
+- Mock 僅明確 demo、非正式回答、每題獨立；production failure 不自動回退 Mock。
+  AI故障時 Quick Search 正常；Excel 僅本機 Quick Search，不同步CX；無新增analytics。
+- B3只局部改原 index.html，app.js及另外六原檔與輸入main完全相同；B1 immutable SHA
+  `e01ef42e7e0caa05c96083c5709b0554127d8e5f` 及 source/search manifest 未改。
+- Backend/CX/GCP／Production／1999／Rental mutation：0。
 
-B2 code remains valuable as UI/transport/mock groundwork, but its multi-turn/reset assumptions are historical and will be adapted only after backend handoff.
+完整 [Web/CX handoff](docs/TAX_AI_WEB_B3_HANDOFF_2026-10-09.md)；
+[測試證據](docs/B3_TEST_EVIDENCE_2026-10-09.json)；[部署證據](docs/PAGES_DEPLOYMENT_2026-10-09.md)。
+
+## 本輪測試與部署證據
+
+Python21/21、Node34/34、B1 Chromium17/17、原功能整合17/17、AI Chromium27/27組、JS syntax10/10 PASS。
+涵蓋每題currentPage／tax_*zero、0～5FAQ、accepted boundary／IME／timeout／late／錯誤隔離、Quick Search／
+分類／收藏／Excel／Learning／詳情／相關／複製／導覽、1280／390／320。browser page errors／外部轉送／Production requests皆0；
+正式loader測試是SDK fixture，不能稱真實SDK成功。
+
+Protected10檔 exact bytes、secret-pattern scan0hits。14runtime檔 review candidate兩build byte-identical、
+CRC／entries／source integrity PASS；359,048bytes，SHA256
+`dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775`。
+ZIP不入Git，非Actions實際Pagesartifact；逐檔 [runtime manifest](docs/B3_RELEASE_MANIFEST.json)。
+
+已核對既有Pages：https://taipei-tax-lab.github.io/tax-helper/ ，初始HTTP200／index/config parity、
+main ec727a3，既有dynamic Pages run37899184297成功；沿用main部署，不改Source或猜agency URL。
+B3 implementation SHA／deployment run／deployed SHA／hosted parity於發布後補入。
+
+## Acceptance 與 rollback
+
+只有真正browser＋CX Production成功才可標 **TAX AI WEB + FAQ FLOW LIVE / USABLE**。
+若CloudTLS／proxy信任阻擋，已部署後標 **DEPLOYED / LIVE ACCEPTANCE PENDING**，browser checklist不勾，
+不能把fixture／backend既有36+36／6 native HTTP驗證寫成Web live PASS。
+
+Launch-critical rollback只關liveEnabled、AI回準備中，推main並驗Pages；Quick Search正常。
+不恢復B2Playbook／借其他Agent／改Production。flag=false離線已驗；Cloudbrowser信任限制本身不觸發產品rollback。
+
+公開題庫已核准；PublicPages＋unauthenticatedMessenger沒有同仁身分限制。「對內」是使用對象。
+未來敏感資料另案存取控制。14缺圖／原返回入口／第三方服務實際可用性留B4，不補造。
+
+## 歷史記錄（以下為 B1／B2 當時狀態，B3 以本頁上方為準）
+
+下方關於 Playbook、多輪/reset、無 SDK／尚未 Pages 或另待 B3 授權的敘述均已由上方本輪契約取代；
+保留原驗收與immutable證據，不作現行產品承諾。
 
 ---
 

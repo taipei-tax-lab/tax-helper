@@ -1,0 +1,145 @@
+{
+  "date": "2026-10-09 (Asia/Taipei)",
+  "web_input_main": "ec727a3df54a9e72c03d0e25ea4887640a860843",
+  "backend_main": "3c214fde52d17810af85bd601e05b72291df67ff",
+  "b1_immutable": "e01ef42e7e0caa05c96083c5709b0554127d8e5f",
+  "python_pass": 21,
+  "node_pass": 34,
+  "js_syntax_pass": 10,
+  "protected_files_identical_to_input_main": [
+    "app.js",
+    "learningBank.js",
+    "logo.png.gif",
+    "questionBank.js",
+    "search.js",
+    "searchDictionary.js",
+    "style.css",
+    "tests/source_baseline.json",
+    "tests/search_baseline.json",
+    "tools/question_bank_to_faq.py"
+  ],
+  "secret_scan": {
+    "patterns": 7,
+    "text_files": 34,
+    "hits": 0,
+    "scope": "repository files, not Git history; pattern scan is not proof of absence of every secret"
+  },
+  "browser_reports": {
+    "b1-browser": {
+      "passed_groups": 17,
+      "checks": [
+        "init: 129 questions, 11 categories, 129 browse rows",
+        "browse: category filter, query ordering and restore",
+        "detail: complete answer and Escape",
+        "related question opens its own detail",
+        "favorites: add, reload persistence, remove and empty state",
+        "quick search: home/search matching order and three frozen query results",
+        "quick search: original no-match state",
+        "home category shortcut: 24 housing questions",
+        "popular chip: opens the original question detail",
+        "empty query: original order and 50-result display limit",
+        "copy: clipboard contains complete original question and answer",
+        "Excel dependency unavailable: failure leaves the original bank intact",
+        "learning: seven article records and drawer; 14 images remain absent",
+        "mobile: menu opens and navigation closes it at 390px",
+        "real XLSX 0.18.5: two synthetic OOXML rows replace runtime bank and remain searchable",
+        "real XLSX errors: duplicate IDs and absent question columns leave the runtime bank intact",
+        "reload: original JS bank wins over saved Excel, matching existing behavior"
+      ],
+      "page_errors": [],
+      "external_page_requests_sent": 0,
+      "production_requests": 0,
+      "report_sha256": "e9aa1c7101c6913ee4cea25a33073e793218d2471dbf1058fe7141666b4858f3"
+    },
+    "integration-browser": {
+      "passed_groups": 17,
+      "checks": [
+        "init: 129 questions, 11 categories, 129 browse rows",
+        "browse: category filter, query ordering and restore",
+        "detail: complete answer and Escape",
+        "related question opens its own detail",
+        "favorites: add, reload persistence, remove and empty state",
+        "quick search: home/search matching order and three frozen query results",
+        "quick search: original no-match state",
+        "home category shortcut: 24 housing questions",
+        "popular chip: opens the original question detail",
+        "empty query: original order and 50-result display limit",
+        "copy: clipboard contains complete original question and answer",
+        "Excel dependency unavailable: failure leaves the original bank intact",
+        "learning: seven article records and drawer; 14 images remain absent",
+        "mobile: menu opens and navigation closes it at 390px",
+        "real XLSX 0.18.5: two synthetic OOXML rows replace runtime bank and remain searchable",
+        "real XLSX errors: duplicate IDs and absent question columns leave the runtime bank intact",
+        "reload: original JS bank wins over saved Excel, matching existing behavior"
+      ],
+      "page_errors": [],
+      "external_page_requests_sent": 0,
+      "production_requests": 0,
+      "report_sha256": "e188e973f42c88ef895744024dc0f70df5322b49f3a03a911a90273797546cba"
+    },
+    "ai-browser": {
+      "passed_groups": 27,
+      "checks": [
+        "rollback disabled-live: no Mock/SDK, quick search remains usable",
+        "latest independent results share technical session; every-query FAQ defaults; accepted clear; no reset/context copy; old query/format/sources removed",
+        "canonical public Q/A projection 0/1/2/3/4/5: exact full fields, native order, separate DOM, no title URL/citation, 1280/390/320 clear dividers; zero replaces old results",
+        "mode and site navigation: retained input/model/session, one mount, no unsolicited sends",
+        "home search and category shortcut force quick mode without remounting independent AI transport",
+        "no reset control: next search replaces old card without session change or favorites/AI storage regression",
+        "accepted boundary: pre-acceptance rejection/hold retains exact raw input; accepted clear precedes answer; next draft and original heading survive late response",
+        "production SDK load failure stays unavailable, never auto-loads Mock, Quick Search remains functional",
+        "formal loader through offline SDK fixture: new global Agent, hidden API, no environment attribute/Mock; first/second/third currentPage + zero tax_* defaults and bodies, exact raw query, 5→2→0 replacement, one mount",
+        "FAQ safe URL/CRLF/internal numbers/HTML-like preserved inert; per-message text-only and combined fallback; service status never rendered as zero result",
+        "internal SDK recovery failure gracefully disables AI without JS errors/Mock fallback/retry; Quick Search stays functional",
+        "in-flight switching: single request, late success stays in AI, quick results/focus remain intact",
+        "empty: clear empty/error state, no reset/retry, independent manual next search recovers",
+        "malformed: clear empty/error state, no reset/retry, independent manual next search recovers",
+        "silent: clear empty/error state, no reset/retry, independent manual next search recovers",
+        "error: clear empty/error state, no reset/retry, independent manual next search recovers",
+        "Mock loader unavailable: clear service state and working quick search; no SDK fallback",
+        "idle expiry while hidden: clear result, retain next draft, notify and recover technical session with FAQ defaults",
+        "in-flight expiry: reject, ignore old answer, new session only after settle",
+        "in-flight end: reject, ignore old answer, new session only after settle",
+        "automatic Mock TTL expiration clears the card and notifies UI",
+        "timeout/never-settled warning: lock until settle, no retry, discard late answer, manual next query",
+        "input/IME: blank and overlength rejected, composition/isComposing/229 guarded, Shift+Enter newline, Enter sends",
+        "safe rendering: HTML stays text, unsafe URLs/images inert, minimal Markdown, explicit citations deduplicated",
+        "320/390px: no horizontal overflow, usable controls, keyboard mode switch, result focus/no reset",
+        "raw fallback and later service error: old card removed, manual recovery keeps same session",
+        "Excel runtime data stays local to quick search; AI session/model unchanged and source difference explained"
+      ],
+      "page_errors": [],
+      "external_page_requests_sent": 0,
+      "production_requests": 0,
+      "report_sha256": "8e5001c55d760db602dcf51b4651eebee4d911ca22a6c3cbe40e61d5c30372a3"
+    }
+  },
+  "screenshots": {
+    "faq-five-1280.png": {
+      "bytes": 482965,
+      "sha256": "37dde139fe57a746eb4053f1eee6b5e2d35885eef50b8831c7dc06cb851b9e2c"
+    },
+    "faq-five-320.png": {
+      "bytes": 457441,
+      "sha256": "8eb3698777d2b3414414504ad4809926612e5988a3dde3012eb03ae686bc6123"
+    },
+    "faq-five-390.png": {
+      "bytes": 475624,
+      "sha256": "ecd78a6f0f56a0b09b57f0dac80529ded0572c44b0a58ca37825ece0af562c29"
+    }
+  },
+  "visual_fixture": "Full canonical public Q/A projected into authoritative message shape; offline, not new Production retrieval. 1280/390/320 checked for distinct FAQ containers, dividers, full text, safe links, zero horizontal overflow.",
+  "package": {
+    "runtime_files": 14,
+    "bytes": 359048,
+    "sha256": "dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775",
+    "repeat_builds_byte_identical": true,
+    "zip_integrity_pass": true,
+    "role": "Review candidate only; main uses existing dynamic Pages build."
+  },
+  "limitations": [
+    "No live CX proof from offline fixtures.",
+    "Real SDK event/promise ordering and extremely late responses still require browser acceptance.",
+    "14 pre-existing Learning images absent; live third-party services not asserted."
+  ]
+}

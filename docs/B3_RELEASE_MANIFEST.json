@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "purpose": "TAX AI B3 runtime byte parity; not the Pages Actions artifact",
+  "files": {
+    "app.js": {
+      "bytes": 26936,
+      "sha256": "88d72e56975238aa2e8861df2faaac2ed57a9f4f5b8169bebbe929bf3337111b"
+    },
+    "assets/tax-ai/config.mjs": {
+      "bytes": 704,
+      "sha256": "5bb709c2817601f30b019379937362c3a1b95822adfcd3ca0db2960a2fb8b99c"
+    },
+    "assets/tax-ai/controller.mjs": {
+      "bytes": 7061,
+      "sha256": "86d5729e0e3a7dd9693cb5f54e3c9cc0282564b31838d0847157eaf5a3cb4b1c"
+    },
+    "assets/tax-ai/messenger-transport.mjs": {
+      "bytes": 5895,
+      "sha256": "dc02a51fde03700d6d6f02a8d18e6e5dd23b46f91f7f25b9185e733f2d856a22"
+    },
+    "assets/tax-ai/mock-messenger.mjs": {
+      "bytes": 3302,
+      "sha256": "b667381ab17d063c1cfb93ebbbbdc47e6d074c3fb62c4c14497729c9a599fdf1"
+    },
+    "assets/tax-ai/result-model.mjs": {
+      "bytes": 9141,
+      "sha256": "231d989dea97d71cd7038e7fd87839362b3b258c57d28f4119fba930f98eb334"
+    },
+    "assets/tax-ai/style.css": {
+      "bytes": 3301,
+      "sha256": "5bf4b48e9e15446a0ca0e9ea63ae1a798eb746f2ed897a2d302a699ce10c0387"
+    },
+    "index.html": {
+      "bytes": 11753,
+      "sha256": "e55cd3e2fd3da312fb595106ba42d11801a3f0de351b3ed519c9e066537cb50a"
+    },
+    "learningBank.js": {
+      "bytes": 9690,
+      "sha256": "a1396fe06fa12b80decee84797666c852b7eb95d4451d1c566aeab796a59c451"
+    },
+    "logo.png.gif": {
+      "bytes": 3595,
+      "sha256": "d7c189c93d2ed9f035854a7dccd8d9cba4fb77173aa32ccafef3389e563edf31"
+    },
+    "questionBank.js": {
+      "bytes": 212639,
+      "sha256": "b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258"
+    },
+    "search.js": {
+      "bytes": 17492,
+      "sha256": "e5a654b9187a281d16e737c1c790a3806dba9d1370c76be900f1d2d77c3d159d"
+    },
+    "searchDictionary.js": {
+      "bytes": 17457,
+      "sha256": "e020590d1a7a6d5ae72a66c89df139b7264f9646107bee06c92a1ca9e7a1cb85"
+    },
+    "style.css": {
+      "bytes": 26274,
+      "sha256": "afb88aa24a70babf928c00d5633dcd7d13d794f9b6fe070c5bcb40484e1f5435"
+    }
+  }
+}

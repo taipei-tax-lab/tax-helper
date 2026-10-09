@@ -14,13 +14,19 @@
 #tax-ai-panel .tax-ai-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 #tax-ai-panel .tax-ai-actions button { min-height: 44px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--blue); cursor: pointer; font: inherit; font-weight: 700; }
 #tax-ai-submit { background: var(--blue); color: white; }
-#tax-ai-reset { background: white; color: var(--blue); }
 #tax-ai-panel button:disabled { cursor: default; opacity: .55; }
 #tax-ai-status { padding: 16px 20px; background: var(--pale); border-radius: 12px; margin: 18px 0; line-height: 1.7; overflow-wrap: anywhere; }
 #tax-ai-result { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 24px; margin-top: 18px; overflow-wrap: anywhere; }
 #tax-ai-result h3 { margin: 0 0 20px; }
 #tax-ai-result h4 { margin: 18px 0 8px; color: var(--blue); }
 #tax-ai-result [data-ai-query], #tax-ai-result [data-ai-answer] { white-space: pre-wrap; line-height: 1.85; }
+#tax-ai-result [data-ai-answer].has-faq-items { white-space: normal; }
+#tax-ai-result .tax-ai-faq-results { margin: 8px 0; padding-left: 26px; }
+#tax-ai-result .tax-ai-faq-result { margin: 0; padding: 16px 4px 20px; }
+#tax-ai-result .tax-ai-faq-result + .tax-ai-faq-result { border-top: 1px solid var(--line); }
+#tax-ai-result .tax-ai-faq-result h5 { font-size: 16px; margin: 0 0 8px; white-space: pre-wrap; }
+#tax-ai-result .tax-ai-faq-answer, #tax-ai-result .tax-ai-faq-intro, #tax-ai-result .tax-ai-faq-footer { white-space: pre-wrap; }
+#tax-ai-result .tax-ai-faq-footer { padding-top: 16px; border-top: 1px solid var(--line); }
 #tax-ai-result a { color: #115ea3; text-decoration: underline; }
 #tax-ai-result li { margin: 8px 0; }
 @media (max-width: 420px) {

@@ -119,15 +119,15 @@ box-shadow:0 12px 30px rgba(20,70,130,.32)!important;border:2px solid #fff!impor
           <p id="tax-ai-bank-note">Excel 匯入僅供本機快速搜尋，不會更新 AI 問答來源。</p>
           <form id="tax-ai-form" aria-busy="false">
             <label for="tax-ai-query">您的問題</label>
-            <textarea id="tax-ai-query" rows="4" aria-describedby="tax-ai-help tax-ai-counter" placeholder="請輸入問題，也可以接續上一題追問。"></textarea>
-            <div class="tax-ai-help"><span id="tax-ai-help">Enter 送出，Shift＋Enter 換行；追問沿用同一對話。</span><span id="tax-ai-counter">0 / 1000</span></div>
-            <div class="tax-ai-actions"><button id="tax-ai-submit" type="submit" disabled>送出提問</button><button id="tax-ai-reset" type="button" disabled>重置提問</button></div>
+            <textarea id="tax-ai-query" rows="4" aria-describedby="tax-ai-help tax-ai-counter" placeholder="請完整描述問題，每次送出都是新的搜尋。"></textarea>
+            <div class="tax-ai-help"><span id="tax-ai-help">Enter 送出，Shift＋Enter 換行；每題獨立搜尋。</span><span id="tax-ai-counter">0 / 1000</span></div>
+            <div class="tax-ai-actions"><button id="tax-ai-submit" type="submit" disabled>送出提問</button></div>
           </form>
           <div id="tax-ai-status" role="status" aria-live="polite" aria-atomic="true" hidden></div>
           <article id="tax-ai-result" aria-labelledby="tax-ai-result-title" hidden>
-            <h3 id="tax-ai-result-title" tabindex="-1">本次問答</h3>
+            <h3 id="tax-ai-result-title" tabindex="-1">本次搜尋結果</h3>
             <h4>您的提問</h4><div data-ai-query></div>
-            <h4>AI 回答</h4><div data-ai-answer></div>
+            <h4>相關題庫問答</h4><div data-ai-answer></div>
             <section data-ai-source-section hidden><h4>參考來源</h4><ul data-ai-sources></ul></section>
           </article>
         </section>

@@ -1,84 +1,64 @@
-## Next B3 gate — wait for TAX AI FAQ Flow backend handoff
+# TAX AI Web B3 — 正式 FAQ Flow 介接
 
-Do not start live CX wiring until backend publishes:
+Date: 2026-10-09 (Asia/Taipei)
+Status: **B3 OFFLINE PASS / PAGES DEPLOYMENT IN PROGRESS**
+Web main: `ec727a3df54a9e72c03d0e25ea4887640a860843`。
+Backend main: `3c214fde52d17810af85bd601e05b72291df67ff`，PR #4 已 merge。
+本輪使用者已明確授權 SDK／Production browser smoke／既定 Pages 發布；
+舊 B2 的 multi-turn/reset／未授權 B3 gate 已被此契約取代，B1 基線保留。
 
-`TAX AI INTERNAL FAQ FLOW BACKEND READY FOR WEB CUTOVER`
+## A. 正式契約與架構
 
-Required backend handoff:
-- new Agent ID;
-- location;
-- Production Environment;
-- Flow ID;
-- full START_PAGE currentPage;
-- Messenger binding;
-- 0–5 result text/structured contract;
-- fallback;
-- independent-query semantics;
-- rollback.
+- [x] 同步兩 main，依序閱讀 Web AGENTS／STATE／TASK／README、backend philosophy／handoff／machine config。
+- [x] Backend READY；handoff 與使用者指定的 Agent／global／Production／Flow／完整 START_PAGE／語言／時區逐欄相等。
+- [x] Canonical129 questionBank SHA 與 backend source 相同；Quick Search 唯一來源及 B1 manifest 不改。
+- [x] 核對既有 Pages：repo has_pages=true；https://taipei-tax-lab.github.io/tax-helper/ HTTP200；index/config 與 Web main exact bytes 相同。
+- [x] 既有 dynamic pages build/deployment（main ec727a3、run37899184297）成功；沿用既定 main Pages，不另猜 agency path 或更改 Pages Source。
+- [x] 正式 config／lazy hidden Messenger SDK 使用新 Agent，Production 綁定由 integration 控制，不加入 environment-id。
+- [x] 每題 request 和 defaults 使用 faqCurrentPage／Asia/Taipei，tax_answers=[]／tax_questions=[]／tax_answer_count=0；移除 first-turn/currentPlaybook/re-arm 邏輯。
+- [x] AI 改為獨立搜尋／最新結果；移除 reset UI、multi-turn copy、JS／CSS／a11y 死碼。
+- [x] accepted send 後清空，接受前失敗保留；single in-flight、IME、timeout／late／service/session recovery。
+- [x] 原生 1～5 Q/A 清楚逐筆分隔，完整 text fallback；不製造 title/url/citation，answer 原有 safe URL／換行／HTML-like inert。
+- [x] Mock 明確 demo only、0～5 stateless shape；production 不自動回退 Mock。
 
-When handoff is ready, Web B3 should:
-- keep Quick Search unchanged;
-- replace old Playbook/multi-turn transport assumptions with per-query currentPage;
-- render 1–5 FAQ results;
-- remove visible reset-conversation UX;
-- latest AI result replaces previous;
-- preserve Favorites/Excel/Learning/site behavior;
-- do not redesign backend architecture.
+Fixed currentPage:
+`projects/serviceagent-1150909/locations/global/agents/786d0cf9-fd1b-4eb9-af1f-16e41891a603/flows/5bee3876-e595-413d-be3c-729227145e4d/pages/START_PAGE`。
+Agent786d0cf9-fd1b-4eb9-af1f-16e41891a603，global，Production
+`e8f1496a-3e23-43b9-a75d-dc53b551e99c`，zh-tw，Asia/Taipei。
+Backend/CX/GCP／1999／Rental mutation：0。
 
-Until then: no GCP/CX guesses, no formal SDK binding, no Pages launch claim.
+## B. Offline 回歸與基線
 
----
+- [x] Python converter／immutable B1 source tests。
+- [x] Node：config、每題 currentPage/tax resets、raw/parsed complete text、0～5 items、安全 URL／HTML／newline、zero vs error、timeout／late／IME／duplicate、internal recovery。
+- [x] Chromium immutable B1 原站＋B3 整合原功能：Quick Search／分類／題庫／收藏／詳情／相關／複製／Excel／Learning／導覽。
+- [x] Chromium AI demo／SDK fixture：0～5完整FAQ、每題獨立、最新替換、accepted clear／草稿、無 reset／multi-turn、故障隔離。
+- [x] 1280／390／320 visual／鍵盤／無 overflow；截圖與 hash 證據。
+- [x] deterministic hosting candidate／manifest／source integrity／secret scan；不提交 ZIP／CSV／Excel／第三方副本，不改 B1 immutable manifest。
 
-# TAX AI — Next Task
+## C. Pages／真實 browser
 
-Last updated: 2026-10-08 (Asia/Taipei)
-Status: **PHASE B2 ACCEPTED — B3 CX HANDOFF / LIVE GATE PENDING**
-Owner: **ChatGPT 專案 Session 接續與驗收**；Web 由 Codex 維護，CX 後端由另一個 Framework Session 同步開發。
-Authorization: **B2 已通過 GitHub 交付／靜態程式審查；目前僅允許 B3 介接契約盤點與準備，未授權正式 SDK/CX 呼叫、Production、GCP/CX 寫入或 Pages／CI 部署。**
-Branch: **本機 work → 遠端 main**；B2實作SHA **10509014fc2b4aaebae4d33b3b4b8e0bc2da9a1a**；驗收文件另作交接commit，main SHA以Codex收工回報核對。
+- [ ] Offline 全 PASS 後 push implementation，沿用既有 Pages build/deployment；記 source/deployed SHA／Actions run／URL。
+- [ ] Hosted runtime files exact byte parity／MIME 與 candidate manifest。
+- [ ] 真實無 mock、TLS enabled browser smoke：新 Agent request／每題 parameters／0～5 exact Q/A／第二題獨立／no-hit／URL answer／mobile／Quick Search 切換。
+- [ ] 真實browser＋CX Production 成功後才標 TAX AI WEB + FAQ FLOW LIVE / USABLE。
 
-## 已定案
+如 Cloud CA／proxy 阻擋 browser，actual browser 驗收保持 PENDING；已部署時
+標 DEPLOYED / LIVE ACCEPTANCE PENDING，離線／backend HTTP proof 不冒充Web live。
 
-- Repo維持Public，Pages仍為未來方案，未啟用。B1八檔公開授權已完成，不再重新詢問。
-- 保留原網站功能、questionBank唯一來源與再生FAQ工具；不重構整站、不修改1999／Rental／CX repo。
-- AI只呈現最新一問一答；同Session追問，模式／站內導覽不reset，主動重置才新Session。自然逾期／結束會清舊卡並通知下一題新對話。
-- 預設AI為服務準備中；URL明確加`?tax-ai-demo=1`才啟用標示為模擬資料的離線Mock，不載入正式SDK或填任何正式ID。
-- B1不可變SHA：`e01ef42e7e0caa05c96083c5709b0554127d8e5f`。`tests/source_baseline.json`與`tests/search_baseline.json`未改寫，B2只有index.html／app.js兩個原檔局部差異，其他六檔仍原貌。
+## D. 文件、rollback 與 STOP
 
-## B2 完成清單（供本輪驗收）
+- [ ] README／STATE／TASK／Web-CX handoff／deployment records 更新實際證據。
+- [ ] launch-critical 檢查與 rollback disposition：只關 liveEnabled 回準備中，Quick Search 正常；不恢復舊 Playbook／借用1999/Rental／改 Production。
+- [ ] Commit／push final handoff，核對 remote main／clean tree，STOP 等待 Web ChatGPT review。
 
-- [x] Pull main至`e4c9bad79793d6dbd6b99d13c36ea3cb81bd9df8`，依序讀README／AGENTS／STATE／TASK，核對並保護B1固定來源。
-- [x] 原搜尋頁雙模式、獨立AI form／status／最新卡；原搜尋、分類、收藏、Excel、學習及導覽保持，首頁／分類入口回快速模式。
-- [x] TAX獨立config／controller／Messenger transport、安全renderer與Mock；只有合成`mock-only-tax-faq`首次override標記，無正式SDK、CX IDs／resource names或1999正式binding。
-- [x] 同Session追問、切模式／導覽不重mount；reset清model／DOM／輸入／來源且保留收藏；idle／in-flight expiry/end、timeout／late response、空答／錯答／service unavailable、連續送出與IME完成。
-- [x] B1固定參照與整合版本測試分層：Python **21/21**、Node **21/21**、JS語法 **10/10**；Chromium **B1原貌17/17、B2原功能回歸17/17、AI Mock E2E21/21**。含安全DOM／links、320／390px鍵盤／focus、真實XLSX＋合成workbook及AI來源分離。
-- [x] 瀏覽器page errors 0、外部頁面請求送出0、正式SDK請求0；FAQ重跑129題／73,297 bytes／原output hash不變，CSV仍不入Git、不上傳GCP。
-- [x] 更新README／STATE／TASK，記錄來源差異、實作commit與重跑證據；commit／push至main，交ChatGPT驗收，不開始B3／部署。
+## 保留 backlog（不阻擋本輪接線）
 
-## ChatGPT B2 驗收結論（2026-10-08）
+- [ ] B4：原本缺的14張 Learning 圖片、返回入口及第三方服務實際可用性；本輪不補造。
+- [ ] 如日後加入敏感資料，另案設計存取控制。對內是使用對象，不是 authentication；目前題庫已核准公開，不再次詢問。
 
-- [x] main交接 `1360dd8be1bc6c5a77969145c3f664916755f614` 與實作 `10509014fc2b4aaebae4d33b3b4b8e0bc2da9a1a` 已查核；新增六個 AI 模組、Mock／Node／Browser E2E 及文件可於 repo 查閱。
-- [x] B1 不可變 manifest 與原始網站差異控制成立；B2 只局部更動原 index／app，保留六個原檔及既有搜尋邏輯。
-- [x] 已閱讀控制器／transport／安全 renderer／測試程式；Codex 記錄 Python21/21、Node21/21、原站17/17、整合17/17、AI Mock21/21。本次是 **GitHub 程式與交付審查，不是獨立重跑測試或 live CX 驗收**。
-- [x] 保留尚待的14張學習圖片、入口／Pages路徑、第三方可用性、正式 CX SDK／稅務品質驗證界線。
+## Completion summary
 
-## 下一輪單一任務：B3 介接契約交接與準備（先不連正式 CX）
-
-- [ ] 向獨立 CX Session 取得並核對：TAX Agent、入口 Playbook 的**完整 resource name**；Environment／Integration Messenger 專屬 binding、可使用的正式或測試網域／allowed domains；回應 messages／citations 契約；FAQ converter產物與 Data Store ingestion 驗證狀態。沒有就明確記 blocker，**不猜ID、不複製1999**。
-- [ ] 規劃 Mock→真實 SDK 的最小切換及安全載入機制，不把憑證放進前端；確認與目前 `setQueryParameters`、`sendQuery`、`startNewSession`、事件監聽的真實 SDK 相容性。
-- [ ] 預先列出 live 驗收案例：初問與追問同 Session／僅初問 Playbook override、reset 後新 Session、逾期與 timeout、事件先後與極晚回應、來源顯示、快速搜尋不受影響，以及公開網址／未登入風險。
-- [ ] 如 CX 尚未就緒，只完成文件與可離線完成的 adapter 盤點，回報缺項；**不要啟用正式 SDK 或部署，也不要為測試任意更動 GCP/CX**。取得必要契約並由使用者另行核准，才啟動 B3 實際接線及 live 測試。
-- [ ] 收工更新 STATE／TASK、commit／push，清楚區分「介接準備已完成」與「已接上／通過 live 驗證」。
-
-## 持續限制及後續路線
-
-- 缺14張學習圖片及公開範圍；返回入口／Pages相對路徑、第三方API／遊戲可用性與正式存取方式未驗證，不假裝已補齊或部署。
-- Mock保持與真實CX分開；現在驗證的是Session／UI／事件協定，正式答案內容與SDK實際時序仍待B3。
-- B3真實介接及B4資產／Pages發布驗收各需後續授權；FAQ交接可從核准SHA離線重建，不宣稱已匯入CX。
-
-## STOP boundary
-
-- 本輪完成B2即交付驗收；不連Production、不開始正式Messenger live或B3設定、不改GCP／CX／IAM，不啟用Pages／CI發布。
-- 不提交ZIP、衍生CSV、使用者Excel、第三方XLSX測試副本、缺少圖片或未核准附件／敏感資料。不修改B1原hash manifest或用整合版冒充原貌。
-- 不改1999／Rental／CX Framework repo，不複製正式ID／binding／GA4。
-- 網址、allowed domains與不登入均非同仁身分驗證；正式存取／發布風險留待B3／B4。
+實作與 offline 全 PASS：Python21、Node34、B1 Chromium17、integration17、AI27、syntax10。
+14runtime deterministic candidate 359,048bytes，SHA256 dd8a739b1e0adbc6641e1ad095068be4d5a4de6e67847652f9ddf364abf7f775。
+測試／manifest／screenshots／Web-CX handoff 見 docs；下一步 push implementation→既有 Pages→hosted parity→真實 browser。

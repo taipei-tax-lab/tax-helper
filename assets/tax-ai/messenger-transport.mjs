@@ -1,28 +1,29 @@
-// Adapted from the pinned 1999 Messenger transport; no loader or live binding in B2.
+// Messenger is the sole live transport; every accepted text is independent FAQ search.
 export class MessengerTransport {
   constructor(messenger, config, eventRoot = messenger) {
     this.messenger = messenger;
     this.config = config;
     this.eventRoot = eventRoot;
-    this.armed = true;
     this.pending = null;
     this.locked = false;
-    this.rearmAfterSettled = false;
+    this.recoverAfterSettled = false;
     this.listeners = [];
     this.listen('df-request-sent', event => {
       const body = event.detail?.data?.requestBody;
-      // Only the accepted user operation can consume the first-turn override.
+      // Reject unsolicited, duplicate and foreign queries; never consume a draft.
       if (!this.pending || this.pending.sent || body?.queryInput?.text?.text !== this.pending.query) {
         if (event.cancelable) event.preventDefault();
         return;
       }
       body.queryParams ||= {};
-      if (this.armed) body.queryParams.currentPlaybook = this.config.initialPlaybook;
-      else delete body.queryParams.currentPlaybook;
+      delete body.queryParams.currentPlaybook;
+      body.queryParams.currentPage = this.config.faqCurrentPage;
       body.queryParams.timeZone = 'Asia/Taipei';
+      if (!body.queryParams.parameters || typeof body.queryParams.parameters !== 'object'
+        || Array.isArray(body.queryParams.parameters)) body.queryParams.parameters = {};
+      Object.assign(body.queryParams.parameters, {tax_answers: [], tax_questions: [], tax_answer_count: 0});
       this.pending.sent = true;
-      this.armed = false;
-      this.messenger.setQueryParameters({timeZone: 'Asia/Taipei'});
+      this.onAccepted?.({query: this.pending.query});
     });
     this.listen('df-response-received', event => {
       if (event.cancelable) event.preventDefault();
@@ -33,12 +34,12 @@ export class MessengerTransport {
     for (const name of ['df-session-expired', 'df-session-ended']) {
       this.listen(name, () => {
         this.finish(new Error('session'));
-        this.rearmAfterSettled = this.locked;
+        this.recoverAfterSettled = this.locked;
         this.onInvalidated?.(name);
-        if (!this.locked) this.reset();
+        if (!this.locked) this.recoverSession();
       });
     }
-    this.arm();
+    this.setDefaults();
   }
 
   listen(name, action) {
@@ -51,17 +52,22 @@ export class MessengerTransport {
     this.listeners.push([name, listener]);
   }
 
-  arm() {
-    this.armed = true;
+  setDefaults() {
     this.messenger.setQueryParameters({
-      timeZone: 'Asia/Taipei', currentPlaybook: this.config.initialPlaybook,
+      timeZone: 'Asia/Taipei', currentPage: this.config.faqCurrentPage,
+      parameters: {tax_answers: [], tax_questions: [], tax_answer_count: 0},
     });
   }
 
-  reset() {
+  recoverSession() {
     if (this.locked) throw new Error('busy');
-    this.messenger.startNewSession({retainHistory: false});
-    this.arm();
+    try {
+      this.messenger.startNewSession({retainHistory: false});
+      this.setDefaults();
+    } catch {
+      this.unavailable = true;
+      this.onUnavailable?.();
+    }
   }
 
   finish(error, detail) {
@@ -74,6 +80,7 @@ export class MessengerTransport {
   }
 
   send(query) {
+    if (this.unavailable) return Promise.reject(new Error('service'));
     if (this.locked || this.pending) return Promise.reject(new Error('busy'));
     this.locked = true;
     return new Promise((resolve, reject) => {
@@ -85,14 +92,15 @@ export class MessengerTransport {
       }, this.config.requestTimeoutMs);
       const settled = () => {
         this.locked = false;
-        if (this.rearmAfterSettled) {
-          this.rearmAfterSettled = false;
-          this.reset();
+        if (this.recoverAfterSettled) {
+          this.recoverAfterSettled = false;
+          this.recoverSession();
         }
         this.onSettled?.();
       };
       let operation;
       try {
+        this.setDefaults();
         operation = this.messenger.sendQuery(query);
       } catch {
         this.finish(new Error('service'));
@@ -111,4 +119,33 @@ export class MessengerTransport {
     if (this.locked) throw new Error('busy');
     for (const [name, listener] of this.listeners) this.eventRoot.removeEventListener(name, listener);
   }
+}
+
+/** One hidden SDK instance; global Agent and Production binding come from handoff. */
+export function loadMessenger(config) {
+  return new Promise((resolve, reject) => {
+    const messenger = document.createElement('df-messenger');
+    messenger.hidden = true;messenger.inert = true;
+    for (const [name, value] of Object.entries({
+      'project-id': config.projectId, 'agent-id': config.agentId,
+      'language-code': config.languageCode, 'storage-option': 'none',
+      'session-ttl': String(config.sessionTtlSeconds), 'max-query-length': '-1',
+    })) messenger.setAttribute(name, value);
+    // Global is SDK's default. Environment is integration-side, never a guessed attribute.
+    messenger.append(document.createElement('df-messenger-chat'));
+    const cleanup = () => { clearTimeout(timer);window.removeEventListener('df-messenger-loaded', loaded); };
+    const fail = () => { cleanup();messenger.remove();reject(new Error('unavailable')); };
+    const loaded = () => {
+      if (typeof messenger.sendQuery !== 'function' || typeof messenger.setQueryParameters !== 'function') return;
+      cleanup();
+      try { messenger.startNewSession({retainHistory: false});resolve(messenger); }
+      catch { messenger.remove();reject(new Error('unavailable')); }
+    };
+    const timer = setTimeout(fail, 20_000);
+    window.addEventListener('df-messenger-loaded', loaded);
+    document.body.append(messenger);
+    const script = document.createElement('script');script.src = config.messengerScript;
+    script.onerror = fail;
+    document.body.append(script);
+  });
 }
