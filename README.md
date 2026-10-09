@@ -1,3 +1,14 @@
+## GitHub Pages deployment model
+
+TAX AI Web is migrating from Pages **Deploy from a branch** to a repository-owned **GitHub Actions** deployment, following the proven 1999 Web release model.
+
+Plan: [`docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`](docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md)
+
+After migration, relevant approved `main` changes automatically test/package/deploy only the verified runtime allowlist. The repository root is not published.
+
+One-time owner setting: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+
+---
 # TAX AI Web
 
 臺北市稅捐稽徵處 TAX AI 題庫網站。保留快速搜尋、分類、題庫瀏覽、收藏、詳情／相關題、複製、Excel 匯入、Learning 與既有導覽；AI 模式使用獨立 TAX AI Agent 的 FAQ semantic search。
