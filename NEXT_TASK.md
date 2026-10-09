@@ -1,3 +1,26 @@
+# Active task — migrate TAX AI Pages from branch source to GitHub Actions
+
+Plan: `docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md`
+
+- [ ] Read the 1999 reference workflow.
+- [ ] Create `.github/workflows/pages.yml` with automatic relevant-main triggers and `workflow_dispatch`.
+- [ ] Add `build_type=workflow` fail-closed guard.
+- [ ] Run deterministic pre-deploy tests/package checks.
+- [ ] Build `tools/package_web.py` twice and require byte-identical ZIPs.
+- [ ] Extract/upload only runtime allowlist + MANIFEST; never publish repo root.
+- [ ] Use configure-pages, upload-pages-artifact and deploy-pages official actions.
+- [ ] Preserve correct Pages/id-token permissions and pages concurrency.
+- [ ] Do not modify CX backend or TAX AI product behavior.
+- [ ] Commit/push workflow and docs.
+- [ ] If Source is still branch mode, stop at `ACTIONS WORKFLOW READY / PAGES SOURCE SWITCH PENDING` and ask owner to select GitHub Actions.
+- [ ] After switch, run/dispatch and record run/source/deployed SHA/artifact.
+- [ ] Verify hosted byte parity and internal-file exclusions.
+- [ ] Then run trusted-browser TAX AI smoke if possible.
+- [ ] Update PROJECT_STATE/NEXT_TASK/README/deployment evidence.
+
+Target: `TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE`
+
+---
 # TAX AI Web B3 — 正式 FAQ Flow 介接
 
 Date: 2026-10-09 (Asia/Taipei)
