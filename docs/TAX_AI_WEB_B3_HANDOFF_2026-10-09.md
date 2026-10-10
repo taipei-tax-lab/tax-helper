@@ -1,3 +1,5 @@
+> **2026-10-10 後續驗收狀態（依使用者確認）**：真實瀏覽器 × CX 正式 FAQ Flow 整合驗收現已完成，狀態 **LIVE / USABLE — owner-confirmed**。下文 `PENDING`、Cloud Chromium TLS blocker 與舊 Checklist 均為 2026-10-09 的歷史交接快照；沒有追改歷史測試結果。詳 [Owner Acceptance](TAX_AI_OWNER_ACCEPTANCE_2026-10-10.md)。本輪僅更新 Markdown。
+
 # TAX AI Web B3／CX FAQ Flow handoff
 
 Date: 2026-10-09 (Asia/Taipei)。Backend **TAX AI INTERNAL FAQ FLOW BACKEND READY FOR WEB CUTOVER**。
