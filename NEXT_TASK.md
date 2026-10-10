@@ -1,3 +1,13 @@
+# TAX AI — 現行下一步（2026-10-10）
+
+- [x] 使用者確認真實瀏覽器 × CX 正式 FAQ Flow 的整合驗收**已完成**（`LIVE / USABLE — owner-confirmed`；不是本輪新的自動化測試）。
+- [x] 只同步文件，不修改任何前端程式、CX 或 Pages 工作流程。
+- [ ] 若需逐測例稽核，補入使用者或業務驗收紀錄；不重新製造測試數據。
+
+參照 [Owner Acceptance](docs/TAX_AI_OWNER_ACCEPTANCE_2026-10-10.md)。下方為**2026-10-09 當輪 Checklist 的歷史紀錄**；保留原未勾項目供追溯，不再當成現行未完成工作。
+
+---
+
 # Active task — TAX AI Pages GitHub Actions migration
 
 Date: 2026-10-09 (Asia/Taipei)
