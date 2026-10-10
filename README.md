@@ -5,11 +5,11 @@
 Pages：https://taipei-tax-lab.github.io/tax-helper/
 
 **TAX AI PAGES ACTIONS DEPLOYMENT ACTIVE**。Pages Source已由新run確認workflow；build／deploy／hosted parity均PASS。
-真實browser／CX狀態 **DEPLOYED / LIVE ACCEPTANCE PENDING**：Cloud Chromium navigation仍有TLS信任blocker，未宣稱LIVE／USABLE。
+真實瀏覽器／CX 整合驗收：**LIVE / USABLE — owner-confirmed（2026-10-10）**。先前 2026-10-09 Cloud Chromium 曾遇 TLS 信任問題，但只是當時該工具的測試限制；詳細見 [驗收狀態補充](docs/TAX_AI_OWNER_ACCEPTANCE_2026-10-10.md)。
 正式 [run37922319766](https://github.com/taipei-tax-lab/tax-helper/actions/runs/37922319766)，source/deployed d614b423d33281667fb7d94f3df73a8a7634f0a5；artifact11611894162。
 舊dynamic run為歷史，不重跑、不作本輪truth。
 
-本輪 B3 狀態見 [PROJECT_STATE.md](PROJECT_STATE.md)、[NEXT_TASK.md](NEXT_TASK.md)、[部署證據](docs/PAGES_DEPLOYMENT_2026-10-09.md)。只有真實 browser＋CX Production 成功才標 **TAX AI WEB + FAQ FLOW LIVE / USABLE**；離線測試不能代替 live 驗收。
+本輪 B3 狀態見 [PROJECT_STATE.md](PROJECT_STATE.md)、[NEXT_TASK.md](NEXT_TASK.md)、[部署證據](docs/PAGES_DEPLOYMENT_2026-10-09.md)。TAX AI WEB + FAQ FLOW 已由使用者於 2026-10-10 確認完成真實瀏覽器整合驗收；原有離線測試仍不得替代或冒充真實測試紀錄。
 
 ## AI 搜尋契約
 
@@ -65,7 +65,7 @@ workflow讀Pages配置，build_type不等於workflow即fail closed，輸出明�
 官方upload-pages-artifact@v3／deploy-pages@v5、github-pages environment、最小pages/id-token權限；artifact為正式deployment truth。
 完整Chromium不放CI：需額外Playwright/browser及第三方XLSX設定，這輪runtime未改且B3 regression已有實證。
 新 [migration plan](docs/PAGES_ACTIONS_MIGRATION_PLAN_2026-10-09.md)、[離線證據](docs/PAGES_ACTIONS_TEST_EVIDENCE_2026-10-09.json)。
-發布後核對source/deployed SHA／artifact、hosted bytes／MIME／internal files404。Cloud browser TLS blocker保留live PENDING，不能假稱LIVE。
+發布後核對source/deployed SHA／artifact、hosted bytes／MIME／internal files404。2026-10-09 Cloud Browser TLS 信任錯誤保留為歷史測試限制；2026-10-10 使用者已另行確認 live acceptance 完成（不推定 10/09 測試轉為 PASS）。
 
 可重製被Actions驗證／fresh extract的runtime ZIP（ZIP本身不同於GitHub artifact封裝）：
 

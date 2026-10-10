@@ -1,3 +1,11 @@
+# TAX AI — 現行驗收狀態（2026-10-10）
+
+**2026-10-10 狀態更新（使用者／服務負責人驗收確認）**：TAX AI Web 的**真實瀏覽器 × CX Production 整合驗收已完成**；目前可標示為 **LIVE / USABLE — owner-confirmed**。本次是使用者對驗收狀態的確認與文件修訂，不是 Codex 在這一輪新執行的 browser 測試；使用者未提供逐案例測試報告，故不虛構 0～5 筆、手機裝置等各個測例的 PASS 數或新測試證據。2026-10-09 Cloud Chromium 曾遇 `ERR_CERT_AUTHORITY_INVALID`，仍是當時工具環境的真實歷史事件，**不再代表最新服務驗收狀態**。無任何網站程式、CX、IAM 或 Pages 新部署。
+
+權威摘要以本節為準；**下方 2026-10-09 的 PENDING／未勾選項目皆為原輪次記錄**，不是 10/10 的最新狀態。驗收確認詳 [TAX AI Owner Acceptance](docs/TAX_AI_OWNER_ACCEPTANCE_2026-10-10.md)。
+
+---
+
 # TAX AI — Pages Actions migration state
 
 Date: 2026-10-09 (Asia/Taipei)
