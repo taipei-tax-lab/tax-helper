@@ -1,6 +1,6 @@
 import {config as defaults} from './config.mjs';
 import {MessengerTransport, loadMessenger} from './messenger-transport.mjs';
-import {normalizeResult, renderResult} from './result-model.mjs';
+import {normalizeResult, renderResult, resolveSourceCards, verifyBank, FAQ_FALLBACK} from './result-model.mjs';
 
 const panel = document.querySelector('#tax-ai-panel');
 const form = document.querySelector('#tax-ai-form');
@@ -28,6 +28,8 @@ const messages = {
   session: '查詢連線已中斷。按鈕恢復後請手動重新送出完整問題，或使用快速搜尋。',
   unavailable: 'AI 服務準備中，請先使用快速搜尋。',
   input: '請輸入問題，並將長度控制在 1000 字以內。',
+  bank: 'AI 候選無法與目前自訂題庫連動，請使用快速搜尋。',
+  source: 'AI 來源資料無法驗證，請稍後再試或使用快速搜尋。',
 };
 
 function clearResult() {
@@ -42,7 +44,7 @@ function clearResult() {
 function showState(name) {
   status.dataset.state = name;
   status.hidden = false;
-  status.setAttribute('role', ['error', 'timeout', 'session', 'unavailable'].includes(name) ? 'alert' : 'status');
+  status.setAttribute('role', ['error', 'timeout', 'session', 'unavailable', 'source', 'bank'].includes(name) ? 'alert' : 'status');
   status.textContent = name === 'timeout'
     ? transport?.locked
       ? '查詢逾時，尚在等待查詢結束。按鈕恢復後可手動再問；若持續無法恢復，請重新載入頁面。'
@@ -115,6 +117,12 @@ for (const button of buttons) {
   button.addEventListener('click', () => setMode(button.dataset.taxMode));
 }
 window.addEventListener('tax-quick-search', () => setMode('quick'));
+window.addEventListener('tax-ai-bank-changed', () => {
+  // Invalidate pending/displayed cards immediately when Excel replaces the bank.
+  if (latestModel?.mode === 'datastore' || busy) {
+    generation++;clearResult();showState('bank');
+  }
+});
 input.addEventListener('input', count);
 input.addEventListener('compositionstart', () => { composing = true; });
 input.addEventListener('compositionend', () => { composing = false; });
@@ -136,10 +144,24 @@ form.addEventListener('submit', async event => {
   try {
     const detail = await transport.send(query);
     if (acceptedGeneration !== generation) return;
-    const model = normalizeResult(detail);
-    if (!model.answer.trim()) { showState('empty'); return; }
+    let model = normalizeResult(detail);
+    const bank = window.taxAiBank?.get();
+    if (model.mode === 'datastore') {
+      model = await resolveSourceCards(model, query, bank, window.TaxSearch?.search);
+      if (acceptedGeneration !== generation || window.taxAiBank?.get() !== bank) return;
+    } else {
+      // v1 compatibility is limited to the frozen FAQ envelope or exact empty response.
+      if (!demo && !model.items?.length && model.answer.trim() !== FAQ_FALLBACK) throw new Error('source');
+      if (!model.answer.trim()) { showState('empty'); return; }
+    }
     latestModel = {query, ...model};
-    renderResult(model, query, result);
+    renderResult(model, query, result, async id => {
+      try {
+        const current = window.taxAiBank?.get();await verifyBank(current);
+        if (current !== bank || current !== window.taxAiBank?.get()) throw new Error('bank');
+        window.taxAiBank.open(id);
+      } catch {clearResult();showState('bank');}
+    });
     status.hidden = true;
     result.hidden = false;
     if (!panel.hidden && document.querySelector('#searchView').classList.contains('active')) {
@@ -147,7 +169,7 @@ form.addEventListener('submit', async event => {
     }
   } catch (error) {
     if (acceptedGeneration !== generation) return;
-    showState(['session', 'empty', 'timeout'].includes(error.message) ? error.message : 'error');
+    showState(['session', 'empty', 'timeout', 'bank', 'source'].includes(error.message) ? error.message : 'error');
   } finally {
     busy = false;
     controls();

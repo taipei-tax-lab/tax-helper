@@ -556,6 +556,66 @@ def run(browser_path, xlsx_path=None, screenshot_dir=None):
             checks.append('Excel runtime data stays local to quick search; AI session/model unchanged and source difference explained')
             context.close()
 
+        # D preparation replay: projected authenticated source captures through OFFLINE SDK.
+        # This tests browser/controller/DOM; it is not native live Messenger raw evidence.
+        fixtures = json.loads((Path(__file__).parent / 'd_source_fixtures.json').read_text())['cases']
+        context, page = open_page(demo=False, sdk_fixture=True, with_xlsx=bool(library))
+        for case in fixtures:
+            detail = {'raw': {'queryResult': {'responseMessages': [
+                {'text': {'text': ['generated summary must not replace original bank']}},
+                {'payload': {'tax_poc': case['payload']}}]}}}
+            page.evaluate('d=>taxSdk.enqueue(d)', detail)
+            ask(page, case['query'])
+            assert page.locator('[data-ai-answer] .result-card').evaluate_all('els=>els.map(e=>e.dataset.id)') == case['expected_ids'], case['id']
+            assert 'generated summary must not replace original bank' not in page.locator('[data-ai-answer]').text_content()
+            for i, original_id in enumerate(case['expected_ids']):
+                record = page.evaluate('id=>taxAiBank.get().find(r=>String(r.id)===id)', original_id)
+                card = page.locator('[data-ai-answer] .result-card').nth(i)
+                assert card.locator('h3').text_content() == record['question']
+                assert card.locator('p').text_content() == record['summary']
+            if case['expected_ids']:
+                first = case['expected_ids'][0]
+                record = page.evaluate('id=>taxAiBank.get().find(r=>String(r.id)===id)', first)
+                page.locator('[data-ai-answer] .result-card h3').first.click()
+                expect(page.locator('#detailDrawer')).to_have_attribute('aria-hidden','false')
+                expect(page.locator('#drawerContent h2')).to_have_text(record['question'])
+                assert page.locator('#drawerContent .detail-card').nth(1).locator('p').text_content() == record['answer'].replace('\r\n','\n').replace('\r','\n')
+                page.keyboard.press('Escape')
+        checks.append('D offline authenticated-capture projection12: original IDs/question/summary, original answer drawer, zero and replacement, no generated answer')
+        q4 = next(c for c in fixtures if c['id'] == 'Q4')
+        for width in (390, 320):
+            page.set_viewport_size({'width':width,'height':900})
+            page.evaluate('p=>taxSdk.enqueue({raw:{queryResult:{responseMessages:[{payload:{tax_poc:p}}]}}})', q4['payload'])
+            ask(page, q4['query'])
+            assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+            page.locator('[data-tax-mode="quick"]').click();page.locator('[data-tax-mode="ai"]').click()
+            assert page.locator('[data-ai-answer] .result-card').count()==4
+            assert page.locator('df-messenger').count()==1
+        checks.append('D 390/320 mobile cards/no overflow, mode switching retains cards and one transport')
+        page.set_viewport_size({'width':1280,'height':960})
+        bad = {**q4['payload'], 'sources':'not JSON'}
+        page.evaluate('p=>taxSdk.enqueue({raw:{queryResult:{responseMessages:[{text:{text:["must not fall back"]}},{payload:{tax_poc:p}}]}}})',bad)
+        ask(page,'malformed source',success=False)
+        expect(page.locator('#tax-ai-status')).to_have_attribute('data-state','source')
+        expect(page.locator('#tax-ai-result')).to_be_hidden()
+        page.evaluate('p=>taxSdk.enqueue({raw:{queryResult:{responseMessages:[{payload:{tax_poc:p}}]}}})',q4['payload'])
+        ask(page,q4['query'])
+        if library:
+            upload_excel(page,[['編號','分類','問題','重點摘要','完整答案'],[111,'自訂','same ID different question','custom summary','custom answer']])
+            expect(page.locator('#toast')).to_have_text('已成功匯入 1 題')
+            page.locator('[data-view="search"]').click()
+            expect(page.locator('#tax-ai-result')).to_be_hidden()
+            page.evaluate('p=>taxSdk.enqueue({raw:{queryResult:{responseMessages:[{payload:{tax_poc:p}}]}}})',q4['payload'])
+            ask(page,q4['query'],success=False)
+            expect(page.locator('#tax-ai-status')).to_have_attribute('data-state','bank')
+            page.locator('[data-tax-mode="quick"]').click()
+            page.locator('#searchView .search-input').fill('same ID different question')
+            page.locator('#searchView .search-form button').click()
+            assert result_ids(page)==['111']
+            checks.append('D same-ID XLSX replaces bank: stale cards invalidated, custom bank blocks D, quick search still works')
+        checks.append('D malformed payload fail closed, generated text suppressed, later valid response recovers')
+        context.close()
+
         assert not errors, errors
         assert blocked <= {'cdn.jsdelivr.net', '113604.github.io', 'tax-status-api.ddy88000000.workers.dev'}, blocked
         assert not any('dialogflow.cloud.google.com/' in url for url in requested)

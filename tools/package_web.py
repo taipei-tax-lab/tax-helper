@@ -12,7 +12,7 @@ FILES = sorted([
     'search.js', 'searchDictionary.js', 'logo.png.gif',
     *('assets/tax-ai/' + name for name in [
         'config.mjs', 'controller.mjs', 'messenger-transport.mjs',
-        'mock-messenger.mjs', 'result-model.mjs', 'style.css']),
+        'mock-messenger.mjs', 'result-model.mjs', 'source-manifest.mjs', 'style.css']),
 ])
 
 

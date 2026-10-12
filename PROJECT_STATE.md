@@ -1,3 +1,23 @@
+# TAX AI｜D Web正式發布回歸通過／執行環境網路阻擋（2026-10-12）
+
+**PREDEPLOY_REGRESSION_PASS / WEB_GATE_PENDING / MAIN_NOT_MERGED**。本輪fresh main=feature base `d12145f...`，無runtime衝突；accepted D `8a215db...` 的Node37/Python27、B1 browser17/integration17/AI browser31、package16entries/11syntax/credential scan全PASS。正式config維持原Agent/FAQ START_PAGE，搜尋/129題不變。使用者已授權正式Web發布，但Pages/SDK live通道被執行環境proxy403阻擋；回覆已開通後工具仍revision2/空allowed_hosts，尚未merge/deploy，不得把離線PASS當正式gate。CX Production不得cutover；開通後繼續既有授權，Web gate通過才交接。上一個已驗收main `d12145f...` / deployed `d614b42...` rollback package已重建exact SHA。詳[正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。下方為輸入與歷史紀錄。
+
+---
+
+# TAX AI｜Web Codex正式發布授權：與CX並行，先完成WEB_GATE（2026-10-12）
+
+**WEB RELEASE AUTHORIZED / PARALLEL WITH CX / WEB_GATE MUST PRECEDE CX PRODUCTION CUTOVER**。使用者已明確同意先改Web。Web Codex可與CX Codex同時工作：本repo只負責D feature→main→Pages及「新版Web × 舊Production Version1」正式站相容驗收；不改GCP。CX可同時建立新immutable FAQ Version，但不得切Production，直到本repo標示**WEB_GATE_PASS**。D feature accepted commit=`8a215dbb125d34a40a6696c344ac21fcb1d9643a`；正式config必須繼續指原Agent `786d0cf9...`與原FAQ START_PAGE，不得寫PoC Agent。權威：[Web平行正式發布](docs/TAX_AI_D_WEB_PARALLEL_PRODUCTION_RELEASE_2026-10-12.md)。Web Gate通過後通知CX；CX切D Production後，再補正式D cards/drawer/Quick Search smoke。PoC Agent清理由CX Codex在正式上線成功後處理。
+
+---
+
+# TAX AI — D版Web分支實作完成／尚未發布（2026-10-12）
+
+**D IMPLEMENTED / OFFLINE PASS / NOT RELEASE_READY**。feature `codex/tax-ai-d-release-readiness-20261012`：原URI129 allowlist＋全bank fingerprint、原D JS策略、原題目/摘要卡與原openDetail側欄；Excel同id不同內容/畸形來源fail-closed，Quick Search/收藏/其他原功能保持。原Agent/config/currentPage/transport不變，沒有merge/Pages部署。Node37/Python27、AI browser31/原站browser17與package16entry PASS，全是offline，不冒充Messenger。原Draft最後12題PASS（早期NOT_FOUND傳播失敗保留）、隔離Messenger/Origin待人工確認；不能標RELEASE_READY。
+
+[實作與最少人工操作](docs/TAX_AI_D_WEB_READINESS_2026-10-12.md)／[測試證據](docs/TAX_AI_D_WEB_READINESS_EVIDENCE_2026-10-12.json)。main d12145f／Pages d614b42回復點與359048byte原artifact exact hash保留；分支commit/push後STOP。以下歷史不改。
+
+---
+
 # TAX AI — 現行驗收狀態（2026-10-10）
 
 **2026-10-10 狀態更新（使用者／服務負責人驗收確認）**：TAX AI Web 的**真實瀏覽器 × CX Production 整合驗收已完成**；目前可標示為 **LIVE / USABLE — owner-confirmed**。本次是使用者對驗收狀態的確認與文件修訂，不是 Codex 在這一輪新執行的 browser 測試；使用者未提供逐案例測試報告，故不虛構 0～5 筆、手機裝置等各個測例的 PASS 數或新測試證據。2026-10-09 Cloud Chromium 曾遇 `ERR_CERT_AUTHORITY_INVALID`，仍是當時工具環境的真實歷史事件，**不再代表最新服務驗收狀態**。無任何網站程式、CX、IAM 或 Pages 新部署。

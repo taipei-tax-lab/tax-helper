@@ -1,0 +1,201 @@
+{
+  "provenance": "Projection of accepted authenticated D responses; removes snippet/quotation fragments; NOT Messenger capture",
+  "cases": [
+    {
+      "id": "Q4",
+      "query": "財產清單",
+      "payload": {
+        "source_count": "4",
+        "kind": "DATA_STORE_ANSWER_SOURCES",
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK",
+        "schema_version": 1,
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-070.txt",
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-070.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-106.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-085.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-111.txt\"}"
+      },
+      "expected_ids": [
+        "111",
+        "85",
+        "70",
+        "106"
+      ]
+    },
+    {
+      "id": "I1",
+      "query": "信用卡購物的電子發票載具如何辦理？",
+      "payload": {
+        "first_uri": "",
+        "sources": [],
+        "kind": "NO_MATCH",
+        "schema_version": 1,
+        "order": "NO_SOURCES",
+        "source_count": 0
+      },
+      "expected_ids": []
+    },
+    {
+      "id": "N1",
+      "query": "請教我用Python寫二分搜尋演算法",
+      "payload": {
+        "order": "NO_SOURCES",
+        "source_count": 0,
+        "kind": "NO_MATCH",
+        "schema_version": 1,
+        "first_uri": "",
+        "sources": []
+      },
+      "expected_ids": []
+    },
+    {
+      "id": "P105",
+      "query": "可以到哪些稅務機關查詢被繼承人金融遺產呢？可否線上申辦？可查詢金融遺產種類？及應備證明文件？",
+      "payload": {
+        "schema_version": 1,
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-105.txt\"}",
+        "source_count": "1",
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-105.txt",
+        "kind": "DATA_STORE_ANSWER_SOURCES",
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK"
+      },
+      "expected_ids": [
+        "105",
+        "106",
+        "107"
+      ]
+    },
+    {
+      "id": "P111",
+      "query": "查調個人財產及所得資料應檢附之證件？",
+      "payload": {
+        "schema_version": 1,
+        "source_count": "2",
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK",
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-085.txt",
+        "kind": "DATA_STORE_ANSWER_SOURCES",
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-085.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-111.txt\"}"
+      },
+      "expected_ids": [
+        "111",
+        "85",
+        "70"
+      ]
+    },
+    {
+      "id": "P127",
+      "query": "有那些地方稅可以用信用卡繳納？",
+      "payload": {
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-127.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-078.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-075.txt\"}",
+        "schema_version": 1,
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK",
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-127.txt",
+        "source_count": "3",
+        "kind": "DATA_STORE_ANSWER_SOURCES"
+      },
+      "expected_ids": [
+        "127",
+        "78",
+        "75",
+        "92",
+        "89"
+      ]
+    },
+    {
+      "id": "Q1",
+      "query": "我父親過世了,聽說要辦金融遺產",
+      "payload": {
+        "order": "NO_SOURCES",
+        "kind": "NO_MATCH",
+        "source_count": 0,
+        "schema_version": 1,
+        "sources": [],
+        "first_uri": ""
+      },
+      "expected_ids": []
+    },
+    {
+      "id": "Q2",
+      "query": "金融遺產",
+      "payload": {
+        "source_count": "3",
+        "schema_version": 1,
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-106.txt",
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-106.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-105.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-107.txt\"}",
+        "kind": "DATA_STORE_ANSWER_SOURCES",
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK"
+      },
+      "expected_ids": [
+        "106",
+        "105",
+        "107"
+      ]
+    },
+    {
+      "id": "Q3",
+      "query": "信用卡",
+      "payload": {
+        "schema_version": 1,
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-127.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-078.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-075.txt\"}",
+        "source_count": "3",
+        "kind": "DATA_STORE_ANSWER_SOURCES",
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-127.txt",
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK"
+      },
+      "expected_ids": [
+        "127",
+        "75",
+        "78",
+        "73",
+        "80"
+      ]
+    },
+    {
+      "id": "Q5",
+      "query": "我要如何申請財產清單",
+      "payload": {
+        "schema_version": 1,
+        "kind": "DATA_STORE_ANSWER_SOURCES",
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-070.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-111.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-106.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-085.txt\"}",
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK",
+        "source_count": "4",
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-070.txt"
+      },
+      "expected_ids": [
+        "111",
+        "85",
+        "70",
+        "106"
+      ]
+    },
+    {
+      "id": "N2",
+      "query": "如何製作巧克力蛋糕？",
+      "payload": {
+        "source_count": 0,
+        "order": "NO_SOURCES",
+        "first_uri": "",
+        "schema_version": 1,
+        "sources": [],
+        "kind": "NO_MATCH"
+      },
+      "expected_ids": []
+    },
+    {
+      "id": "I2",
+      "query": "信用卡可以繳哪些地方稅？",
+      "payload": {
+        "first_uri": "https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-127.txt",
+        "schema_version": 1,
+        "kind": "DATA_STORE_ANSWER_SOURCES",
+        "source_count": "2",
+        "order": "CITATION_ORDER_NOT_SEARCH_RANK",
+        "sources": "{\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-127.txt\"}, {\"uri\":\"https://storage.cloud.google.com/tpctax-tax-ai-unstructured-poc-763620207055-20261012/faq/txt-context-v2-20261012/b803a7d26df0c817bd605d5023abb4f71f8dda5280b9ad45426af60792a2c258/faq-078.txt\"}"
+      },
+      "expected_ids": [
+        "127",
+        "78",
+        "92",
+        "117",
+        "89"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,72 @@
-/** Complete TAX AI text baseline; optional exact question/answer presentation items. */
+/** D source cards plus backward-compatible immutable v1 text presentation. */
+import {sourceManifest} from './source-manifest.mjs';
+
+const knownUris = new Map(sourceManifest.records.map(r => [r.uri, r.id]));
+function sourceId(uri) {
+  if (typeof uri !== 'string' || uri.length > 50000) throw new Error('source');
+  let canonical;
+  try {
+    const u = new URL(uri);
+    if (u.protocol === 'gs:' && !u.username && !u.password && !u.search && !u.hash) canonical = uri;
+    if (u.protocol === 'https:' && u.host === 'storage.cloud.google.com' && !u.username && !u.password && !u.search) {
+      canonical = 'gs://' + decodeURIComponent(u.pathname).slice(1);
+    }
+  } catch { throw new Error('source'); }
+  const id = knownUris.get(canonical);
+  if (!id) throw new Error('source');
+  return id;
+}
+
+function nativeSources(qr) {
+  const messages = Array.isArray(qr?.responseMessages) ? qr.responseMessages : [];
+  const envelopes = messages.filter(m => m?.payload && Object.hasOwn(m.payload, 'tax_poc'));
+  if (!envelopes.length) {
+    // Never treat stripped D payload/parameter-only data as legacy generated text.
+    if (qr?.parameters && Object.hasOwn(qr.parameters, 'final_sources')) throw new Error('source');
+    return null;
+  }
+  if (envelopes.length !== 1) throw new Error('source');
+  const p = envelopes[0].payload.tax_poc;
+  if (!p || p.schema_version !== 1 || !['NO_MATCH', 'DATA_STORE_ANSWER_SOURCES'].includes(p.kind)) throw new Error('source');
+  let sources;
+  if (Array.isArray(p.sources)) sources = p.sources;
+  else if (typeof p.sources === 'string' && p.sources.length <= 200000 && p.sources.trim().startsWith('{')) {
+    try { sources = JSON.parse('[' + p.sources + ']'); } catch { throw new Error('source'); }
+  } else throw new Error('source');
+  const count = typeof p.source_count === 'number' ? p.source_count : /^\d+$/.test(p.source_count || '') ? Number(p.source_count) : NaN;
+  if (!Number.isInteger(count) || count !== sources.length || count > 129 || typeof p.first_uri !== 'string') throw new Error('source');
+  if (p.kind === 'NO_MATCH' && (count !== 0 || p.first_uri !== '' || !Array.isArray(p.sources))) throw new Error('source');
+  if (p.kind === 'DATA_STORE_ANSWER_SOURCES' && !count) throw new Error('source');
+  const ids = sources.map(s => sourceId(s?.uri));
+  if (ids.length && sourceId(p.first_uri) !== ids[0]) throw new Error('source');
+  if (qr?.parameters && Object.hasOwn(qr.parameters, 'final_sources')) {
+    const param = qr.parameters.final_sources;
+    if (!Array.isArray(param) || param.length !== sources.length || param.some((s, i) => sourceId(s?.uri) !== ids[i])) throw new Error('source');
+  }
+  return {mode: 'datastore', sourceIds: [...new Set(ids)], answer: ''};
+}
+
+export async function verifyBank(bank) {
+  if (!Array.isArray(bank) || bank.length !== 129 || new Set(bank.map(r => String(r.id))).size !== 129) throw new Error('bank');
+  const projected = bank.map(r => Object.fromEntries(sourceManifest.fields.map(f => [f, r[f]])));
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(projected)));
+  const hex = [...new Uint8Array(digest)].map(n => n.toString(16).padStart(2, '0')).join('');
+  if (hex !== sourceManifest.normalized_bank_sha256) throw new Error('bank');
+}
+
+export async function resolveSourceCards(model, query, bank, search) {
+  await verifyBank(bank);
+  if (model.mode !== 'datastore' || typeof search !== 'function') throw new Error('source');
+  const original = model.sourceIds.length ? search(bank, query, '全部') : [];
+  const ranked = original.filter(r => model.sourceIds.includes(String(r.id)));
+  for (const r of bank) if (model.sourceIds.includes(String(r.id)) && !ranked.some(x => String(x.id) === String(r.id))) ranked.push(r);
+  const cards = [];
+  for (const r of [...ranked, ...original]) {
+    if (!cards.some(x => String(x.id) === String(r.id))) cards.push(r);
+    if (cards.length === 5) break;
+  }
+  return {...model, cards};
+}
 export function safeUrl(value) {
   if (typeof value !== 'string' || !/^https?:\/\//i.test(value)) return null;
   try {
@@ -117,6 +185,8 @@ export function normalizeResult(detail) {
   const steps = qr?.diagnosticInfo?.['DataStore Execution Sequence']?.steps;
   if (raw?.error?.message || (Array.isArray(qr?.webhookStatuses) && qr.webhookStatuses.some(x => x?.message))
     || (Array.isArray(steps) && steps.some(x => x?.status?.message))) throw new Error('service');
+  const d = nativeSources(qr);
+  if (d) return d;
   const rawMessages = Array.isArray(raw?.queryResult?.responseMessages) ? raw.queryResult.responseMessages : [];
   const parsed = Array.isArray(detail?.data?.messages) ? detail.data.messages : [];
   const text = parsed.filter(m => m?.type === 'text' && typeof m.text === 'string').map(m => m.text);
@@ -151,11 +221,30 @@ export function appendAnswer(container, answer) {
   append(container, answerParts(answer));return inline;
 }
 
-export function renderResult(model, query, root) {
+export function renderResult(model, query, root, openOriginal) {
   const question = root.querySelector('[data-ai-query]');
   question.textContent = query;
   const answer = root.querySelector('[data-ai-answer]');
   answer.replaceChildren();
+  if (model.mode === 'datastore') {
+    answer.classList.remove('has-faq-items');
+    const list = document.createElement('div');list.className = 'result-list';
+    for (const item of model.cards || []) {
+      const card = document.createElement('article');card.className = 'result-card';card.dataset.id = String(item.id);
+      const top = document.createElement('div');top.className = 'result-top';
+      const category = document.createElement('span');category.className = 'cat-tag';category.textContent = item.category;top.append(category);
+      const heading = document.createElement('h3');heading.textContent = item.question;
+      const summary = document.createElement('p');summary.textContent = item.summary;
+      const action = document.createElement('button');action.type = 'button';action.className = 'small-btn';action.textContent = '查看完整答詢';
+      action.addEventListener('click', () => openOriginal?.(item.id));
+      card.addEventListener('click', event => {if (!event.target.closest('button')) openOriginal?.(item.id);});
+      card.append(top, heading, summary, action);list.append(card);
+    }
+    if (!model.cards?.length) {const empty = document.createElement('p');empty.className = 'empty';empty.textContent = FAQ_FALLBACK;list.append(empty);}
+    answer.append(list);
+    root.querySelector('[data-ai-sources]').replaceChildren();root.querySelector('[data-ai-source-section]').hidden = true;
+    return;
+  }
   const hasItems = Array.isArray(model.items) && model.items.length > 0;
   answer.classList.toggle('has-faq-items', hasItems);
   const inline = new Set();

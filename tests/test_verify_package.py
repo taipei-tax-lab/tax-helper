@@ -35,14 +35,14 @@ class PackageVerificationTests(unittest.TestCase):
             for name, data in contents.items():
                 z.writestr(name, data)
 
-    def test_deterministic_package_and_fresh_extraction_only_fifteen_files(self):
+    def test_deterministic_package_and_fresh_extraction_only_sixteen_files(self):
         second = self.root / 'independent-path/hosting.zip'
         self.build(second)
         self.assertEqual(self.archive.read_bytes(), second.read_bytes())
         destination = self.root / 'pages'
         result = verify_package.verify(self.archive, destination)
-        self.assertEqual(result['files'], 15)
-        self.assertEqual(result['js_syntax_checks'], 10)
+        self.assertEqual(result['files'], 16)
+        self.assertEqual(result['js_syntax_checks'], 11)
         actual = {p.relative_to(destination).as_posix() for p in destination.rglob('*') if p.is_file()}
         self.assertEqual(actual, set(package_web.FILES) | {'MANIFEST.json'})
         for name in package_web.FILES:

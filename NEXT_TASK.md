@@ -1,3 +1,43 @@
+# TAX AI｜NEXT：網路實際生效後完成既有授權Web發布（2026-10-12）
+
+**WEB_GATE_PENDING；CX Production不得cutover。** [正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。
+
+- [x] Fresh compare：main/base/merge-base `d12145f...`，無TAX AI/search/questionBank runtime衝突；D範圍與正式config核對完成。
+- [x] Node37/Python27、B1/integration browser各17、AI browser31、package16entries/11syntax/credential-security回歸PASS；rollback package exact重建。
+- [ ] 執行環境允許正式Pages/官方SDK/Messenger hosts且實際生效；目前proxy403，使用者回覆已開通後readback仍revision2/allowed_hosts=[]。不改GCP/網域、不繞過proxy/TLS。
+- [ ] 網路就緒後再fresh-read main；有新的runtime/search/questionBank衝突立即STOP。依既有授權合入D必要變更，main自動Pages Actions部署。
+- [ ] 新run build/deploy/artifact、hosted16檔/MIME/exclusion parity；新版Web × 舊Production Version1正式Quick Search/legacy AI/模式/輸入/結果/無JS錯誤smoke。
+- [ ] 實際通過後才記錄gate通過、main SHA/run/artifact至STATE/TASK/release；push並STOP交CX cutover。Web發布異常立即恢復上一個已驗收Web，不允許CX cutover。
+- [ ] CX切D Production後另輪補D cards→完整答詢drawer/Quick Search最後smoke。
+
+---
+
+# TAX AI｜NEXT：Web Codex先發布D Web並交付WEB_GATE（2026-10-12）
+
+- [x] 使用者授權Web/CX Codex平行作業，Web可先發布；建立[Web正式發布計畫](docs/TAX_AI_D_WEB_PARALLEL_PRODUCTION_RELEASE_2026-10-12.md)。
+- [ ] Fresh compare main vs D feature `8a215db`；如main有新的TAX AI runtime/search/questionBank衝突，STOP，不自行覆蓋。
+- [ ] 僅合入D正式必要變更，確認正式config仍是原Agent/currentPage且無localhost/PoC Agent；跑Node/Python/browser/package/credential scan。
+- [ ] Merge/push main，讓既有Pages Actions部署；驗build/deploy/artifact/hosted parity。
+- [ ] **CX仍舊Production Version1時**，在正式Pages驗Quick Search及legacy AI格式相容；PASS後記錄main commit/run並明確標 **WEB_GATE_PASS**。
+- [ ] WEB_GATE_PASS後先STOP通知CX Codex可切Production；不要改Agent/Flow/Version/Messenger/IAM/domain。
+- [ ] CX切D Production後，再補正式站D cards→完整原答、Q4/P127/N1、Quick Search smoke；Q1/I1為已知查無，不誤判Web regression。
+- [ ] 建release文件、PROJECT_STATE/NEXT_TASK與rollback commit，push後STOP。
+
+---
+
+# TAX AI — D版準備交付／STOP待驗收（2026-10-12）
+
+- [x] feature branch最小D source mapping/原JS/原卡片/完整原答詢，保持正式config與原功能。
+- [x] bounded native payload＋trusted URI129、全bank fingerprint、Excel/pending/stale card防護、legacy v1相容。
+- [x] Node37/Python27、原站browser17/AI browser31（offline）、package16entry／11syntax／hash/scan PASS。
+- [x] main／原Pages artifact回復點與來源hash、最少人工隔離Messenger/Origin設定交付。
+- [ ] 機關人工啟用既有PoC Agent自己的Draft Messenger並核准測試Origin；原integration不動。
+- [x] 原Agent Draft最終同12題backend無NOT_FOUND、native sources與D Top1/Top5=8/10通過；早期傳播失敗保留。
+- [ ] 真實Messenger raw來源實證＋人工驗收後，才另授權正式發布。
+- [ ] 本輪STOP，不merge main、不deploy Pages、不改正式Production。詳[readiness](docs/TAX_AI_D_WEB_READINESS_2026-10-12.md)。
+
+---
+
 # TAX AI — 現行下一步（2026-10-10）
 
 - [x] 使用者確認真實瀏覽器 × CX 正式 FAQ Flow 的整合驗收**已完成**（`LIVE / USABLE — owner-confirmed`；不是本輪新的自動化測試）。

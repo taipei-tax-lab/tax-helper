@@ -240,6 +240,7 @@ function bindExcelImport(){
         ids.add(item.id);
       }
       bank=normalizeBank(converted);
+      window.dispatchEvent(new Event('tax-ai-bank-changed'));
       localStorage.setItem('taxAIExcelBank',JSON.stringify(bank));
       $('#bankCount').textContent=bank.length;
       renderPopular();renderCategories();fillCategorySelect();renderBank();
@@ -555,3 +556,6 @@ function escapeLearningHtml(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+// D result cards use the current normalized bank and the existing detail drawer.
+window.taxAiBank = Object.freeze({get:()=>bank, open:id=>openDetail(id)});
