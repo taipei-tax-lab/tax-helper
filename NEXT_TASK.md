@@ -1,3 +1,17 @@
+# TAX AI｜NEXT：網路實際生效後完成既有授權Web發布（2026-10-12）
+
+**WEB_GATE_PENDING；CX Production不得cutover。** [正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。
+
+- [x] Fresh compare：main/base/merge-base `d12145f...`，無TAX AI/search/questionBank runtime衝突；D範圍與正式config核對完成。
+- [x] Node37/Python27、B1/integration browser各17、AI browser31、package16entries/11syntax/credential-security回歸PASS；rollback package exact重建。
+- [ ] 執行環境允許正式Pages/官方SDK/Messenger hosts且實際生效；目前proxy403，使用者回覆已開通後readback仍revision2/allowed_hosts=[]。不改GCP/網域、不繞過proxy/TLS。
+- [ ] 網路就緒後再fresh-read main；有新的runtime/search/questionBank衝突立即STOP。依既有授權合入D必要變更，main自動Pages Actions部署。
+- [ ] 新run build/deploy/artifact、hosted16檔/MIME/exclusion parity；新版Web × 舊Production Version1正式Quick Search/legacy AI/模式/輸入/結果/無JS錯誤smoke。
+- [ ] 實際通過後才記錄gate通過、main SHA/run/artifact至STATE/TASK/release；push並STOP交CX cutover。Web發布異常立即恢復上一個已驗收Web，不允許CX cutover。
+- [ ] CX切D Production後另輪補D cards→完整答詢drawer/Quick Search最後smoke。
+
+---
+
 # TAX AI｜NEXT：Web Codex先發布D Web並交付WEB_GATE（2026-10-12）
 
 - [x] 使用者授權Web/CX Codex平行作業，Web可先發布；建立[Web正式發布計畫](docs/TAX_AI_D_WEB_PARALLEL_PRODUCTION_RELEASE_2026-10-12.md)。

@@ -1,3 +1,9 @@
+# TAX AI｜D Web正式發布回歸通過／執行環境網路阻擋（2026-10-12）
+
+**PREDEPLOY_REGRESSION_PASS / WEB_GATE_PENDING / MAIN_NOT_MERGED**。本輪fresh main=feature base `d12145f...`，無runtime衝突；accepted D `8a215db...` 的Node37/Python27、B1 browser17/integration17/AI browser31、package16entries/11syntax/credential scan全PASS。正式config維持原Agent/FAQ START_PAGE，搜尋/129題不變。使用者已授權正式Web發布，但Pages/SDK live通道被執行環境proxy403阻擋；回覆已開通後工具仍revision2/空allowed_hosts，尚未merge/deploy，不得把離線PASS當正式gate。CX Production不得cutover；開通後繼續既有授權，Web gate通過才交接。上一個已驗收main `d12145f...` / deployed `d614b42...` rollback package已重建exact SHA。詳[正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。下方為輸入與歷史紀錄。
+
+---
+
 # TAX AI｜Web Codex正式發布授權：與CX並行，先完成WEB_GATE（2026-10-12）
 
 **WEB RELEASE AUTHORIZED / PARALLEL WITH CX / WEB_GATE MUST PRECEDE CX PRODUCTION CUTOVER**。使用者已明確同意先改Web。Web Codex可與CX Codex同時工作：本repo只負責D feature→main→Pages及「新版Web × 舊Production Version1」正式站相容驗收；不改GCP。CX可同時建立新immutable FAQ Version，但不得切Production，直到本repo標示**WEB_GATE_PASS**。D feature accepted commit=`8a215dbb125d34a40a6696c344ac21fcb1d9643a`；正式config必須繼續指原Agent `786d0cf9...`與原FAQ START_PAGE，不得寫PoC Agent。權威：[Web平行正式發布](docs/TAX_AI_D_WEB_PARALLEL_PRODUCTION_RELEASE_2026-10-12.md)。Web Gate通過後通知CX；CX切D Production後，再補正式D cards/drawer/Quick Search smoke。PoC Agent清理由CX Codex在正式上線成功後處理。
