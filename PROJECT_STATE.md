@@ -1,3 +1,9 @@
+# TAX AI｜Web Codex正式發布授權：與CX並行，先完成WEB_GATE（2026-10-12）
+
+**WEB RELEASE AUTHORIZED / PARALLEL WITH CX / WEB_GATE MUST PRECEDE CX PRODUCTION CUTOVER**。使用者已明確同意先改Web。Web Codex可與CX Codex同時工作：本repo只負責D feature→main→Pages及「新版Web × 舊Production Version1」正式站相容驗收；不改GCP。CX可同時建立新immutable FAQ Version，但不得切Production，直到本repo標示**WEB_GATE_PASS**。D feature accepted commit=`8a215dbb125d34a40a6696c344ac21fcb1d9643a`；正式config必須繼續指原Agent `786d0cf9...`與原FAQ START_PAGE，不得寫PoC Agent。權威：[Web平行正式發布](docs/TAX_AI_D_WEB_PARALLEL_PRODUCTION_RELEASE_2026-10-12.md)。Web Gate通過後通知CX；CX切D Production後，再補正式D cards/drawer/Quick Search smoke。PoC Agent清理由CX Codex在正式上線成功後處理。
+
+---
+
 # TAX AI — D版Web分支實作完成／尚未發布（2026-10-12）
 
 **D IMPLEMENTED / OFFLINE PASS / NOT RELEASE_READY**。feature `codex/tax-ai-d-release-readiness-20261012`：原URI129 allowlist＋全bank fingerprint、原D JS策略、原題目/摘要卡與原openDetail側欄；Excel同id不同內容/畸形來源fail-closed，Quick Search/收藏/其他原功能保持。原Agent/config/currentPage/transport不變，沒有merge/Pages部署。Node37/Python27、AI browser31/原站browser17與package16entry PASS，全是offline，不冒充Messenger。原Draft最後12題PASS（早期NOT_FOUND傳播失敗保留）、隔離Messenger/Origin待人工確認；不能標RELEASE_READY。
