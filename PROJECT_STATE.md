@@ -1,3 +1,11 @@
+# TAX AI — D版Web分支實作完成／尚未發布（2026-10-12）
+
+**D IMPLEMENTED / OFFLINE PASS / NOT RELEASE_READY**。feature `codex/tax-ai-d-release-readiness-20261012`：原URI129 allowlist＋全bank fingerprint、原D JS策略、原題目/摘要卡與原openDetail側欄；Excel同id不同內容/畸形來源fail-closed，Quick Search/收藏/其他原功能保持。原Agent/config/currentPage/transport不變，沒有merge/Pages部署。Node37/Python27、AI browser31/原站browser17與package16entry PASS，全是offline，不冒充Messenger。原Draft最後12題PASS（早期NOT_FOUND傳播失敗保留）、隔離Messenger/Origin待人工確認；不能標RELEASE_READY。
+
+[實作與最少人工操作](docs/TAX_AI_D_WEB_READINESS_2026-10-12.md)／[測試證據](docs/TAX_AI_D_WEB_READINESS_EVIDENCE_2026-10-12.json)。main d12145f／Pages d614b42回復點與359048byte原artifact exact hash保留；分支commit/push後STOP。以下歷史不改。
+
+---
+
 # TAX AI — 現行驗收狀態（2026-10-10）
 
 **2026-10-10 狀態更新（使用者／服務負責人驗收確認）**：TAX AI Web 的**真實瀏覽器 × CX Production 整合驗收已完成**；目前可標示為 **LIVE / USABLE — owner-confirmed**。本次是使用者對驗收狀態的確認與文件修訂，不是 Codex 在這一輪新執行的 browser 測試；使用者未提供逐案例測試報告，故不虛構 0～5 筆、手機裝置等各個測例的 PASS 數或新測試證據。2026-10-09 Cloud Chromium 曾遇 `ERR_CERT_AUTHORITY_INVALID`，仍是當時工具環境的真實歷史事件，**不再代表最新服務驗收狀態**。無任何網站程式、CX、IAM 或 Pages 新部署。

@@ -289,3 +289,39 @@ test('technical recovery SDK failure becomes unavailable without throwing or ret
   h.emit('df-session-expired', {});assert.equal(unavailable, 1);assert.equal(h.transport.unavailable, true);
   await assert.rejects(h.transport.send('retain for later'), /service/);assert.equal(h.requests.length, 0);h.transport.dispose();
 });
+
+// D identity/selection regression uses projected real authenticated captures, not Messenger proof.
+import fs from 'node:fs';
+import vm from 'node:vm';
+import {resolveSourceCards, verifyBank} from '../assets/tax-ai/result-model.mjs';
+import {sourceManifest} from '../assets/tax-ai/source-manifest.mjs';
+const dContext = vm.createContext({window:{}});
+for (const name of ['questionBank.js','searchDictionary.js','search.js']) vm.runInContext(fs.readFileSync(new URL('../'+name,import.meta.url),'utf8'),dContext);
+const originalApp = fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+vm.runInContext(originalApp.slice(originalApp.indexOf('function normalizeQuestion('),originalApp.indexOf('function sameId('))+'\nwindow.bank=normalizeBank(window.questionBank);',dContext);
+const dBank=dContext.window.bank;
+const dFixtures=JSON.parse(fs.readFileSync(new URL('./d_source_fixtures.json',import.meta.url)));
+const dDetail=payload=>raw([{text:{text:['生成摘要不得冒充標準答案']}},{payload:{tax_poc:payload}}]);
+
+test('D all original12 captures preserve frozen source-first JS IDs and bank answer',async()=>{
+ await verifyBank(dBank);
+ for(const c of dFixtures.cases){
+  const model=await resolveSourceCards(normalizeResult(dDetail(c.payload)),c.query,dBank,dContext.window.TaxSearch.search);
+  assert.deepEqual(Array.from(model.cards,r=>String(r.id)),c.expected_ids,c.id);
+  assert.equal(model.answer,'');
+  for(const item of model.cards){const original=dBank.find(r=>r.id===item.id);assert.equal(item.question,original.question);assert.equal(item.summary,original.summary);assert.equal(item.answer,original.answer);}
+ }
+});
+test('D malformed source, arbitrary URI, title-ID and stripped payload fail closed',()=>{
+ const p=dFixtures.cases.find(c=>c.id==='Q4').payload;
+ const unknown={...p,sources:JSON.stringify({uri:'https://example.com/faq-111.txt',title:'FAQ-ID:111'}),source_count:1,first_uri:'https://example.com/faq-111.txt'};
+ for(const payload of [unknown,{...p,sources:'not JSON'},{...p,source_count:999},{...p,schema_version:2},{...p,first_uri:'https://evil.test'}])assert.throws(()=>normalizeResult(dDetail(payload)));
+ assert.throws(()=>normalizeResult({raw:{queryResult:{parameters:{final_sources:[]},responseMessages:[{text:{text:['generated']}}]}}}));
+});
+test('D same-ID Excel replacements and changed answers/keywords cannot open canonical cards',async()=>{
+ const c=dFixtures.cases.find(c=>c.id==='Q4');const changed=structuredClone(Array.from(dBank));
+ changed.find(r=>r.id===111).answer='different same-ID answer';
+ await assert.rejects(()=>resolveSourceCards(normalizeResult(dDetail(c.payload)),c.query,changed,dContext.window.TaxSearch.search),/bank/);
+ const altered=structuredClone(Array.from(dBank));altered[0].keywords.push('new');await assert.rejects(()=>verifyBank(altered),/bank/);
+ assert.equal(sourceManifest.records.length,129);
+});
