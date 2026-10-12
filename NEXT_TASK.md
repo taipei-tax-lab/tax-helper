@@ -1,3 +1,16 @@
+# TAX AI｜NEXT：Web Codex先發布D Web並交付WEB_GATE（2026-10-12）
+
+- [x] 使用者授權Web/CX Codex平行作業，Web可先發布；建立[Web正式發布計畫](docs/TAX_AI_D_WEB_PARALLEL_PRODUCTION_RELEASE_2026-10-12.md)。
+- [ ] Fresh compare main vs D feature `8a215db`；如main有新的TAX AI runtime/search/questionBank衝突，STOP，不自行覆蓋。
+- [ ] 僅合入D正式必要變更，確認正式config仍是原Agent/currentPage且無localhost/PoC Agent；跑Node/Python/browser/package/credential scan。
+- [ ] Merge/push main，讓既有Pages Actions部署；驗build/deploy/artifact/hosted parity。
+- [ ] **CX仍舊Production Version1時**，在正式Pages驗Quick Search及legacy AI格式相容；PASS後記錄main commit/run並明確標 **WEB_GATE_PASS**。
+- [ ] WEB_GATE_PASS後先STOP通知CX Codex可切Production；不要改Agent/Flow/Version/Messenger/IAM/domain。
+- [ ] CX切D Production後，再補正式站D cards→完整原答、Q4/P127/N1、Quick Search smoke；Q1/I1為已知查無，不誤判Web regression。
+- [ ] 建release文件、PROJECT_STATE/NEXT_TASK與rollback commit，push後STOP。
+
+---
+
 # TAX AI — D版準備交付／STOP待驗收（2026-10-12）
 
 - [x] feature branch最小D source mapping/原JS/原卡片/完整原答詢，保持正式config與原功能。
