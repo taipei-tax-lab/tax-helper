@@ -1,3 +1,9 @@
+# TAX AI｜WEB_GATE_PASS：新版Web正式站人工驗收通過（2026-10-12）
+
+**WEB_GATE_PASS / D WEB DEPLOYED / OLD PRODUCTION V1 COMPATIBILITY OWNER-CONFIRMED**。D版Web已 merge至main `b0aa07e57c58334319f4c7ab4e4174518bcc4005`，GitHub Pages Actions run `38232258739` build/deploy SUCCESS。服務負責人於正式 Pages 人工操作確認功能正常，完成「新版Web × 舊CX Production Version1」相容性 smoke；因此正式標記 **WEB_GATE_PASS**，允許 CX Codex 依既定計畫執行 FAQ Production Version1→Version2 cutover。此人工驗收是 owner-confirmed，不虛構逐項瀏覽器自動化數據；正式Web config仍為原Agent/currentPage，Quick Search/既有功能未被回報異常。下一步Web不再改程式，等待CX切D Version2後再補正式D cards/完整答詢/Quick Search smoke與最終release紀錄。
+
+---
+
 # TAX AI｜D Web正式發布回歸通過／執行環境網路阻擋（2026-10-12）
 
 **PREDEPLOY_REGRESSION_PASS / WEB_GATE_PENDING / MAIN_NOT_MERGED**。本輪fresh main=feature base `d12145f...`，無runtime衝突；accepted D `8a215db...` 的Node37/Python27、B1 browser17/integration17/AI browser31、package16entries/11syntax/credential scan全PASS。正式config維持原Agent/FAQ START_PAGE，搜尋/129題不變。使用者已授權正式Web發布，但Pages/SDK live通道被執行環境proxy403阻擋；回覆已開通後工具仍revision2/空allowed_hosts，尚未merge/deploy，不得把離線PASS當正式gate。CX Production不得cutover；開通後繼續既有授權，Web gate通過才交接。上一個已驗收main `d12145f...` / deployed `d614b42...` rollback package已重建exact SHA。詳[正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。下方為輸入與歷史紀錄。
