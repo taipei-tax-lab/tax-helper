@@ -1,3 +1,9 @@
+# TAX AI｜D版正式上線完成／LIVE / USABLE（2026-10-12）
+
+**D LIVE / USABLE / WEB+CXM VERSION2 FINAL ACCEPTED**。Web main `b0aa07e57c58334319f4c7ab4e4174518bcc4005` 已由 Pages run `38232258739` 成功部署；服務負責人先完成新版Web×舊Production Version1人工WEB_GATE_PASS。其後CX正式Agent FAQ Production已切至immutable Version2，Default仍Version1，正式Pages真實Messenger驗證Q4→#111、P127→#127、Python→0、Q1/I1已知查無，卡片→原完整標準答詢drawer、Quick Search房屋稅42筆、page/Messenger errors=0。搜尋golden仍8/10，不宣稱12/12。首次Version2 smoke因測試器CRLF/LF比較false positive曾實際rollback Version1，修驗證器後同Version2重新cutover並全綠，rollback流程實證有效。今日兩個PoC Agent已由CX刪除並GET404；v2 Store/GCS/原Store/正式Engine保留。詳[最終驗收](docs/TAX_AI_D_WEB_FINAL_LIVE_ACCEPTANCE_2026-10-12.md)。本案Web發布工作完成。
+
+---
+
 # TAX AI｜D Web正式發布回歸通過／執行環境網路阻擋（2026-10-12）
 
 **PREDEPLOY_REGRESSION_PASS / WEB_GATE_PENDING / MAIN_NOT_MERGED**。本輪fresh main=feature base `d12145f...`，無runtime衝突；accepted D `8a215db...` 的Node37/Python27、B1 browser17/integration17/AI browser31、package16entries/11syntax/credential scan全PASS。正式config維持原Agent/FAQ START_PAGE，搜尋/129題不變。使用者已授權正式Web發布，但Pages/SDK live通道被執行環境proxy403阻擋；回覆已開通後工具仍revision2/空allowed_hosts，尚未merge/deploy，不得把離線PASS當正式gate。CX Production不得cutover；開通後繼續既有授權，Web gate通過才交接。上一個已驗收main `d12145f...` / deployed `d614b42...` rollback package已重建exact SHA。詳[正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。下方為輸入與歷史紀錄。
