@@ -1,3 +1,14 @@
+# TAX AI｜NEXT：WEB_GATE_PASS，等待CX切Version2後補最終D smoke（2026-10-12）
+
+- [x] D Web已merge main：`b0aa07e57c58334319f4c7ab4e4174518bcc4005`。
+- [x] Pages Actions run `38232258739` build/deploy SUCCESS，github-pages artifact已產生。
+- [x] 服務負責人於正式Pages人工驗收「新版Web × 舊Production Version1」功能正常，**WEB_GATE_PASS**。
+- [x] 已允許CX Codex依既定發布計畫切FAQ Production Version1→Version2。
+- [ ] CX切D Version2後，正式站補驗D cards、卡片→原完整答詢、Q4/P127/N1與Quick Search；Q1/I1為已知查無。
+- [ ] 更新最終Web release紀錄與PROJECT_STATE/NEXT_TASK後STOP；不再修改搜尋架構或正式config。
+
+---
+
 # TAX AI｜NEXT：網路實際生效後完成既有授權Web發布（2026-10-12）
 
 **WEB_GATE_PENDING；CX Production不得cutover。** [正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。
