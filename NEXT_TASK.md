@@ -1,3 +1,15 @@
+# TAX AI｜D版正式發布完成／無待切換工作（2026-10-12）
+
+- [x] D Web已merge main `b0aa07e57...`、Pages run `38232258739` SUCCESS。
+- [x] 新版Web×舊Production Version1人工WEB_GATE_PASS。
+- [x] 原正式CX FAQ Production已切immutable Version2；Default Flow維持Version1。
+- [x] 正式Pages Messenger smoke PASS：Q4#111、P127#127、Python0、Q1/I1已知0、D卡片→原完整答詢、Quick Search42筆。
+- [x] Version1 rollback保留且本輪因CRLF/LF驗證器false positive曾實際演練成功；最終已回Version2。
+- [x] 今日兩個PoC Agent已DELETE/GET404；正式D依賴v2 Store/GCS/原Store/正式Engine保留。
+- [x] TAX AI D版標記 **LIVE / USABLE**。本輪STOP；後續搜尋品質改善或PoC-only Engine清理另案處理。
+
+---
+
 # TAX AI｜NEXT：網路實際生效後完成既有授權Web發布（2026-10-12）
 
 **WEB_GATE_PENDING；CX Production不得cutover。** [正式release紀錄](docs/TAX_AI_D_WEB_PRODUCTION_RELEASE_2026-10-12.md)。
